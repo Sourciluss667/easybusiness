@@ -1,29 +1,57 @@
 <?php
-require('model/backend.php');
+session_start();
+require('models/backend.php');
 ini_set('display_errors', 1);
-error_reporting(e_all);
+
+
+
+function home () {
+$title = "Easy Business";
+require('views/accueil.php');
+}
+
+function connection($array) {
+    $email = $_GET['email'];
+    $password = $_GET['password'];
+    $infos = selectInfoUser($pseudo);
+    if (isset($infos)){
+      if ($infos['password'] == $pw){
+        $_SESSION['status'] = 'connected';
+        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['error'] = '';
+      }
+    }else {
+      $_SESSION['error'] = "Erreur : Compte inconnu.";
+    }
+}
 
 function registerMember() {
     if(isset($_POST['inscription']))
     {
-        $_POST['lastName'] = htmlspecialchars($_POST['lastName']);
-        $_POST['firstName'] = htmlspecialchars($_POST['firstName']);
+        $_POST['lastname'] = htmlspecialchars($_POST['lastname']);
+        $_POST['firstname'] = htmlspecialchars($_POST['firstname']);
+        $_POST['nameEnterprise'] = htmlspecialchars($_POST['nameEnterprise']);
         $_POST['password'] = htmlspecialchars($_POST['password']);
         $_POST['verifPassword'] = htmlspecialchars($_POST['verifPassword']);
-        $_POST['mail'] = htmlspecialchars($_POST['mail']);
+        $_POST['email'] = htmlspecialchars($_POST['email']);
         
         
-        if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['mail']))
+        if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email']))
         {
             $email_valide = true;
         }
         
-            if(!isset($_POST['lastName']) OR empty($_POST['lastName']))
+            if(!isset($_POST['lastname']) OR empty($_POST['lastname']))
             {
                 echo 'Veuillez saisir un nouveau nom';
             }
             
-            else if(!isset($_POST['firstName']) OR empty($_POST['firstName']))
+            else if(!isset($_POST['firstname']) OR empty($_POST['firstname']))
+            {
+                echo 'Veuillez saisir un nouveau prenom';
+            }
+            
+            else if(!isset($_POST['nameEnterprise']) OR empty($_POST['nameEnterprise']))
             {
                 echo 'Veuillez saisir un nouveau prenom';
             }
@@ -34,7 +62,7 @@ function registerMember() {
                 echo 'Les deux mots de passes ne sont pas identiques, veuillez les saisir à nouveau';
             }
             
-            elseif(empty($_POST['mail']) OR !isset($email_valide))
+            elseif(empty($_POST['email']) OR !isset($email_valide))
             {
                 echo 'L\'adresse e-mail n\'est pas valide !';
             }

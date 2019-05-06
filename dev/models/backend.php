@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 
 function dbConnect() {
   try
@@ -13,8 +14,7 @@ function dbConnect() {
     return $db;
 }
 
-function CreateMember($lastname, $firstname, $password, $email)
-{
+function CreateMember($lastname, $firstname, $password, $email) {
     $db = dbConnect();    
     $req = $bdd->prepare('INSERT INTO membres(lastname, firstname, password, email, dateInscription) VALUES(:lastname, :firstname, :password, :email, CURDATE())');
     $req->execute(array(
@@ -25,7 +25,24 @@ function CreateMember($lastname, $firstname, $password, $email)
     $req->closeCursor();
 }
 
-function isRegister($pseudo,$password){
+function selectInfoUser($email){
+  $db = dbConnect();
+  $req = $db->prepare("SELECT * FROM profil WHERE email LIKE :email");
+  $req->execute(array(
+    ":email" => $email,
+  ));
+  $result = $req->fetch(PDO::FETCH_ASSOC);
+  return $result;
+}
+
+function isExist() {
+    $db = dbconnect();
+    $req = $bdd->prepare('SELECT COUNT(*) AS nb_email FROM account WHERE email = ?');
+    $req->execute(array($email));
+    $req->fetch();
+    return $req;
+}
+function isRegister($pseudo,$password) {
     $db = dbConnect();
     $req = $db->prepare('SELECT * FROM profil WHERE pseudo = :pseudo AND password = :password');
     $req->execute(array(
