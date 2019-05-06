@@ -28,7 +28,7 @@
 
             
             <input type="password" name="password" id="password" placeholder="Password"><br><br>
-            <input type="password" name="repassword" id="repassword" placeholder="Retype Password"><br><br><br>
+            <input type="password" name="verifPassword" id="verifPassword" placeholder="Retype Password"><br><br><br>
 
             <input type="hidden" name="typeForm" value="inscription">
             <input type="submit" value="Je m'inscris">
