@@ -25,11 +25,11 @@ function CreateMember($lastname, $firstname, $password, $email) {
     $req->closeCursor();
 }
 
-function selectInfoUser($mail){
+function selectInfoUser($email){
   $db = dbConnect();
-  $req = $db->prepare("SELECT * FROM profil WHERE mail LIKE :mail");
+  $req = $db->prepare("SELECT * FROM profil WHERE email LIKE :email");
   $req->execute(array(
-    ":mail" => $mail,
+    ":email" => $email,
   ));
   $result = $req->fetch(PDO::FETCH_ASSOC);
   return $result;
@@ -37,8 +37,8 @@ function selectInfoUser($mail){
 
 function isExist() {
     $db = dbconnect();
-    $req = $bdd->prepare('SELECT COUNT(*) AS nb_mail FROM account WHERE mail = ?');
-    $req->execute(array($mail));
+    $req = $bdd->prepare('SELECT COUNT(*) AS nb_email FROM account WHERE email = ?');
+    $req->execute(array($email));
     $req->fetch();
     return $req;
 }
