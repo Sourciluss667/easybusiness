@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 
 function home () {
 $title = "Easy Business";
-require('views/accueil.php');
+require('views/register.php');
 }
 
 function connection($array) {
@@ -15,9 +15,9 @@ function connection($array) {
     $password = $_GET['password'];
     $infos = selectInfoUser($pseudo);
     if (isset($infos)){
-      if ($infos['password'] == $pw){
+      if ($infos['password'] == $password){
         $_SESSION['status'] = 'connected';
-        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['email'] = $email;
         $_SESSION['error'] = '';
       }
     }else {
