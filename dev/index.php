@@ -1,21 +1,15 @@
 <?php
 ini_set('display_errors', 1);
-require('controllers/backend.php');
+
 try{
   if(isset($_GET['action'])){
     switch($_GET['action']){
-      case 'home' :
-        home();
-      break;
-      case 'B' :
-        echo 'B';
-      break;
-      case 'C' :
-        echo 'C';
+      case 'register' :
+      require('views/register.php');
       break;
     }
-  }else{
-    home();
+  } else {
+    require('views/accueil.php');
   }
 }catch(Exception $e){
   $message = $e->getMessage();

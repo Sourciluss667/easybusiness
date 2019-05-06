@@ -33,7 +33,7 @@
             <input type="hidden" name="typeForm" value="inscription">
             <input type="submit" value="Je m'inscris">
 
-            <a href="#" v-on:click="switchForm = !switchForm">Switch</a>
+            <a href="#" v-on:click="switchForm = !switchForm">Se connecter</a>
         </form>
     </div>
     </transition>
@@ -47,7 +47,7 @@
             <input type="hidden" name="typeForm" value="connexion">
             <input type="submit" value="Connexion">
             
-            <a href="#" v-on:click="switchForm = !switchForm">Switch</a>
+            <a href="#" v-on:click="switchForm = !switchForm">S'inscrire</a>
         </form>
     </div>
     </transition>
