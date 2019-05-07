@@ -6,55 +6,134 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>EasyBusiness</title>
 <link rel="stylesheet" href="public/css/register.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 </head>
 <body>
 
 <div id="app"> <!-- For VUEJS -->
 
-    <img src="public/img/logo-pi.png" alt="Logo EASYBUSINESS" id="logo">
+<div id="background"></div>
 
-    <!-- Formulaire Inscription -->
-    <transition name="move">
-    <div class="center" id="form-inscription" v-if="switchForm">
-        <form action="controllers/backend.php" method="post" class="center">
+<img src="public/img/logo-pi.png" alt="Logo" class="logo">
 
-            <input type="text" name="lastname" id="lastname" placeholder="Nom"><br><br>
 
-            <input type="text" name="firstname" id="firstname" placeholder="Prénom"><br><br>
-
-            <input type="text" name="nameEnterprise" id="nameEnterprise" placeholder="Nom de l'entreprise"><br><br>
-
-            <input type="email" name="email" id="email" placeholder="E-Mail" required><br><br>
-
-            
-            <input type="password" name="password" id="password" placeholder="Password"><br><br>
-            <input type="password" name="verifPassword" id="verifPassword" placeholder="Retype Password"><br><br><br>
-
-            <input type="hidden" name="typeForm" value="inscription">
-            <input type="submit" value="Je m'inscris">
-
-            <a href="#" v-on:click="switchForm = !switchForm">Se connecter</a>
+<!-- Connexion -->
+<div class="ui placeholder segment" id="connexion" v-if="switchForm">
+  <div class="ui two column very relaxed stackable grid">
+    <div class="column">
+      <form class="ui form" action="controllers/backend.php" method="post">
+        <div class="field">
+          <label>E-Mail</label>
+          <div class="ui left icon input">
+            <input type="email" name="email" placeholder="E-Mail" required>
+            <i class="at icon"></i>
+          </div>
+        </div>
+        <div class="field">
+          <label>Mot de passe</label>
+          <div class="ui left icon input">
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <i class="lock icon"></i>
+          </div>
+        </div>
+        <div class="ui blue submit button">Login</div>
         </form>
     </div>
-    </transition>
-    <!-- Formulaire Connexion -->
-    <transition name="move">
-    <div class="center" id="form-connexion" v-if="!switchForm">
-        <form action="controllers/backend.php" method="post" class="center">
-            <input type="email" name="email" id="email" placeholder="E-Mail"><br><br>
-            <input type="password" name="password" id="password" placeholder="Password"><br><br><br>
-
-            <input type="hidden" name="typeForm" value="connexion">
-            <input type="submit" value="Connexion">
-            
-            <a href="#" v-on:click="switchForm = !switchForm">S'inscrire</a>
-        </form>
+    <div class="middle aligned column">
+      <div class="ui big button" v-on:click="switchForm = !switchForm">
+        <i class="signup icon"></i>
+        Inscription !
+      </div>
     </div>
-    </transition>
+  </div>
+  <div class="ui vertical divider">
+    Ou
+  </div>
 </div>
 
+<!-- Inscription -->
+<div class="ui placeholder segment" id="inscription" v-if="!switchForm">
+  <div class="ui two column very relaxed stackable grid">
+    <div class="column">
+      <form class="ui form" action="controllers/backend.php" method="post">
+
+      <div class="field">
+          <label>Nom</label>
+          <div class="ui left icon input">
+            <input type="text" name="lastname" placeholder="Nom" required>
+            <i class="user icon"></i>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Prénom</label>
+          <div class="ui left icon input">
+            <input type="text" name="firstname" placeholder="Prénom" required>
+            <i class="user icon"></i>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Nom d'entreprise</label>
+          <div class="ui left icon input">
+            <input type="text" name="nameEnterprise" placeholder="Nom d'entreprise" required>
+            <i class="user icon"></i>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>E-Mail</label>
+          <div class="ui left icon input">
+            <input type="email" name="email" placeholder="E-Mail" required>
+            <i class="at icon"></i>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Mot de passe</label>
+          <div class="ui left icon input">
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <i class="lock icon"></i>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Encore</label>
+          <div class="ui left icon input">
+            <input type="password" name="verifPassword" placeholder="Mot de passe" required>
+            <i class="lock icon"></i>
+          </div>
+        </div>
+
+        <div class="ui blue submit button">Login</div>
+        </form>
+    </div>
+    <div class="middle aligned column">
+      <div class="ui big button" v-on:click="switchForm = !switchForm">
+        <i class="sign-in icon"></i>
+        Connexion !
+      </div>
+    </div>
+  </div>
+  <div class="ui vertical divider">
+    Ou
+  </div>
+</div>
+
+
+
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="public/js/vue.js"></script>
 <script>
+
+//$('#connexion').transition('fly down');
+//$('#inscription').transition('fly down');
+
+
 const app = new Vue({
     el: '#app',
     data: {
