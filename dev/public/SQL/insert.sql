@@ -1,1 +1,1 @@
-INSERT INTO `account` (`id`, `lastname`, `firstname`, `mail`, `password`, `nameEnterprise`, `dateInscription`) VALUES (NULL, 'Quentin', 'pinpin', 'pinpin@wanadoo.fr', 'password', 'superenterprise', NULL);
+INSERT INTO `account` (`id`, `lastname`, `firstname`, `mail`, `password`, `nameEnterprise`, `dateInscription`) VALUES (1, 'Quentin', 'pinpin', 'pinpin@wanadoo.fr', 'password', 'superenterprise', NULL);

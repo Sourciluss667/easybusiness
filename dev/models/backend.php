@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 function dbConnect() {
   try
   {
-    $db = new PDO('mysql:host=localhost;dbname=easybusiness;charset=utf8','phpmyadmin','secret');
+    $db = new PDO('mysql:host=localhost;dbname=easybusiness;charset=utf8','root','');
   }
   catch(Exception $e)
   {
