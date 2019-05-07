@@ -4,21 +4,23 @@ require('models/backend.php');
 ini_set('display_errors', 1);
 
 try{
-    if(isset($_POST['typeForm'])) {
+    if (isset($_POST['typeForm'])) {
         switch($_POST['typeForm']) {
             case 'inscription' :
-                require('inscription.php');
+            require('inscription.php');
             break;
             case 'connexion' :
-                require('connexion.php');
+            require('connexion.php');
             break;
+           /* case 'deconnexion';
+            require('deconnexion.php');
+            break;*/
         }
     } else {
         header('Location: ../index.php?action=home');
     }
-}catch(Exception $e){
+
+} catch(Exception $e) {
     $message = $e->getMessage();
 } 
-
-
 ?>

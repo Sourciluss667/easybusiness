@@ -42,11 +42,11 @@ function isExist() {
     $req->fetch();
     return $req;
 }
-function isRegister($pseudo,$password) {
+function isRegister($email,$password) {
     $db = dbConnect();
-    $req = $db->prepare('SELECT * FROM profil WHERE pseudo = :pseudo AND password = :password');
+    $req = $db->prepare('SELECT * FROM account WHERE email = :email AND password = :password');
     $req->execute(array(
-      'pseudo' => $pseudo,
+      'email' => $email,
       'password' => $password
     ));
     return $req;
