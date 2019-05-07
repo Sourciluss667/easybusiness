@@ -36,7 +36,8 @@
             <i class="lock icon"></i>
           </div>
         </div>
-        <div class="ui blue submit button">Login</div>
+        <input type="hidden" name="typeForm" value="connexion">
+        <input type="submit" class="ui blue submit button" value="Connexion">
         </form>
     </div>
     <div class="middle aligned column">
@@ -104,8 +105,8 @@
             <i class="lock icon"></i>
           </div>
         </div>
-
-        <div class="ui blue submit button">Login</div>
+        <input type="hidden" name="typeForm" value="inscription">
+        <input type="submit" class="ui blue submit button" value="Inscription">
         </form>
     </div>
     <div class="middle aligned column">

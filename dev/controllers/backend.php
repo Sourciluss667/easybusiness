@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('models/backend.php');
+require('../models/backend.php');
 ini_set('display_errors', 1);
 
 try{
