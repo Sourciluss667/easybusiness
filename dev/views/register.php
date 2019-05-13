@@ -18,6 +18,7 @@
 
 
 <!-- Connexion -->
+<transition name="fade">
 <div class="ui placeholder segment" id="connexion" v-if="switchForm">
   <div class="ui two column very relaxed stackable grid">
     <div class="column">
@@ -51,8 +52,10 @@
     Ou
   </div>
 </div>
+</transition>
 
 <!-- Inscription -->
+<transition name="fade">
 <div class="ui placeholder segment" id="inscription" v-if="!switchForm">
   <div class="ui two column very relaxed stackable grid">
     <div class="column">
@@ -120,7 +123,7 @@
     Ou
   </div>
 </div>
-
+</transition>
 
 
 
@@ -130,10 +133,6 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="public/js/vue.js"></script>
 <script>
-
-//$('#connexion').transition('fly down');
-//$('#inscription').transition('fly down');
-
 
 const app = new Vue({
     el: '#app',
