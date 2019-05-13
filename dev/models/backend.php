@@ -69,5 +69,21 @@ function selectRate() {
   return $req;
 }
 
+function deleteUser($id){
+  $db = dbConnect();
+  $query = $db->prepare('DELETE FROM account WHERE id = :id');
+  $query->execute(array(
+    'id'=>$id
+  ));
 
+  function modifyRate($seuil,$formationPro,$RSI,$TVA) {
+    $db =dbConnect();
+    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA WHERE id =:idUser');
+    $query -> execute(array(
+      'idUser'=> $idUser,
+      'formationPro'=> $formationPro,
+      'RSI' => $RSI,
+      'TVA' => $TVA
+    ));
+  }
 ?>
