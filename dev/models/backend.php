@@ -14,22 +14,28 @@ function dbConnect() {
     return $db;
 }
 
-function CreateMember($lastname, $firstname, $password, $email) {
+function createMember($lastname, $firstname, $password, $email, $nameEnterprise) {
+    try {
     $db = dbConnect();    
-    $req = $bdd->prepare('INSERT INTO membres(lastname, firstname, password, email, dateInscription) VALUES(:lastname, :firstname, :password, :email, CURDATE())');
+    $req = $db->prepare('INSERT INTO account(lastname, firstname, mail, password, nameEnterprise, dateInscription) VALUES(:lastname, :firstname, :mail, :password, :nameEnterprise, CURDATE())');
     $req->execute(array(
         'lastname' => $lastname,
         'firstname'=> $firstname,
+        'mail' => $email,
         'password' => $password,
-        'email' => $email));
+        'nameEnterprise' => $nameEnterprise));
     $req->closeCursor();
+    }
+    catch (Exception $e) {
+      die('Erreur : ' . $e->getMessage());
+    }
 }
 
 function selectInfoUser($email){
   $db = dbConnect();
-  $req = $db->prepare("SELECT * FROM profil WHERE email LIKE :email");
+  $req = $db->prepare("SELECT * FROM profil WHERE mail LIKE :mail");
   $req->execute(array(
-    ":email" => $email,
+    ":mail" => $email,
   ));
   $result = $req->fetch(PDO::FETCH_ASSOC);
   return $result;
@@ -37,19 +43,24 @@ function selectInfoUser($email){
 
 function isExist() {
     $db = dbconnect();
-    $req = $bdd->prepare('SELECT COUNT(*) AS nb_email FROM account WHERE email = ?');
+    $req = $bdd->prepare('SELECT COUNT(*) AS nb_email FROM account WHERE mail = ?');
     $req->execute(array($email));
     $req->fetch();
     return $req;
 }
 function isRegister($email,$password) {
+  try {
     $db = dbConnect();
-    $req = $db->prepare('SELECT * FROM account WHERE email = :email AND password = :password');
+    $req = $db->prepare('SELECT * FROM account WHERE mail = :mail AND password = :password');
     $req->execute(array(
-      'email' => $email,
+      'mail' => $email,
       'password' => $password
     ));
     return $req;
-    }
+  }
+  catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+  }
+}
 
 ?>

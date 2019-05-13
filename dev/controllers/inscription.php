@@ -1,6 +1,4 @@
 <?php
-
-ini_set('display_errors', 1);
 $_POST['lastname'] = htmlspecialchars($_POST['lastname']);
 $_POST['firstname'] = htmlspecialchars($_POST['firstname']);
 $_POST['nameEnterprise'] = htmlspecialchars($_POST['nameEnterprise']);
@@ -41,16 +39,16 @@ elseif(empty($_POST['email']) OR !isset($email_valide))
     echo 'L\'adresse e-mail n\'est pas valide !';
 }
 else
-{
-    $password_hash = sha1($_POST['password']);
-    
-    createMember($_POST['pseudo'], $password_hash, $_POST['email']);
+{    
+    createMember($_POST['lastname'], $_POST['firstname'], $_POST['password'], $_POST['email'], $_POST['nameEnterprise']);
     
     echo 'Vous avez été inscrit.';
     $inscrit = true;
+
+    header('Location: ../index.php');
 }		
 if ($inscrit == false) {
-    header('Location : views/register.php');
+    header('Location: ../index.php');
 }
 
 

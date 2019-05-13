@@ -1,26 +1,20 @@
 <?php
-ini_set('display_errors', 1);
-$email = $_POST['email'];
-$password = $_POST['password'];
-$isRegister = isRegister($email,$password)->fetch(PDO::FETCH_ASSOC);
 
-if($isRegister){
-    if ($isRegister['email'] == $email) {
-        if ($isRegister['password'] == $password) {
-            $_SESSION['status'] = 'connected';
-            $_SESSION['statut'] = $isRegister['statut'];
-            $_SESSION['email'] = $email;
-            $_SESSION['error'] = "";
-        }
-    }else {
-        $_SESSION['error'] = "Erreur : email ou mot de passe inconnu !";
-    }
-}else{
-    $_SESSION['error'] = "Erreur : Email ou mot de passe inconnu !";
+$isRegister = isRegister(htmlspecialchars($_POST['email']),htmlspecialchars($_POST['password']))->fetch(PDO::FETCH_ASSOC);
+
+if ($isRegister['email'] == $_POST['email']) {
+    $_SESSION['status'] = 'connected';
+    $_SESSION['statut'] = $isRegister['statut'];
+    $_SESSION['email'] = $email;
+    $_SESSION['name'] = $isRegister['firstname'].' '.$isRegister['lastname'];
+    $_SESSION['nameEnterprise'] = $isRegister['nameEnterprise'];
+
+    $_SESSION['error'] = "";
+
+    header('Location: ../index.php');
+} else {
+    $_SESSION['error'] = "Erreur : email ou mot de passe inconnu !";
+    header('Location: ../index.php');
 }
-header('Location: index.php');
-
-
-
 
 ?>

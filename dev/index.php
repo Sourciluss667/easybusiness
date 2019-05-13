@@ -1,4 +1,5 @@
 <?php
+session_start();
 ini_set('display_errors', 1);
 
 try{
@@ -9,7 +10,14 @@ try{
       break;
     }
   } else {
-    require('views/accueil.php');
+    if(isset($_SESSION['status'])) {
+      if($_SESSION['status'] == "connected") {
+        require('views/accueil.php');
+      }
+    }
+    else {
+      require('views/register.php');
+    }
   }
 }catch(Exception $e){
   $message = $e->getMessage();
