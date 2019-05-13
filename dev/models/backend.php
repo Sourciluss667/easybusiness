@@ -63,4 +63,11 @@ function isRegister($email,$password) {
   }
 }
 
+function selectRate() {
+  $db = dbConnect();
+  $req = $db->prepare("SELECT * FROM rate");
+  return $req;
+}
+
+
 ?>

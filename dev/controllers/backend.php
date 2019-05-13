@@ -15,6 +15,9 @@ try{
             case 'deconnexion';
             require('deconnexion.php');
             break;
+            case 'administration'
+            require('administration.php');
+            break;
         }
     } else {
         header('Location: ../index.php?action=home');
