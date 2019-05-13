@@ -18,6 +18,9 @@ try{
             case 'administration'
             require('administration.php');
             break;
+            case 'editUser':
+            require('editUser.php');
+            break;
         }
     } else {
         header('Location: ../index.php?action=home');
