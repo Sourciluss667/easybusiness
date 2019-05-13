@@ -2,10 +2,10 @@
 
 $isRegister = isRegister(htmlspecialchars($_POST['email']),htmlspecialchars($_POST['password']))->fetch(PDO::FETCH_ASSOC);
 
-if ($isRegister['email'] == $_POST['email']) {
+if ($isRegister['mail'] == $_POST['email']) {
     $_SESSION['status'] = 'connected';
     $_SESSION['statut'] = $isRegister['statut'];
-    $_SESSION['email'] = $email;
+    $_SESSION['mail'] = $email;
     $_SESSION['name'] = $isRegister['firstname'].' '.$isRegister['lastname'];
     $_SESSION['nameEnterprise'] = $isRegister['nameEnterprise'];
 
