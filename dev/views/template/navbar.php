@@ -6,7 +6,11 @@
   <a class="item">Calendrier</a>
   <a class="item">Factures</a>
   <a class="item">Bilan</a>
-  <a class="item">Paramètres</a>
+
+  <!-- Paramètres -->
+  <a class="item" href="index.php">Paramètres</a>
+  
+  <!-- Deconnexion -->
   <form name="deconnexionForm" action="controllers/backend.php" method="post">
     <input type="hidden" name="typeForm" value="deconnexion">
     <a class="item" href="javascript:document.deconnexionForm.submit()">Déconnexion</a>
