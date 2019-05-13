@@ -7,5 +7,8 @@
   <a class="item">Factures</a>
   <a class="item">Bilan</a>
   <a class="item">Paramètres</a>
-  <a class="item">Déconnexion</a>
+  <form name="deconnexionForm" action="controllers/backend.php" method="post">
+    <input type="hidden" name="typeForm" value="deconnexion">
+    <a class="item" href="javascript:document.deconnexionForm.submit()">Déconnexion</a>
+  </form>
 </div>

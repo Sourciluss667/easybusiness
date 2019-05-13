@@ -12,9 +12,9 @@ try{
             case 'connexion' :
             require('connexion.php');
             break;
-            /* case 'deconnexion';
+            case 'deconnexion';
             require('deconnexion.php');
-            break;*/
+            break;
         }
     } else {
         header('Location: ../index.php?action=home');

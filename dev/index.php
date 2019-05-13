@@ -8,11 +8,17 @@ try{
       case 'register' :
       require('views/register.php');
       break;
+      default:
+      require('views/register.php');
+      break;
     }
   } else {
     if(isset($_SESSION['status'])) {
       if($_SESSION['status'] == "connected") {
         require('views/accueil.php');
+      }
+      else {
+        require('views/register.php');
       }
     }
     else {
