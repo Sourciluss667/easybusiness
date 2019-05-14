@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 1);
 
 function dbConnect() {
   try
@@ -40,14 +39,15 @@ function selectInfoUser($email){
   $result = $req->fetch(PDO::FETCH_ASSOC);
   return $result;
 }
-
+/*
 function isExist() {
     $db = dbconnect();
-    $req = $bdd->prepare('SELECT COUNT(*) AS nb_email FROM account WHERE mail = ?');
+    $req = $db->prepare('SELECT COUNT(*) AS nb_email FROM account WHERE mail = ?');
     $req->execute(array($email));
     $req->fetch();
     return $req;
 }
+*/
 function isRegister($email,$password) {
   try {
     $db = dbConnect();
@@ -75,15 +75,49 @@ function deleteUser($id){
   $query->execute(array(
     'id'=>$id
   ));
+}
 
-  function modifyRate($seuil,$formationPro,$RSI,$TVA) {
+  function modifyRate($idUser, $seuil, $formationPro,$RSI,$TVA) {
     $db =dbConnect();
     $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA WHERE id =:idUser');
-    $query -> execute(array(
+    $query->execute(array(
+      'seuil'=> $seuil,
       'idUser'=> $idUser,
       'formationPro'=> $formationPro,
       'RSI' => $RSI,
       'TVA' => $TVA
     ));
   }
+
+  function editUserWPass($idUser, $firstname, $lastname, $nameEnterprise, $password) {
+    $db = dbConnect();
+    $query = $db->prepare('UPDATE account SET firstname = :firstname, lastname = :lastname, nameEnterprise = :nameEnterprise, password = :password WHERE id = :idUser');
+    $query->execute(array(
+      'firstname'      => $firstname,
+      'lastname'       => $lastname,
+      'nameEnterprise' => $nameEnterprise,
+      'password'       => $password,
+      'idUser'         => $idUser
+    ));
+  }
+
+  function editUser($idUser, $firstname, $lastname, $nameEnterprise) {
+    $db = dbConnect();
+    $query = $db->prepare('UPDATE account SET firstname = :firstname, lastname = :lastname, nameEnterprise = :nameEnterprise WHERE id = :idUser');
+    $query->execute(array(
+      'firstname'      => $firstname,
+      'lastname'       => $lastname,
+      'nameEnterprise' => $nameEnterprise,
+      'idUser'         => $idUser
+    ));
+  }
+
+  function getId($mail) {
+    $db = dbConnect();
+    $query = $db->prepare('SELECT id FROM account WHERE mail = :mail');
+    $req= $query->execute(array('mail' => $mail));
+
+    return $req;
+  }
+
 ?>

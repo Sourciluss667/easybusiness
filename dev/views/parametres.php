@@ -24,26 +24,30 @@
   <div class="fields">
     <div class="field">
       <label>Prénom</label>
-      <input type="text" name="firstname" placeholder="PRENOM" value="<?php echo $_SESSION['firstname']; ?>">
+      <input type="text" name="firstname" placeholder="PRENOM" value="<?php echo $_SESSION['firstname']; ?>" required>
     </div>
     <div class="field">
       <label>Nom</label>
-      <input type="text" name="lastname" placeholder="NOM" value="<?php echo $_SESSION['lastname']; ?>">
+      <input type="text" name="lastname" placeholder="NOM" value="<?php echo $_SESSION['lastname']; ?>" required>
     </div>
     <div class="field">
       <label>Nom d'entreprise</label>
-      <input type="text" name="nameEnterprise" placeholder="NOM D'ENTREPRISE" value="<?php echo $_SESSION['nameEnterprise']; ?>">
+      <input type="text" name="nameEnterprise" placeholder="NOM D'ENTREPRISE" value="<?php echo $_SESSION['nameEnterprise']; ?>" required>
     </div>
   </div>
   <div class="fields">
     <div class="field">
       <label>E-Mail</label>
-      <input type="email" name="email" placeholder="E-MAIL" value="<?php echo $_SESSION['mail']; ?>">
+      <input type="email" name="email" placeholder="E-MAIL" value="<?php echo $_SESSION['mail']; ?>" required>
     </div>
   </div>
   <div class="fields">
+  <div class="field">
+      <label>Ancien mot de passe</label>
+      <input type="password" name="oldPassword" placeholder="MOT DE PASSE">
+    </div>
     <div class="field">
-      <label>Mot de passe</label>
+      <label>Nouveau mot de passe</label>
       <input type="password" name="password" placeholder="MOT DE PASSE">
     </div>
     <div class="field">
@@ -58,6 +62,33 @@
     </div>
   </div>
 </form>
+
+<?php 
+
+if (isset($_GET['msg']) && $_GET['msg'] == "Success") {
+  echo 'Edit successfully';
+
+/*
+*
+*
+*
+**
+*
+* Popup "Successfully edited informations"
+*
+*
+**
+*
+*
+*
+*
+*
+*/
+
+}
+
+?>
+
 </div>
 
 </div>
