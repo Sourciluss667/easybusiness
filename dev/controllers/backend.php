@@ -7,19 +7,22 @@ try{
     if (isset($_POST['typeForm'])) {
         switch($_POST['typeForm']) {
             case 'inscription' :
-            require('inscription.php');
+                require('inscription.php');
             break;
             case 'connexion' :
-            require('connexion.php');
+                require('connexion.php');
             break;
             case 'deconnexion';
-            require('deconnexion.php');
+                require('deconnexion.php');
             break;
             case 'administration':
-            require('admin.php');
+                require('admin.php');
             break;
             case 'editUser':
-            require('editUser.php');
+                require('editUser.php');
+            break;
+            case 'deleteAccount':
+                require('delAccount.php');
             break;
         }
     } else {

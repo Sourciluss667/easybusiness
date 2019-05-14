@@ -45,3 +45,9 @@
 
     transform: translateX(-50%);
 }
+
+.suprAccount {
+    position: absolute;
+    bottom: 1%;
+    right: 1%;
+}

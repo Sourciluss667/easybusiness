@@ -10,7 +10,10 @@ $verifPassword = htmlspecialchars($_POST['verifPassword']);
 $id = getId($_SESSION['mail']);
 
 if ($password == $verifPassword && $password != '') {
-    editUserWPass($id, $firstname, $lastname, $nameEnterprise, $password);
+    $isRegister = isRegister($_SESSION['mail'],htmlspecialchars($_POST['oldPassword']))->fetch(PDO::FETCH_ASSOC);
+    if ($isRegister['mail'] == $_SESSION['mail']) {
+        editUserWPass($id, $firstname, $lastname, $nameEnterprise, $password);
+    }
 }
 else {
     editUser($id, $firstname, $lastname, $nameEnterprise);

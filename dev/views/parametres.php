@@ -15,7 +15,7 @@
 
 <!-- TOUT ICI -->
 
-<div class="containerCenter">
+<div class="containerCenter" id="app">
 <div class="containerParamUser">
 
 <div class="titleFormParamUser">Paramètres utilisateur :</div>
@@ -91,6 +91,13 @@ if (isset($_GET['msg']) && $_GET['msg'] == "Success") {
 
 </div>
 
+
+<form action="controllers/backend.php" method="post">
+  <input type="hidden" name="typeForm" value="deleteAccount">
+  <div class="suprAccount"><button class="ui right labeled icon red button" type="submit">Supprimer le compte<i class="delete icon"></i></button></div>
+</form>
+
+
 </div>
 
 <!-- FIN TOUT ICI -->
@@ -102,9 +109,7 @@ if (isset($_GET['msg']) && $_GET['msg'] == "Success") {
 <script>
 const app = new Vue({
     el: '#app',
-    data: {
-        switchForm: true
-    }
+    data: {}
 })
 </script>
 </body>
