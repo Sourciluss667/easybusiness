@@ -15,8 +15,8 @@ try{
             case 'deconnexion';
             require('deconnexion.php');
             break;
-            case 'administration'
-            require('administration.php');
+            case 'administration':
+            require('admin.php');
             break;
             case 'editUser':
             require('editUser.php');
