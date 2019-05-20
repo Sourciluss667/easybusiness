@@ -15,21 +15,21 @@
   <div class="fields">
     <div class="two wide field">
       <label>Seuil </label>
-      <input type="text" name="seuil" placeholder=<?php echo $_SESSION["seuil"];?>>
+      <input type="text" name="seuil" placeholder=<?php if (isset($_SESSION["seuil"])) { echo $_SESSION["seuil"]; } ?>>
     </div>
     <div class="two wide field">
       <label>TVA</label>
-      <input type="text" name="TVA" placeholder=<?php echo $_SESSION["TVA"];?>>
+      <input type="text" name="TVA" placeholder=<?php if (isset($_SESSION["TVA"])) { echo $_SESSION["TVA"]; } ?>>
     </div>
     <div class="two wide field">
       <label>Formation Professionelle</label>
-      <input type="text" name="formationPro" placeholder=<?php echo $_SESSION["formationPro"];?>>
+      <input type="text" name="formationPro" placeholder=<?php if (isset($_SESSION["formationPro"])) { echo $_SESSION["formationPro"]; } ?>>
     </div>
   </div>
   <div class="fields">
     <div class="two wide field">
       <label>RSI</label>
-      <input type="text" name="RSI" placeholder=<?php echo $_SESSION["RSI"];?>>
+      <input type="text" name="RSI" placeholder=<?php if (isset($_SESSION["RSI"])) { echo $_SESSION["RSI"]; } ?>>
     </div>
   </div>
   </div>
@@ -38,10 +38,10 @@
     <button class="ui  button" type="submit" >Modifier les taux !</button>
 </form>
 
-<p>
-<P>
-<p>
-<p>
+<br>
+<br>
+<br>
+<br>
 <form action = "controllers/backend.php" method = "POST">
 <input type="hidden" name="typeForm" value="displayUser">
 </form>
@@ -49,7 +49,7 @@
 <table>
 <tr><th>ID</th><th>Nom</th><th>Prenom</th><th>Mail</th>Nom Entreprise</th><th>Date d'inscription</th></tr>
 
-</table class =>
+</table>
 
 
 
@@ -64,7 +64,7 @@
 const app = new Vue({
     el: '#app',
     data: {
-        switchForm: true
+      
     }
 })
 </script>

@@ -1,7 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-
 $seuil = htmlspecialchars($_POST['seuil']);
 $TVA = htmlspecialchars($_POST['TVA']);
 $formationPro = htmlspecialchars($_POST['formationPro']);
@@ -13,6 +11,6 @@ $_SESSION['TVA'] = $TVA;
 $_SESSION['formationPro'] = $formationPro;
 $_SESSION['RSI'] = $RSI;
 
-modifyRate($seuil,$formationPro,$RSI,$TVA);
+modifyRate($seuil, $formationPro, $RSI, $TVA);
 header("Location : ../index.php?action=admin");
 ?>
