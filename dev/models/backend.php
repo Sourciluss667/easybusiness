@@ -77,12 +77,11 @@ function deleteUser($id){
   ));
 }
 
-  function modifyRate($idUser, $seuil, $formationPro,$RSI,$TVA) {
+  function modifyRate($seuil, $formationPro,$RSI,$TVA) {
     $db =dbConnect();
-    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA WHERE id =:idUser');
+    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA ');
     $query->execute(array(
       'seuil'=> $seuil,
-      'idUser'=> $idUser,
       'formationPro'=> $formationPro,
       'RSI' => $RSI,
       'TVA' => $TVA
@@ -111,7 +110,11 @@ function deleteUser($id){
       'idUser'         => $idUser
     ));
   }
-
+function getRate () {
+  $db = dbConnect();
+  $query = $db->prepare('SELECT * FROM rate');
+  return $query;
+}
   function getId($mail) {
     $db = dbConnect();
     $query = $db->prepare('SELECT id FROM account WHERE mail = :mail');
@@ -119,5 +122,10 @@ function deleteUser($id){
 
     return $req;
   }
-
+function getInfoUser() {
+  $db = dbConnect();
+  $req = $db->prepare("SELECT * FROM account");
+  $query = $query->fetchAll(PDO::FETCH_ASSOC);
+  return $query;
+}
 ?>
