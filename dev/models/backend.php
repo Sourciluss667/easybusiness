@@ -15,6 +15,8 @@ function dbConnect() {
 
 function createMember($lastname, $firstname, $password, $email, $nameEnterprise) {
     try {
+
+    // account
     $db = dbConnect();    
     $req = $db->prepare('INSERT INTO account(lastname, firstname, mail, password, nameEnterprise, dateInscription) VALUES(:lastname, :firstname, :mail, :password, :nameEnterprise, CURDATE())');
     $req->execute(array(
@@ -23,6 +25,22 @@ function createMember($lastname, $firstname, $password, $email, $nameEnterprise)
         'mail' => $email,
         'password' => $password,
         'nameEnterprise' => $nameEnterprise));
+    $req->closeCursor();
+    
+    // rate
+    //id 	seuil 	formationPro 	RSI 	TVA 
+    $db = dbConnect();
+    $req = $db->prepare('INSERT INTO rate(seuil, formationPro, RSI, TVA) VALUES(1, 1, 1, 1)');
+    $req->execute();
+    $req->closeCursor();
+
+
+    // enterpriseInfo
+    $db = dbConnect();
+    $req = $db->prepare('INSERT INTO enterpriseInfo(status, ACRE, ARCE, RCP, declarationTime, rate_id, account_id) VALUES("Achat/revente de marchandises", 0, 0, 0, "trimestrielle", 1, :id)');
+    $req->execute(array(
+      "id" => getId($email)
+    ));
     $req->closeCursor();
     }
     catch (Exception $e) {
@@ -128,4 +146,28 @@ function getInfoUser() {
   $query = $query->fetchAll(PDO::FETCH_ASSOC);
   return $query;
 }
+
+  function selectEnterpriseInfo($id){
+    $db = dbConnect();
+    $req = $db->prepare("SELECT * FROM enterpriseInfo WHERE account_id LIKE :id");
+    $req->execute(array(
+      ":id" => $id,
+    ));
+    $result = $req->fetch(PDO::FETCH_ASSOC);
+    return $result;
+  }
+
+  function editEnterprise($idUser, $status, $acre, $arce, $rcp, $declarationTime) { // 	status 	ACRE 	ARCE 	RCP 	declarationTime
+    $db = dbConnect();
+    $query = $db->prepare('UPDATE enterpriseInfo SET status = :status, ACRE = :acre, ARCE = :arce, RCP = :rcp, declarationTime = :declarationTime WHERE account_id = :idUser');
+    $query->execute(array(
+      'status'      => $status,
+      'acre'       => $acre,
+      'arce' => $arce,
+      'rcp' => $rcp,
+      'declarationTime' => $declarationTime,
+      'idUser'         => $idUser
+    ));    
+  }
+
 ?>

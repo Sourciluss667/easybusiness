@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`enterpriseInfo` (
   `ACRE` TINYINT NULL,
   `ARCE` TINYINT NULL,
   `RCP` INT NULL,
-  `declarationTime` TINYINT NULL,
+  `declarationTime` VARCHAR(45) NULL,
   `rate_id` INT NOT NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`),
