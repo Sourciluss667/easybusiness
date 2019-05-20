@@ -97,7 +97,7 @@ function deleteUser($id){
 
   function modifyRate($seuil, $formationPro,$RSI,$TVA) {
     $db =dbConnect();
-    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA ');
+    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA');
     $query->execute(array(
       'seuil'=> $seuil,
       'formationPro'=> $formationPro,
