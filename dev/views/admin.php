@@ -11,38 +11,49 @@
 <body>
 
 <!-- TOUT ICI -->
-<
-<form class="ui form" action="controller/backend.php" method ="GET">
+<form class="ui form" action="controllers/backend.php" method ="POST">
   <div class="fields">
     <div class="two wide field">
-      <label>seuil </label>
-      <input type="text" name="seuil" placeholder="First Name">
+      <label>Seuil </label>
+      <input type="text" name="seuil" placeholder=<?php echo $_SESSION["seuil"];?>>
     </div>
     <div class="two wide field">
-      <label>Middle</label>
-      <input type="text" placeholder="Middle Name">
+      <label>TVA</label>
+      <input type="text" name="TVA" placeholder=<?php echo $_SESSION["TVA"];?>>
     </div>
     <div class="two wide field">
-      <label>Last name</label>
-      <input type="text" placeholder="Last Name">
+      <label>Formation Professionelle</label>
+      <input type="text" name="formationPro" placeholder=<?php echo $_SESSION["formationPro"];?>>
     </div>
   </div>
   <div class="fields">
     <div class="two wide field">
-      <input type="text" placeholder="2 Wide">
-    </div>
-    <div class="two wide field">
-      <input type="text" placeholder="12 Wide">
-    </div>
-    <div class=" two field">
-      <input type="text" placeholder="2 Wide">
+      <label>RSI</label>
+      <input type="text" name="RSI" placeholder=<?php echo $_SESSION["RSI"];?>>
     </div>
   </div>
   </div>
 </div>
     <input type="hidden" name="typeForm" value="modifyRate">
-    <button class="ui  button" type="submit" name="modifyRate">Modifier les taux !</button>
+    <button class="ui  button" type="submit" >Modifier les taux !</button>
 </form>
+
+<p>
+<P>
+<p>
+<p>
+<form action = "controllers/backend.php" method = "POST">
+<input type="hidden" name="typeForm" value="displayUser">
+</form>
+<h1> Liste des utilisateurs</h1>
+<table>
+<tr><th>ID</th><th>Nom</th><th>Prenom</th><th>Mail</th>Nom Entreprise</th><th>Date d'inscription</th></tr>
+
+</table class =>
+
+
+
+
 <!-- FIN TOUT ICI -->
 
 <?php require('template/bottom.php'); ?>
