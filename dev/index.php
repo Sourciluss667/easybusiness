@@ -17,6 +17,9 @@ try{
           case 'admin':
             require('views/admin.php');
           break;
+          case 'calendar':
+            require('views/calendrier.php');
+          break;
           default:
             require('views/register.php');
           break;

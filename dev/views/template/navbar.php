@@ -3,7 +3,11 @@
     <img class="ui image" src="public/img/logo-pi.png">
   </div>
   <a class="item" href="index.php">Dashboard</a>
-  <a class="item">Calendrier</a>
+
+  <!-- Calendrier -->
+  <a class="item" href="index.php?action=calendar">Calendrier</a>
+
+  <!-- -->
   <a class="item">Factures</a>
   <a class="item">Bilan</a>
 

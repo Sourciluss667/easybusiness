@@ -19,7 +19,7 @@
 
 <div class="ui text titleForm">Paramètres utilisateur :</div>
 
-<form action="controllers/backend.php" method="post" class="ui form formParamUser">
+<form action="controllers/backend.php" method="post" class="ui form formParam">
   <div class="fields">
     <div class="field">
       <label>Prénom</label>
@@ -76,7 +76,7 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
 
 <div class="ui text titleForm">Paramètres entreprise :</div>
 
-<form action="controllers/backend.php" method="post" class="ui form formParamUser">
+<form action="controllers/backend.php" method="post" class="ui form formParam">
   <div class="fields">
     <div class="field">
       
@@ -171,9 +171,20 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
 
 
 <!-- Param Rates -->
+<!-- 
+<div class="ui text titleForm">Paramètres taux :</div>
 
+<form action="controllers/backend.php" method="post" class="ui form formParam">
+  
+    <input type="hidden" name="typeForm" value="editTaux">
 
-
+    <div class="fields">
+      <div class="field">
+        <button class="ui right labeled icon yellow button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
+      </div>
+    </div>
+</form>
+      -->
 
 
 
