@@ -16,9 +16,8 @@
 <!-- TOUT ICI -->
 
 <div class="containerCenter" id="app">
-<div class="containerParamUser">
 
-<div class="titleFormParamUser">Paramètres utilisateur :</div>
+<div class="ui text titleForm">Paramètres utilisateur :</div>
 
 <form action="controllers/backend.php" method="post" class="ui form formParamUser">
   <div class="fields">
@@ -55,12 +54,15 @@
       <input type="password" name="verifPassword" placeholder="MOT DE PASSE">
     </div>
 
+    </div>
+
     <input type="hidden" name="typeForm" value="editUser">
 
-    <div class="field">
-        <button class="ui right labeled icon yellow button submitEditParamUser" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
+    <div class="fields">
+      <div class="field">
+        <button class="ui right labeled icon yellow button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
+      </div>
     </div>
-  </div>
 </form>
 
 <?php 
@@ -89,8 +91,111 @@ if (isset($_GET['msg']) && $_GET['msg'] == "Success") {
 
 ?>
 
-</div>
+<!-- Autre params (entreprise info) -->
 
+<?php
+require('models/backend.php');
+
+$enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
+
+?>
+
+<div class="ui text titleForm">Paramètres entreprise :</div>
+
+<form action="controllers/backend.php" method="post" class="ui form formParamUser">
+  <div class="fields">
+    <div class="field">
+      
+      <select class="ui dropdown" name="status">
+        <option value="<?php echo $enterpriseInfo['status']; ?>"><?php echo $enterpriseInfo['status']; ?></option>
+        <option value="Achat/revente de marchandises">Achat/revente de marchandises</option>
+        <option value="Vente de denrées à consommer sur place">Vente de denrées à consommer sur place</option>
+        <option value="Prestations d'hébergement (BIC)">Prestations d'hébergement (BIC)</option>
+        <option value="Prestation de service commerciale ou artisanale (BIC / BNC)">Prestation de service commerciale ou artisanale (BIC / BNC)</option>
+        <option value="Profession libérale">Profession libérale</option>
+        <option value="Activité de location de tourisme">Activité de location de tourisme</option>
+      </select>
+
+    </div>
+  </div>
+
+  <div class="fields">
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="ACRE" <?php if ($enterpriseInfo['ACRE']) { ?>checked="checked" <?php } ?> value="1">
+        <label><a href="https://www.auto-entrepreneur.fr/aide/aide-financiere/accre.html" target="_blank" rel="noopener noreferrer" title="Aide à la Création d'une Auto-entreprise">ACRE</a></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="ARCE" <?php if ($enterpriseInfo['ARCE']) { ?>checked="checked" <?php } ?> value="1">
+        <label><a href="https://www.auto-entrepreneur.fr/aide/aide-financiere/arce.html" target="_blank" rel="noopener noreferrer" title="Aide à la Reprise ou à la Création d'Entreprise ">ARCE</a></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" name="RCP" <?php if ($enterpriseInfo['RCP']) { ?>checked="checked" <?php } ?> value="1">
+        <label><a href="https://www.auto-entrepreneur.fr/assurance/assurance-responsabilite-civile-professionnelle/index.html" target="_blank" rel="noopener noreferrer" title="Responsabilité Civile Professionnelle">RCP</a></label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="inline fields">
+    <label>A quelle fréquence voulez-vous déclarer ?</label>
+
+    <?php
+      if ($enterpriseInfo['declarationTime'] == "Mensuelle") {
+    ?>
+
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="declarationTime" checked="checked">
+        <label>Mensuelle</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="declarationTime">
+        <label>Trimestrielle</label>
+      </div>
+    </div>
+    
+    <?php
+      }
+      else {
+    ?>
+
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="declarationTime">
+        <label>Mensuelle</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="declarationTime" checked="checked">
+        <label>Trimestrielle</label>
+      </div>
+    </div>
+    
+    <?php } ?>
+
+  </div>
+
+    <input type="hidden" name="typeForm" value="editEnterprise">
+
+    <div class="fields">
+      <div class="field">
+        <button class="ui right labeled icon yellow button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Supression compte -->
 
 <form action="controllers/backend.php" method="post">
   <input type="hidden" name="typeForm" value="deleteAccount">

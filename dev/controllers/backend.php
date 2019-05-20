@@ -21,6 +21,9 @@ try{
             case 'editUser':
                 require('editUser.php');
             break;
+            case 'editEnterprise':
+                require('editEnterprise.php');
+            break;
             case 'deleteAccount':
                 require('delAccount.php');
             break;
