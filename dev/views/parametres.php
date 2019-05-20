@@ -60,7 +60,7 @@
 
     <div class="fields">
       <div class="field">
-        <button class="ui right labeled icon yellow button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
+        <button class="ui right labeled icon red basic button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
       </div>
     </div>
 </form>
@@ -163,42 +163,56 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
 
     <div class="fields">
       <div class="field">
-        <button class="ui right labeled icon yellow button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
+        <button class="ui right labeled icon red basic button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
       </div>
     </div>
   </div>
 </form>
 
-
 <!-- Param Rates -->
-<!-- 
+
+<div class="paramRates">
 <div class="ui text titleForm">Paramètres taux :</div>
 
 <form action="controllers/backend.php" method="post" class="ui form formParam">
-  
+        
+
+    <div class="fields">
+      <div class="field">
+          RSI (en %)
+          <input type="number" name="rsi" value="0">
+      </div>
+      <div class="field">
+          Formation Pro (en %)
+          <input type="number" name="formationPro" value="0">
+      </div>
+      <div class="field">
+          TVA (en %)
+          <input type="number" name="tva" value="0">
+      </div>
+      <div class="field">
+          Seuil (en EUR)
+          <input type="number" name="seuil" value="0">
+      </div>
+    </div>
+
     <input type="hidden" name="typeForm" value="editTaux">
 
     <div class="fields">
       <div class="field">
-        <button class="ui right labeled icon yellow button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
+        <button class="ui right labeled icon red basic button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
       </div>
     </div>
 </form>
-      -->
-
-
-
-
-
-
+</div>
 
 
 <?php if (isset($_GET['msg']) && $_GET['msg'] == "Success") { ?>
 
 <!-- Fermeture du pop up non faites ! -->
 
-<div class="ui success message popupsuccess" v-if="showPopup = true">
-  <i class="close icon" v-on:click="showPopup = false"></i>
+<div class="ui success message popupsuccess" id="popupsuccess">
+  <i class="close icon" onclick="document.getElementById('popupsuccess').style.display = 'none'"></i>
   <div class="header">
     Edit successfully !
   </div>
@@ -227,9 +241,7 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
 <script>
 const app = new Vue({
     el: '#app',
-    data: {
-      showPopup: true
-    }
+    data: {}
 })
 </script>
 </body>

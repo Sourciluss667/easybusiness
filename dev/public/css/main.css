@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .containerCenter {
     position: absolute;
     top: 0%;
@@ -22,9 +26,16 @@
     right: 1%;
 }
 
+.paramRates {
+    position: absolute;
+    left: 13%;
+    bottom: 13%;
+    width: 100%;
+}
+
 .titleForm {
-    color: blue;
-    border-bottom: 2px solid blue;
+    color: red;
+    border-bottom: 2px solid red;
     width: 100%;
     margin-bottom: 1%;
     margin-top: 2%;

@@ -77,7 +77,7 @@ ENGINE = InnoDB;
 -- Table `easybusiness`.`employees`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`employees` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `salary` VARCHAR(45) NULL,
   `job` VARCHAR(45) NULL,
@@ -96,7 +96,7 @@ ENGINE = InnoDB;
 -- Table `easybusiness`.`bilan`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`bilan` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `CA` VARCHAR(45) NULL,
   `taxe` VARCHAR(45) NULL,
   `impots` VARCHAR(45) NULL,
@@ -116,7 +116,7 @@ ENGINE = InnoDB;
 -- Table `easybusiness`.`client`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`client` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
   `status` TINYINT NULL,
   `account_id` INT NOT NULL,
@@ -134,7 +134,7 @@ ENGINE = InnoDB;
 -- Table `easybusiness`.`facture`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `prix` VARCHAR(45) NULL,
   `date` VARCHAR(45) NULL,
   `notes` VARCHAR(45) NULL,

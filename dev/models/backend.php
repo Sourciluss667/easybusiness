@@ -170,4 +170,24 @@ function getInfoUser() {
     ));    
   }
 
+  function addFacture($idUser, $idClient, $notes, $date, $prix) {
+    try {
+
+      // account
+      $db = dbConnect();    
+      $req = $db->prepare('INSERT INTO facture(prix, date, notes, account_id, client_id) VALUES(:prix, :date, :notes, :idUser, :idClient)');
+      $req->execute(array(
+          'prix' => $prix,
+          'date'=> $date,
+          'notes' => $notes,
+          'idUser' => $idUser,
+          'idClient' => $idClient));
+      $req->closeCursor();
+      
+      }
+      catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
+      }
+  }
+
 ?>

@@ -8,19 +8,78 @@
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     
-    <link href='public/js/fullcalendar/core/main.css' rel='stylesheet' />
-    <link href='fullcalendar/daygrid/main.css' rel='stylesheet' />
+    <link href='public/js/fullcalendar/packages/core/main.css' rel='stylesheet' />
+    <link href='public/js/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
 
-    <script src='fullcalendar/core/main.js'></script>
-    <script src='fullcalendar/daygrid/main.js'></script>
+    <script src='public/js/fullcalendar/packages/core/main.js'></script>
+    <script src='public/js/fullcalendar/packages/daygrid/main.js'></script>
 
     <script>
 
-      document.addEventListener('DOMContentLoaded', function() {
+function post(path, params, method='post') {
+
+// The rest of this code assumes you are not using a library.
+// It can be made less wordy if you use one.
+const form = document.createElement('form');
+form.method = method;
+form.action = path;
+
+for (const key in params) {
+  if (params.hasOwnProperty(key)) {
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = key;
+    hiddenField.value = params[key];
+
+    form.appendChild(hiddenField);
+  }
+}
+
+document.body.appendChild(form);
+form.submit();
+}
+
+
+        document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: [ 'dayGrid' ]
+            plugins: [ 'dayGrid' ],
+            height: 'parent',
+            header: {
+              center: 'addEventBtn'
+            },
+            customButtons: {
+              addEventBtn: {
+                text: 'Ajouter une facture...',
+                click: function() {
+                  var dateStr = prompt('Entrer une date (YYYY-MM-DD)');
+                  //var dateParsed = new Date(dateStr + 'T00:00:00'); // will be in local time
+                  
+                  var montant = prompt('Prix');
+
+                  var notesUser = prompt('Notes');
+
+                  var id = prompt('ID du Client')
+
+                  post('controllers/backend.php', {typeForm: 'addFacture', notes: notesUser, prix: montant, idClient: id, date: dateStr});
+
+
+                  /*
+                  if (!isNaN(date.valueOf())) { // valid?
+                    calendar.addEvent({
+                    title: 'dynamic event',
+                    start: date,
+                    allDay: true
+                    });
+                    alert('Great. Now, update your database...');
+                  } else {
+                    alert('Invalid date.');
+                  }
+                  */
+                }
+              }
+            }
         });
 
         calendar.render();
@@ -35,9 +94,9 @@
 
 <!-- TOUT ICI -->
 
-<div class="containerCenter">
+<div class="containerCenter" id="app">
 
-<div id="calendar"></div>
+<div id="calendar" style="width: 80%; position: absolute; left: 0%;"></div>
 
 </div>
 
