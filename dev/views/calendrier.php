@@ -19,7 +19,9 @@
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {});
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [ 'dayGrid' ]
+        });
 
         calendar.render();
       });
