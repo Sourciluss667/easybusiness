@@ -175,7 +175,7 @@ function getInfoUser() {
 
       // account
       $db = dbConnect();    
-      $req = $db->prepare('INSERT INTO facture(prix, date, notes, account_id, client_id) VALUES(:prix, :date, :notes, :idUser, :idClient)');
+      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, account_id, client_id) VALUES(:prix, :date, :notes, :idUser, :idClient)');
       $req->execute(array(
           'prix' => $prix,
           'date'=> $date,
@@ -188,6 +188,19 @@ function getInfoUser() {
       catch (Exception $e) {
         die('Erreur : ' . $e->getMessage());
       }
+  }
+
+  function getFacturesFromId($id) {
+    $db = dbConnect();
+    $req = $db->prepare("SELECT * FROM facture AS f JOIN client AS c WHERE f.account_id LIKE :id");
+    $req->execute(array(
+      ":id" => $id,
+    ));
+    $result = $req->fetch(PDO::FETCH_ASSOC);
+
+    
+
+    return $result;
   }
 
 ?>

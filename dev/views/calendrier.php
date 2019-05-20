@@ -64,23 +64,28 @@ form.submit();
 
                   post('controllers/backend.php', {typeForm: 'addFacture', notes: notesUser, prix: montant, idClient: id, date: dateStr});
 
-
-                  /*
-                  if (!isNaN(date.valueOf())) { // valid?
-                    calendar.addEvent({
-                    title: 'dynamic event',
-                    start: date,
-                    allDay: true
-                    });
-                    alert('Great. Now, update your database...');
-                  } else {
-                    alert('Invalid date.');
-                  }
-                  */
                 }
               }
             }
         });
+        
+        <?php
+          require('models/backend.php');
+
+          $factures = getFacturesFromId(getId($_SESSION['mail']));
+
+          foreach ($factures as $row) {
+              ?>
+                var date = new Date('<?php echo $row['date']; ?>' + 'T00:00:00');
+
+                calendar.addEvent({
+                    title: '<?php echo $row['notes']; ?>',
+                    start: date,
+                    allDay: true
+                });
+              <?php
+          }
+        ?>
 
         calendar.render();
       });
@@ -98,6 +103,14 @@ form.submit();
 
 <div id="calendar" style="width: 80%; position: absolute; left: 0%;"></div>
 
+<?php 
+
+foreach ($factures as $row) {
+ echo $row['date'];
+}
+
+?>
+
 </div>
 
 <!-- FIN TOUT ICI -->
@@ -109,9 +122,7 @@ form.submit();
 <script>
 const app = new Vue({
     el: '#app',
-    data: {
-        switchForm: true
-    }
+    data: {}
 })
 </script>
 </body>
