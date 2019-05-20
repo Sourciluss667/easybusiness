@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     
-    <link href='fullcalendar/core/main.css' rel='stylesheet' />
+    <link href='public/js/fullcalendar/core/main.css' rel='stylesheet' />
     <link href='fullcalendar/daygrid/main.css' rel='stylesheet' />
 
     <script src='fullcalendar/core/main.js'></script>
