@@ -38,10 +38,10 @@
     <button class="ui  button" type="submit" >Modifier les taux !</button>
 </form>
 
-<p>
-<P>
-<p>
-<p>
+<br>
+<br>
+<br>
+<br>
 <form action = "controllers/backend.php" method = "POST">
 <input type="hidden" name="typeForm" value="displayUser">
 </form>
@@ -49,7 +49,9 @@
 <table>
 <tr><th>ID</th><th>Nom</th><th>Prenom</th><th>Mail</th>Nom Entreprise</th><th>Date d'inscription</th></tr>
 
-</table class =>
+
+
+</table>
 
 
 
