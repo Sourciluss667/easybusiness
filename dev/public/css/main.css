@@ -1,7 +1,7 @@
 .containerCenter {
     position: absolute;
     top: 0%;
-    left: 11%;
+    left: 13%;
     height: 100%;
     width: 89%;
 }
@@ -25,4 +25,13 @@
     margin-top: 2%;
     padding-bottom: 1%;
     font-size: 30px;
+}
+
+.popupsuccess {
+    position: absolute;
+    top: 90%;
+    width: 80%;
+    left: 16%;
+
+    z-index: 999;
 }

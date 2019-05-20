@@ -150,7 +150,7 @@ function deleteUser($id){
 
   function editEnterprise($idUser, $status, $acre, $arce, $rcp, $declarationTime) { // 	status 	ACRE 	ARCE 	RCP 	declarationTime
     $db = dbConnect();
-    $query = $db->prepare('UPDATE enterpriseInfo SET status = :status, ACRE = :acre, ARCE = :arce, RCP = :rcp, declarationTime = :declarationTime WHERE accout_id = :idUser');
+    $query = $db->prepare('UPDATE enterpriseInfo SET status = :status, ACRE = :acre, ARCE = :arce, RCP = :rcp, declarationTime = :declarationTime WHERE account_id = :idUser');
     $query->execute(array(
       'status'      => $status,
       'acre'       => $acre,
@@ -158,7 +158,7 @@ function deleteUser($id){
       'rcp' => $rcp,
       'declarationTime' => $declarationTime,
       'idUser'         => $idUser
-    ));
+    ));    
   }
 
 ?>

@@ -65,32 +65,6 @@
     </div>
 </form>
 
-<?php 
-
-if (isset($_GET['msg']) && $_GET['msg'] == "Success") {
-  echo 'Edit successfully';
-
-/*
-*
-*
-*
-**
-*
-* Popup "Successfully edited informations"
-*
-*
-**
-*
-*
-*
-*
-*
-*/
-
-}
-
-?>
-
 <!-- Autre params (entreprise info) -->
 
 <?php
@@ -152,13 +126,13 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
 
     <div class="field">
       <div class="ui radio checkbox">
-        <input type="radio" name="declarationTime" checked="checked">
+        <input type="radio" name="declarationTime" checked="checked" value="Mensuelle">
         <label>Mensuelle</label>
       </div>
     </div>
     <div class="field">
       <div class="ui radio checkbox">
-        <input type="radio" name="declarationTime">
+        <input type="radio" name="declarationTime" value="Trimestrielle">
         <label>Trimestrielle</label>
       </div>
     </div>
@@ -170,13 +144,13 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
 
     <div class="field">
       <div class="ui radio checkbox">
-        <input type="radio" name="declarationTime">
+        <input type="radio" name="declarationTime" value="Mensuelle">
         <label>Mensuelle</label>
       </div>
     </div>
     <div class="field">
       <div class="ui radio checkbox">
-        <input type="radio" name="declarationTime" checked="checked">
+        <input type="radio" name="declarationTime" checked="checked" value="Trimestrielle">
         <label>Trimestrielle</label>
       </div>
     </div>
@@ -194,6 +168,34 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
     </div>
   </div>
 </form>
+
+
+<!-- Param Rates -->
+
+
+
+
+
+
+
+
+
+
+
+<?php if (isset($_GET['msg']) && $_GET['msg'] == "Success") { ?>
+
+<!-- Fermeture du pop up non faites ! -->
+
+<div class="ui success message popupsuccess" v-if="showPopup = true">
+  <i class="close icon" v-on:click="showPopup = false"></i>
+  <div class="header">
+    Edit successfully !
+  </div>
+  <p>You can edit settings everytime <?php echo $_SESSION["firstname"].' '.$_SESSION["lastname"]; ?> !</p>
+</div>
+
+<?php } ?>
+
 
 <!-- Supression compte -->
 
@@ -214,7 +216,9 @@ $enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
 <script>
 const app = new Vue({
     el: '#app',
-    data: {}
+    data: {
+      showPopup: true
+    }
 })
 </script>
 </body>
