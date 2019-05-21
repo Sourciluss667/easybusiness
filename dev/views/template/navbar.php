@@ -11,6 +11,9 @@
   <a class="item">Factures</a>
   <a class="item">Bilan</a>
 
+  <!-- Clients -->
+  <a class="item" href="index.php?action=clients">Clients</a>
+
   <!-- Paramètres -->
   <a class="item" href="index.php?action=settings">Paramètres</a>
   

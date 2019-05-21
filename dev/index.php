@@ -20,6 +20,9 @@ try{
           case 'calendar':
             require('views/calendrier.php');
           break;
+          case 'clients':
+            require('views/clients.php');
+          break;
           default:
             require('views/register.php');
           break;

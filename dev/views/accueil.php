@@ -27,9 +27,7 @@
 <script>
 const app = new Vue({
     el: '#app',
-    data: {
-        switchForm: true
-    }
+    data: {}
 })
 </script>
 </body>

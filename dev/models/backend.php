@@ -178,10 +178,10 @@ function getInfoUser() {
 
       // account
       $db = dbConnect();    
-      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, account_id, client_id) VALUES(:prix, :date, :notes, :idUser, :idClient)');
+      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, account_id, client_id) VALUES(:prix, :dateStr, :notes, :idUser, :idClient)');
       $req->execute(array(
           'prix' => $prix,
-          'date'=> $date,
+          'dateStr'=> $date,
           'notes' => $notes,
           'idUser' => $idUser,
           'idClient' => $idClient));

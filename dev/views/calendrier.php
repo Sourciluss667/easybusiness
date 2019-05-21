@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EasyBusiness</title>
+    <title>EasyBusiness - Calendrier</title>
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     
@@ -74,6 +74,7 @@ form.submit();
 
           $factures = getFacturesFromId(getId($_SESSION['mail']));
 
+          /*
           foreach ($factures as $row) {
               ?>
                 var date = new Date('<?php echo $row['date']; ?>' + 'T00:00:00');
@@ -84,9 +85,9 @@ form.submit();
                     allDay: true
                 });
               <?php
-          }
+          } */
         ?>
-
+          
         calendar.render();
       });
 
@@ -104,11 +105,11 @@ form.submit();
 <div id="calendar" style="width: 80%; position: absolute; left: 0%;"></div>
 
 <?php 
-
+/*
 foreach ($factures as $row) {
  echo $row['date'];
 }
-
+*/
 ?>
 
 </div>
