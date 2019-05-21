@@ -139,7 +139,7 @@ function getRate ($id) {
     $db = dbConnect();
     $query = $db->prepare('SELECT id FROM account WHERE mail = :mail');
     $req= $query->execute(array('mail' => $mail));
-    $result = $req->fetch(PDO::FETCH_ASSOC);
+    $result = $req;
     return $result;
   }
 function getInfoUser() {
