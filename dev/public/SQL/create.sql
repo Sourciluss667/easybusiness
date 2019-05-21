@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`bilan` (
   `CA` VARCHAR(45) NULL,
   `taxe` VARCHAR(45) NULL,
   `impots` VARCHAR(45) NULL,
-  `date` VARCHAR(45) NULL,
+  `dateStr` VARCHAR(45) NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_bilan_account1_idx` (`account_id` ASC),
@@ -136,7 +136,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `prix` VARCHAR(45) NULL,
-  `date` VARCHAR(45) NULL,
+  `dateStr` VARCHAR(45) NULL,
   `notes` VARCHAR(45) NULL,
   `account_id` INT NOT NULL,
   `client_id` INT NOT NULL,
