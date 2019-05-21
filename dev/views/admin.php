@@ -12,8 +12,6 @@
 <?php 
 require('models/backend.php');
 $rateInfo = getRate(1);
-print_r($rateInfo);
-
 $list = getInfoUser();
 
 ?>
@@ -67,7 +65,8 @@ $list = getInfoUser();
 }*/
 
 foreach ($list as $v1) {
-echo "<br><br>".$v1["id"]." &nbsp;&nbsp;".$v1["lastname"]."&nbsp;&nbsp; ".$v1["firstname"]." &nbsp;&nbsp;".$v1["mail"]." &nbsp;&nbsp;".$v1["nameEnterprise"]."&nbsp;&nbsp; ".$v1["dateInscription"];
+echo "<br><br>".$v1["id"]." &nbsp;&nbsp;".$v1["lastname"]."&nbsp;&nbsp; ".$v1["firstname"]." &nbsp;&nbsp;".$v1["mail"]." &nbsp;&nbsp;".$v1["nameEnterprise"]."&nbsp;&nbsp; ".
+$v1["dateInscription"]."&nbsp;&nbsp; <button>supprimer l'utilisateur</button>";
 
 }
 ?>
