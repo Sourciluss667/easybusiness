@@ -97,7 +97,7 @@ function deleteUser($id){
 
   function modifyRate($seuil, $formationPro,$RSI,$TVA) {
     $db =dbConnect();
-    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA');
+    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA ');
     $query->execute(array(
       'seuil'=> $seuil,
       'formationPro'=> $formationPro,
@@ -128,23 +128,26 @@ function deleteUser($id){
       'idUser'         => $idUser
     ));
   }
-function getRate () {
-  $db = dbConnect();
-  $query = $db->prepare('SELECT * FROM rate');
-  return $query;
+function getRate ($id) {
+    $db = dbConnect();
+    $query = $db->prepare("SELECT * FROM rate where id = :id");
+    $query->execute(array('id' => $id));
+    $result = $query->fetchAll();
+    return $result;
 }
   function getId($mail) {
     $db = dbConnect();
     $query = $db->prepare('SELECT id FROM account WHERE mail = :mail');
     $req= $query->execute(array('mail' => $mail));
-
-    return $req;
+    $result = $req->fetch(PDO::FETCH_ASSOC);
+    return $result;
   }
 function getInfoUser() {
   $db = dbConnect();
-  $req = $db->prepare("SELECT * FROM account");
-  $query = $query->fetchAll(PDO::FETCH_ASSOC);
-  return $query;
+  $query = $db->prepare("SELECT * FROM account");
+  $query->execute();
+  $result = $query->fetchAll();
+  return $result;
 }
 
   function selectEnterpriseInfo($id){
