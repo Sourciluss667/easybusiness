@@ -96,8 +96,8 @@ function deleteUser($id){
 }
 
   function modifyRate($seuil, $formationPro,$RSI,$TVA) {
-    $db =dbConnect();
-    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA');
+    $db = dbConnect();
+    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA'); // WHERE et JOIN
     $query->execute(array(
       'seuil'=> $seuil,
       'formationPro'=> $formationPro,
@@ -135,15 +135,14 @@ function getRate () {
 }
   function getId($mail) {
     $db = dbConnect();
-    $query = $db->prepare('SELECT id FROM account WHERE mail = :mail');
-    $req= $query->execute(array('mail' => $mail));
-
+    $query = $db->prepare('SELECT id FROM account WHERE mail LIKE :mail');
+    $req = $query->execute(array('mail' => $mail));
     return $req;
   }
 function getInfoUser() {
   $db = dbConnect();
   $req = $db->prepare("SELECT * FROM account");
-  $query = $query->fetchAll(PDO::FETCH_ASSOC);
+  $query = $req->fetchAll(PDO::FETCH_ASSOC);
   return $query;
 }
 
