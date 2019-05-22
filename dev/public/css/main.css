@@ -190,3 +190,15 @@ div#calendar{
       font-size: 30px;
       margin-top: 2%;
   }
+
+  .deleteIconClient {
+      color: rgb(255, 0, 0);
+  }
+  
+  .deleteIconClient:hover {
+      color: rgb(196, 0, 0);
+  }
+
+  .listClient {
+      width: 80%;
+  }

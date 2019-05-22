@@ -5,6 +5,8 @@ $status = $_POST["statutClient"];
 
 $idUser = getId(htmlspecialchars($_SESSION["mail"]));
 
-print_r($idUser);
+addClient($idUser, $nom, $status);
+
+header('Location: ../index.php?action=clients');
 
 ?>

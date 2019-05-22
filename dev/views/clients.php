@@ -21,25 +21,26 @@
 <!-- Liste -->
 <div class="ui text titleClients">Liste des clients</div>
 
-    <div class="ui middle aligned selection list">
-  <div class="item">
-    <img class="ui avatar image" src="/images/avatar/small/helen.jpg">
-    <div class="content">
-      <div class="header">Helen</div>
-    </div>
-  </div>
-  <div class="item">
-    <img class="ui avatar image" src="/images/avatar/small/christian.jpg">
-    <div class="content">
-      <div class="header">Christian</div>
-    </div>
-  </div>
-  <div class="item">
-    <img class="ui avatar image" src="/images/avatar/small/daniel.jpg">
-    <div class="content">
-      <div class="header">Daniel</div>
-    </div>
-  </div>
+<div class="ui middle aligned divided selection list listClient">
+    
+    <?php
+        require('models/backend.php');
+        $clients = getClients(htmlspecialchars(getId($_SESSION['mail'])));
+
+        for ($i = 0; $i < count($clients, COUNT_NORMAL); $i++) {
+            // 1 Client
+        ?>
+        <div class="item">
+            <img class="ui avatar image" src="public/img/client_avatar.png">
+            <div class="content">
+                <div class="header"><?php echo $clients[$i]["nom"];?></div>
+                <?php echo $clients[$i]["status"]; ?>
+            </div>
+            <div class="right floated content">
+                <i class="trash alternate icon deleteIconClient" onclick="deleteClient('<?php echo $clients[$i]['id']; ?>')"></i>
+            </div>
+        </div>
+    <?php } ?>
 </div>
 
 <!-- -->
@@ -54,9 +55,9 @@
 
 <form action="controllers/backend.php" method="post" v-if="clientForm">
 
-<input type="text" name="nomClient" id="nomClient">
+Nom client : <input type="text" name="nomClient" id="nomClient">
 
-<input type="text" name="statutClient" id="statutClient">
+Statut client : <input type="text" name="statutClient" id="statutClient">
 
 <input type="hidden" name="typeForm" value="addClient">
 
@@ -74,6 +75,12 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="public/js/vue.js"></script>
 <script>
+
+const deleteClient = id => {
+    console.log('Supprimer le client avec l\'id : ' + id);
+    // FAIRE UNE REQUETE POST SUR LE BACKEND POUR SUPR LE COMPTE
+}
+
 const app = new Vue({
     el: '#app',
     data: {
