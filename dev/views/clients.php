@@ -30,7 +30,7 @@
         for ($i = 0; $i < count($clients, COUNT_NORMAL); $i++) {
             // 1 Client
         ?>
-        <div class="item">
+        <div class="item" id="clients-<?php echo $clients[$i]["id"];?>">
             <img class="ui avatar image" src="public/img/client_avatar.png">
             <div class="content">
                 <div class="header"><?php echo $clients[$i]["nom"];?></div>
@@ -76,9 +76,34 @@ Statut client : <input type="text" name="statutClient" id="statutClient">
 <script src="public/js/vue.js"></script>
 <script>
 
+function post(path, params, method='post') {
+
+// The rest of this code assumes you are not using a library.
+// It can be made less wordy if you use one.
+const form = document.createElement('form');
+form.method = method;
+form.action = path;
+
+for (const key in params) {
+  if (params.hasOwnProperty(key)) {
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = key;
+    hiddenField.value = params[key];
+
+    form.appendChild(hiddenField);
+  }
+}
+
+document.body.appendChild(form);
+form.submit();
+}
+
 const deleteClient = id => {
-    console.log('Supprimer le client avec l\'id : ' + id);
     // FAIRE UNE REQUETE POST SUR LE BACKEND POUR SUPR LE COMPTE
+    if (confirm("Cela entrainera la suppression de toutes les factures liées, êtes-vous sûr ?")) {
+        post('controllers/backend.php', {typeForm: 'deleteClient', idClient: id});
+    }
 }
 
 const app = new Vue({

@@ -36,6 +36,9 @@ try{
             case 'deleteAccount':
                 require('delAccount.php');
             break;
+            case 'deleteClient':
+                require('delClient.php');
+            break;
         }
     } else {
         header('Location: ../index.php?action=home');

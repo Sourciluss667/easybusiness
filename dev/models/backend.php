@@ -37,9 +37,10 @@ function createMember($lastname, $firstname, $password, $email, $nameEnterprise)
 
     // enterpriseInfo
     $db = dbConnect();
-    $req = $db->prepare('INSERT INTO enterpriseInfo(status, ACRE, ARCE, RCP, declarationTime, rate_id, account_id) VALUES("Achat/revente de marchandises", 0, 0, 0, "trimestrielle", 1, :id)');
+    $req = $db->prepare('INSERT INTO enterpriseInfo(status, ACRE, ARCE, RCP, declarationTime, rate_id, account_id) VALUES("Achat/revente de marchandises", 0, 0, 0, "Trimestrielle", :rateId, :id)');
     $req->execute(array(
-      "id" => getId($email)
+      "id" => getId($email),
+      "rateId" => getId($email)
     ));
     $req->closeCursor();
     }
@@ -230,6 +231,19 @@ function getInfoUser() {
       $result = $req->fetchAll();
 
       return $result;
+    }
+    catch (Exception $e) {
+      die('Erreur : ' . $e->getMessage());
+    }
+  }
+
+  function deleteClient($idClient) {
+    try {
+      $db = dbConnect();
+      $req = $db->prepare("DELETE FROM client WHERE id=:idClient");
+      $req->execute(array(
+        "idClient" => $idClient
+      ));
     }
     catch (Exception $e) {
       die('Erreur : ' . $e->getMessage());
