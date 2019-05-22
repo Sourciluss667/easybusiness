@@ -72,7 +72,7 @@ form.submit();
         <?php
           require('models/backend.php');
 
-          $factures = getFacturesFromId(getId($_SESSION['mail']));
+          $factures = getFacturesFromId(htmlspecialchars(getId($_SESSION['mail'])));
 
           /*
           foreach ($factures as $row) {

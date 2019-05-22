@@ -137,9 +137,10 @@ function getRate ($id) {
 }
   function getId($mail) {
     $db = dbConnect();
-    $query = $db->prepare('SELECT id FROM account WHERE mail = :mail');
-    $req= $query->execute(array('mail' => $mail));
-    $result = $req;
+    $query = $db->prepare("SELECT id FROM account WHERE mail = :mail");
+    $query->execute(array('mail' => $mail));
+    $result = $query->fetchAll();
+    $result = $result[0]['id'];
     return $result;
   }
 function getInfoUser() {
@@ -197,13 +198,42 @@ function getInfoUser() {
     $db = dbConnect();
     $req = $db->prepare("SELECT * FROM facture AS f JOIN client AS c WHERE f.account_id LIKE :id");
     $req->execute(array(
-      ":id" => $id,
+      "id" => $id
     ));
-    $result = $req->fetch(PDO::FETCH_ASSOC);
-
-    
-
+    $result = $req->fetchall();
     return $result;
+  }
+
+  function addClient($idUser, $nom, $status) {
+    try {
+    $db = dbConnect();
+    $req = $db->prepare("INSERT INTO client(nom, status, account_id) VALUES(:nom, :status, :idUser)");
+    $req->execute(array(
+      "nom" => $nom,
+      "status" => $status,
+      "idUser" => $idUser
+    ));
+    $req->closeCursor();
+    }
+    catch (Exception $e) {
+      die('Erreur : ' . $e->getMessage());
+    }
+  }
+
+  function getClients($idUser) {
+    try {
+      $db = dbConnect();
+      $req = $db->prepare("SELECT * FROM client WHERE account_id=:idUser");
+      $req->execute(array(
+        "idUser" => $idUser
+      ));
+      $result = $req->fetchAll();
+
+      return $result;
+    }
+    catch (Exception $e) {
+      die('Erreur : ' . $e->getMessage());
+    }
   }
 
 ?>

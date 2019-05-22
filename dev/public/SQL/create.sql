@@ -118,7 +118,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `easybusiness`.`client` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
-  `status` TINYINT NULL,
+  `status` VARCHAR(45) NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_client_account1_idx` (`account_id` ASC),

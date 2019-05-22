@@ -70,7 +70,7 @@
 <?php
 require('models/backend.php');
 
-$enterpriseInfo = selectEnterpriseInfo(getId($_SESSION['mail'])); // A SECURISER
+$enterpriseInfo = selectEnterpriseInfo(getId(htmlspecialchars($_SESSION['mail'])));
 
 ?>
 
