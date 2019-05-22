@@ -137,9 +137,10 @@ function getRate ($id) {
 }
   function getId($mail) {
     $db = dbConnect();
-    $query = $db->prepare('SELECT id FROM account WHERE mail = :mail');
-    $req= $query->execute(array('mail' => $mail));
-    $result = $req;
+    $query = $db->prepare("SELECT id FROM account WHERE mail = :mail");
+    $query->execute(array('mail' => $mail));
+    $result = $query->fetchAll();
+    $result = $result[0]['id'];
     return $result;
   }
 function getInfoUser() {

@@ -30,6 +30,9 @@ try{
             case 'addFacture':
                 require('addFacture.php');
             break;
+            case 'addClient':
+                require('addClient.php');
+            break;
             case 'deleteAccount':
                 require('delAccount.php');
             break;
