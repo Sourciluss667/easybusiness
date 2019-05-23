@@ -5,7 +5,8 @@ body {
 .containerCenter {
     position: absolute;
     top: 0%;
-    left: 13%;
+    /* left: 13%; */
+    left: 250px;
     height: 100%;
     width: 89%;
 }
@@ -28,7 +29,8 @@ body {
 
 .paramRates {
     position: absolute;
-    left: 13%;
+    /* left: 13%; */
+    left: 250px;
     bottom: 13%;
     width: 100%;
 }

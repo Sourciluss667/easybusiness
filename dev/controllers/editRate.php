@@ -6,6 +6,13 @@ $formationPro = htmlspecialchars($_POST['formationPro']);
 $RSI = htmlspecialchars($_POST['rsi']);
 $idUser = getId(htmlspecialchars($_SESSION['mail']));
 
-editRate($idUser, $seuil, $formationPro, $RSI, $TVA);
-header("Location: ../index.php?action=settings");
+if ($seuil >= 0 && $TVA >= 0 && $formationPro >= 0 && $RSI >= 0) {
+    editRate($idUser, $seuil, $formationPro, $RSI, $TVA);
+    header("Location: ../index.php?action=settings&msg=Success");
+}
+else {
+    echo 'ERREUR : Un taux ne peut pas etre negatif';
+    echo '<br><br><a href="../index.php?action=settings">Retour</a>';
+}
+
 ?>

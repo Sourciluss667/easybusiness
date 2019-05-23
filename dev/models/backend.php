@@ -143,8 +143,8 @@ function deleteUser($id){
   }
 function getRate ($id) {
     $db = dbConnect();
-    $query = $db->prepare("SELECT * FROM rate where id = :id");
-    $query->execute(array('id' => $id));
+    $query = $db->prepare("SELECT * FROM rate WHERE id LIKE (SELECT rate_id FROM enterpriseInfo WHERE account_id = :idUser)");
+    $query->execute(array('idUser' => $id));
     $result = $query->fetchAll();
     return $result;
 }
@@ -208,13 +208,17 @@ function getInfoUser() {
   }
 
   function getFacturesFromId($id) {
+    try {
     $db = dbConnect();
-    $req = $db->prepare("SELECT * FROM facture AS f JOIN client AS c WHERE f.account_id LIKE :id");
+    $req = $db->prepare("SELECT * FROM facture WHERE account_id LIKE :id");
     $req->execute(array(
       "id" => $id
     ));
-    $result = $req->fetchall();
+    $result = $req->fetchAll();
     return $result;
+    } catch (Exception $e) {
+      die('Erreur: ' . $e->getMessage());
+    }
   }
 
   function addClient($idUser, $nom, $status) {

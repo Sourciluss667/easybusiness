@@ -72,6 +72,8 @@ require('models/backend.php');
 
 $enterpriseInfo = selectEnterpriseInfo(getId(htmlspecialchars($_SESSION['mail'])));
 
+$rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
+
 ?>
 
 <div class="ui text titleForm">Paramètres entreprise :</div>
@@ -175,24 +177,22 @@ $enterpriseInfo = selectEnterpriseInfo(getId(htmlspecialchars($_SESSION['mail'])
 <div class="ui text titleForm">Paramètres taux :</div>
 
 <form action="controllers/backend.php" method="post" class="ui form formParam">
-        
-
     <div class="fields">
       <div class="field">
           RSI (en %)
-          <input type="number" name="rsi" value="0">
+          <input type="number" name="rsi" id="rsi" value="<?php echo $rate[0]['RSI']; ?>" onclick="verifRate('rsi')">
       </div>
       <div class="field">
           Formation Pro (en %)
-          <input type="number" name="formationPro" value="0">
+          <input type="number" name="formationPro" id="formationPro" value="<?php echo $rate[0]['formationPro']; ?>" onclick="verifRate('formationPro')">
       </div>
       <div class="field">
           TVA (en %)
-          <input type="number" name="tva" value="0">
+          <input type="number" name="tva" id="tva" value="<?php echo $rate[0]['TVA']; ?>" onclick="verifRate('tva')">
       </div>
       <div class="field">
           Seuil (en EUR)
-          <input type="number" name="seuil" value="0">
+          <input type="number" name="seuil" id="seuil" value="<?php echo $rate[0]['seuil']; ?>" onclick="verifRate('seuil')">
       </div>
     </div>
 
@@ -239,6 +239,14 @@ $enterpriseInfo = selectEnterpriseInfo(getId(htmlspecialchars($_SESSION['mail'])
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="public/js/vue.js"></script>
 <script>
+
+const verifRate = u => {
+  if (document.getElementById(u).value < 0)
+    document.getElementById(u).style = 'color: red;'
+  else
+    document.getElementById(u).style = 'color: green;'
+}
+
 const app = new Vue({
     el: '#app',
     data: {}

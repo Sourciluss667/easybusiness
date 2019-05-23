@@ -1,1 +1,2 @@
-INSERT INTO `account` (`id`, `lastname`, `firstname`, `mail`, `password`, `nameEnterprise`, `dateInscription`) VALUES (1, 'Quentin', 'pinpin', 'pinpin@wanadoo.fr', 'password', 'superenterprise', NULL);
+INSERT INTO `account` (`id`, `lastname`, `firstname`, `mail`, `password`, `nameEnterprise`, `dateInscription`) VALUES (1, 'ADMIN', 'ADMIN', 'admin@easybusiness.fr', 'easybusiness', 'EASYBUSINESS', NULL);
+INSERT INTO `rate` (`id`, `seuil`, `formationPro`, `RSI`, `TVA`) VALUES (1, 170000, 0.1, 22, 20)

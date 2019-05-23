@@ -74,10 +74,10 @@ form.submit();
 
           $factures = getFacturesFromId(htmlspecialchars(getId($_SESSION['mail'])));
 
-          /*
+          
           foreach ($factures as $row) {
               ?>
-                var date = new Date('<?php echo $row['date']; ?>' + 'T00:00:00');
+                var date = new Date('<?php echo $row['dateStr']; ?>' + 'T00:00:00');
 
                 calendar.addEvent({
                     title: '<?php echo $row['notes']; ?>',
@@ -85,7 +85,7 @@ form.submit();
                     allDay: true
                 });
               <?php
-          } */
+          }
         ?>
           
         calendar.render();
@@ -103,14 +103,6 @@ form.submit();
 <div class="containerCenter" id="app">
 
 <div id="calendar" style="width: 80%; position: absolute; left: 0%;"></div>
-
-<?php 
-/*
-foreach ($factures as $row) {
- echo $row['date'];
-}
-*/
-?>
 
 </div>
 
