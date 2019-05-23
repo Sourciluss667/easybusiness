@@ -49,7 +49,7 @@
 
 <!-- Ajouter un client -->
 
-<button class="ui button" v-on:click="clientForm = true">Ajouter un client</button>
+<button class="ui button" v-on:click="clientForm = true" v-if="!clientForm">Ajouter un client</button>
 
 <a href="javascript:void(0);" v-if="clientForm" v-on:click="clientForm = false">Retour</a>
 

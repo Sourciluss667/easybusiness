@@ -96,14 +96,26 @@ function deleteUser($id){
   ));
 }
 
-  function modifyRate($seuil, $formationPro,$RSI,$TVA) {
+  function modifyRate($seuil, $formationPro,$RSI,$TVA) { // Taux admin
     $db = dbConnect();
-    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA'); // WHERE et JOIN
+    $query =$db->prepare('UPDATE rate SET seuil = :seuil , formationPro = :formationPro , RSI = :RSI, TVA = :TVA WHERE id=1');
     $query->execute(array(
       'seuil'=> $seuil,
       'formationPro'=> $formationPro,
       'RSI' => $RSI,
       'TVA' => $TVA
+    ));
+  }
+
+  function editRate($idUser, $seuil, $formationPro, $RSI, $TVA) { // Taux user
+    $db = dbConnect();
+    $query = $db->prepare('UPDATE rate SET seuil = :seuil, formationPro = :formationPro, RSI = :RSI, TVA = :TVA WHERE id LIKE (SELECT rate_id FROM enterpriseInfo WHERE account_id = :idUser)');
+    $query->execute(array(
+      'seuil'=> $seuil,
+      'formationPro'=> $formationPro,
+      'RSI' => $RSI,
+      'TVA' => $TVA,
+      'idUser' => $idUser
     ));
   }
 

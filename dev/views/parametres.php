@@ -196,7 +196,7 @@ $enterpriseInfo = selectEnterpriseInfo(getId(htmlspecialchars($_SESSION['mail'])
       </div>
     </div>
 
-    <input type="hidden" name="typeForm" value="editTaux">
+    <input type="hidden" name="typeForm" value="editRate">
 
     <div class="fields">
       <div class="field">

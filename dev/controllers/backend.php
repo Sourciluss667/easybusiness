@@ -27,6 +27,9 @@ try{
             case 'editEnterprise':
                 require('editEnterprise.php');
             break;
+            case 'editRate':
+                require('editRate.php');
+            break;
             case 'addFacture':
                 require('addFacture.php');
             break;

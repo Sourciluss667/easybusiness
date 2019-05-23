@@ -12,5 +12,5 @@ $_SESSION['formationPro'] = $formationPro;
 $_SESSION['RSI'] = $RSI;
 
 modifyRate($seuil, $formationPro, $RSI, $TVA);
-header("Location : ../index.php?action=admin");
+header("Location: ../index.php?action=admin");
 ?>
