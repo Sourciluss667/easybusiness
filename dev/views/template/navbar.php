@@ -8,7 +8,7 @@
   <a class="item" href="index.php?action=calendar">Calendrier</a>
 
   <!-- -->
-  <a class="item">Factures</a>
+  <a class="item" href="index.php?action=factures">Factures</a>
   <a class="item">Bilan</a>
 
   <!-- Clients -->

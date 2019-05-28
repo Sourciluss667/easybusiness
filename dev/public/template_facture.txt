@@ -1,0 +1,29 @@
+Numéro de facture
+
+User :
+Nom
+Adresse
+Nom commercial
+Numero SIRET
+Numero RCS/RM (Si enregistré au RCS ou Registre des Metiers)
+
+Client :
+Nom
+Adresse
+Forme juridique (pour un professionnel)
+
+---------
+
+Tous les biens ou prestations vendues avec description
+Quantité
+Prix unitaire HT
+
+Reduction ?
+Total HT
+
+TVA
+
+Date emission facture
+Date livraison/execution
+Date reglement
+

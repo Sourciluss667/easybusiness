@@ -37,6 +37,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`rate` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `SIRET` VARCHAR(45) NULL,
   `seuil` VARCHAR(45) NULL,
   `formationPro` VARCHAR(45) NULL,
   `RSI` INT NULL,
@@ -118,7 +119,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `easybusiness`.`client` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NULL,
-  `status` VARCHAR(45) NULL,
+  `status` VARCHAR(45) NULL, -- Acheteur / Vendeur
+  `adresse` VARCHAR(45) NULL,
+  `formeJuridique` VARCHAR(45) NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_client_account1_idx` (`account_id` ASC),
@@ -135,9 +138,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `prix` VARCHAR(45) NULL,
-  `dateStr` VARCHAR(45) NULL,
+  `prix` VARCHAR(45) NOT NULL, -- Prix total
+  `dateStr` VARCHAR(45) NOT NULL, -- Date reglement
   `notes` VARCHAR(45) NULL,
+  `dateFacture` VARCHAR(45) NULL, -- Date emission facture
+  `dateLivraison` VARCHAR(45) NULL, -- Date livraison
+  `numFacture` VARCHAR(45) NOT NULL,
   `account_id` INT NOT NULL,
   `client_id` INT NOT NULL,
   PRIMARY KEY (`id`),

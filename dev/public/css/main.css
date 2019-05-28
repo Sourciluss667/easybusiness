@@ -204,3 +204,9 @@ div#calendar{
   .listClient {
       width: 80%;
   }
+
+  /* Factures */
+  .titleFactures {
+    font-size: 30px;
+    margin-top: 2%;
+}
