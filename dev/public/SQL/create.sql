@@ -37,7 +37,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`rate` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `SIRET` VARCHAR(45) NULL,
   `seuil` VARCHAR(45) NULL,
   `formationPro` VARCHAR(45) NULL,
   `RSI` INT NULL,
@@ -55,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`enterpriseInfo` (
   `ACRE` TINYINT NULL,
   `ARCE` TINYINT NULL,
   `RCP` INT NULL,
+  `SIRET` VARCHAR(45) NULL,
   `declarationTime` VARCHAR(45) NULL,
   `rate_id` INT NOT NULL,
   `account_id` INT NOT NULL,

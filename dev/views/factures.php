@@ -44,7 +44,8 @@
             
             <div class="content">
                 <div class="header"><?php echo $factures[$i]["notes"];?></div>
-                <?php echo $client[0]["nom"]; ?>
+                <span class="nomclientlist"><?php echo $client[0]["nom"]; ?></span>
+                <span class="numerofacturelist right floated content">No.<?php echo $factures[$i]["numFacture"]; ?></span>
             </div>
             <div class="right floated content">
                 <i class="trash alternate icon deleteIconClient" onclick="deleteFacture('<?php echo $factures[$i]['id']; ?>')"></i>
