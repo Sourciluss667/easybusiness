@@ -30,7 +30,7 @@ function createMember($lastname, $firstname, $password, $email, $nameEnterprise)
     // rate
     //id 	seuil 	formationPro 	RSI 	TVA 
     $db = dbConnect();
-    $req = $db->prepare('INSERT INTO rate(seuil, formationPro, RSI, TVA) VALUES(1, 1, 1, 1)');
+    $req = $db->prepare('INSERT INTO rate(seuil, formationPro, RSI, TVA) VALUES(1, 1, 1, 1)'); // Mettre les taux admin
     $req->execute();
     $req->closeCursor();
 
@@ -187,7 +187,7 @@ function getInfoUser() {
     ));    
   }
 
-  function addFacture($idUser, $idClient, $notes, $date, $prix) {
+  function addFactureFromCalendar($idUser, $idClient, $notes, $date, $prix) {
     try {
 
       // account
@@ -197,6 +197,29 @@ function getInfoUser() {
           'prix' => $prix,
           'dateStr'=> $date,
           'notes' => $notes,
+          'idUser' => $idUser,
+          'idClient' => $idClient));
+      $req->closeCursor();
+      
+      }
+      catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
+      }
+  }
+
+  function addFacture($idUser, $idClient, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture) {
+    try {
+
+      // account
+      $db = dbConnect();    
+      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, dateFacture, dateLivraison, numFacture, account_id, client_id) VALUES(:prix, :dateStr, :notes, :dateFacture, :dateLivraison, :numFacture, :idUser, :idClient)');
+      $req->execute(array(
+          'prix' => $prix,
+          'dateStr'=> $dateStr,
+          'notes' => $notes,
+          'dateFacture' => $dateFacture,
+          'dateLivraison' => $dateLivraison,
+          'numFacture' => $numFacture,
           'idUser' => $idUser,
           'idClient' => $idClient));
       $req->closeCursor();
@@ -243,6 +266,22 @@ function getInfoUser() {
       $req = $db->prepare("SELECT * FROM client WHERE account_id=:idUser");
       $req->execute(array(
         "idUser" => $idUser
+      ));
+      $result = $req->fetchAll();
+
+      return $result;
+    }
+    catch (Exception $e) {
+      die('Erreur : ' . $e->getMessage());
+    }
+  }
+
+  function getClientFromId($id) {
+    try {
+      $db = dbConnect();
+      $req = $db->prepare("SELECT * FROM client WHERE id=:id");
+      $req->execute(array(
+        "id" => $id
       ));
       $result = $req->fetchAll();
 

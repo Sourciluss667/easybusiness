@@ -43,6 +43,14 @@
     <?php } ?>
 </div>
 
+<?php 
+
+if ($clients == Array()) {
+    echo 'Vous n\'avez aucun clients !';
+}
+
+?>
+
 <!-- -->
 
 </div>
@@ -55,9 +63,12 @@
 
 <form action="controllers/backend.php" method="post" v-if="clientForm">
 
-Nom client : <input type="text" name="nomClient" id="nomClient">
+Nom client : <input type="text" name="nomClient" id="nomClient" required>
 
-Statut client : <input type="text" name="statutClient" id="statutClient">
+<select name="statutClient" id="statutClient" required>
+    <option value="Acheteur">Acheteur</option>
+    <option value="Vendeur">Vendeur</option>
+</select>
 
 <input type="hidden" name="typeForm" value="addClient">
 

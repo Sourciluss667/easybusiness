@@ -33,6 +33,9 @@ try{
             case 'addFacture':
                 require('addFacture.php');
             break;
+            case 'addFactureFromCalendar':
+                require('addFactureFromCalendar.php');
+            break;
             case 'addClient':
                 require('addClient.php');
             break;

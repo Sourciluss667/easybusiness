@@ -62,7 +62,7 @@ form.submit();
 
                   var id = prompt('ID du Client')
 
-                  post('controllers/backend.php', {typeForm: 'addFacture', notes: notesUser, prix: montant, idClient: id, date: dateStr});
+                  post('controllers/backend.php', {typeForm: 'addFactureFromCalendar', notes: notesUser, prix: montant, idClient: id, date: dateStr});
 
                 }
               }
