@@ -14,8 +14,76 @@
 <?php require('template/navbar.php'); ?>
 
 <!-- TOUT ICI -->
-
 <div class="containerCenter" id="app">
+
+<?php
+require('models/backend.php');
+
+if (isset($_GET["detailClient"])) {
+    // Afficher detail du client avec l'id
+    $client = getClientFromIdSecure(htmlspecialchars($_GET["detailClient"]), getId(htmlspecialchars($_SESSION['mail'])));
+    // Info client et modif possible
+    ?>
+
+    <!-- Btn retour -->
+    <a href="index.php?action=clients">Retour</a>
+
+    <!-- Details clients form -->
+    <form action="controllers/backend.php" method="post">
+        <br>
+        Nom : <input type="text" name="nom" id="adresse" value="<?php echo $client[0]["nom"]; ?>">
+        <br><br>
+        <?php
+        if ($client[0]["status"] == "Acheteur") {
+            ?>
+                <select name="status" id="status" required>
+                    <option value="Acheteur"><span style="color: green;">Acheteur</span></option>
+                    <option value="Vendeur">Vendeur</option>
+                </select>
+            <?php
+        }
+        elseif ($client[0]["status"] == "Vendeur") {
+            ?>
+                <select name="status" id="status" required>
+                    <option value="Vendeur"><span style="color: green;">Vendeur</span></option>
+                    <option value="Acheteur">Acheteur</option>
+                </select>
+            <?php
+        }
+
+        if ($client[0]["adresse"] != "") {
+            ?>
+            <br><br>
+            Adresse : <input type="text" name="adresse" id="adresse" value="<?php echo $client[0]["adresse"]; ?>">
+            <?php
+        }
+
+        if ($client[0]["formeJuridique"] != "") {
+            ?>
+            <br><br>
+            Forme juridique : <input type="text" name="formeJuridique" id="formeJuridique" value="<?php echo $client[0]["formeJuridique"]; ?>"> <!-- A changer plus tard pour mettre toutes les formes en choix -->
+            <?php
+        }
+        ?>
+    </form>
+
+    <?php
+    // Liste des factures
+    $factures = getFacturesFromClientIdSecure(htmlspecialchars($_GET["detailClient"]), getId(htmlspecialchars($_SESSION['mail'])));
+
+    print_r($factures);
+
+
+
+
+
+
+
+
+
+}
+else {
+?>
 
 <div id="allWithoutForm" v-if="!clientForm">
 <!-- Liste -->
@@ -24,13 +92,12 @@
 <div class="ui middle aligned divided selection list listClient">
     
     <?php
-        require('models/backend.php');
         $clients = getClients(htmlspecialchars(getId($_SESSION['mail'])));
 
         for ($i = 0; $i < count($clients, COUNT_NORMAL); $i++) {
             // 1 Client
         ?>
-        <div class="item" id="clients-<?php echo $clients[$i]["id"];?>">
+        <div class="item" id="clients-<?php echo $clients[$i]["id"];?>" onclick="detailClient('<?php echo $clients[$i]['id']; ?>')">
             <img class="ui avatar image" src="public/img/client_avatar.png">
             <div class="content">
                 <div class="header"><?php echo $clients[$i]["nom"];?></div>
@@ -76,6 +143,7 @@ Nom client : <input type="text" name="nomClient" id="nomClient" required>
 
 </form>
 
+<?php } // fin else ?>
 
 </div>
 
@@ -115,6 +183,11 @@ const deleteClient = id => {
     if (confirm("Cela entrainera la suppression de toutes les factures liées, êtes-vous sûr ?")) {
         post('controllers/backend.php', {typeForm: 'deleteClient', idClient: id});
     }
+}
+
+const detailClient = id => {
+    // Faire requete sur la meme page avec un argument get en +
+    document.location.href = `index.php?action=clients&detailClient=${id}`;
 }
 
 const app = new Vue({

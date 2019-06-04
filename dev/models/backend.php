@@ -245,6 +245,21 @@ function getInfoUser() {
     }
   }
 
+  function getFacturesFromClientIdSecure($id, $idUser) {
+    try {
+    $db = dbConnect();
+    $req = $db->prepare("SELECT * FROM facture WHERE client_id LIKE :id AND account_id LIKE :idUser");
+    $req->execute(array(
+      "id" => $id,
+      "idUser" => $idUser
+    ));
+    $result = $req->fetchAll();
+    return $result;
+    } catch (Exception $e) {
+      die('Erreur: ' . $e->getMessage());
+    }
+  }
+
   function addClient($idUser, $nom, $status) {
     try {
     $db = dbConnect();
@@ -283,6 +298,23 @@ function getInfoUser() {
       $req = $db->prepare("SELECT * FROM client WHERE id=:id");
       $req->execute(array(
         "id" => $id
+      ));
+      $result = $req->fetchAll();
+
+      return $result;
+    }
+    catch (Exception $e) {
+      die('Erreur : ' . $e->getMessage());
+    }
+  }
+
+  function getClientFromIdSecure($id, $idUser) {
+    try {
+      $db = dbConnect();
+      $req = $db->prepare("SELECT * FROM client WHERE id=:id AND account_id=:idUser");
+      $req->execute(array(
+        "id" => $id,
+        "idUser" => $idUser
       ));
       $result = $req->fetchAll();
 
