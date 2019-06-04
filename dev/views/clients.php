@@ -65,24 +65,25 @@ if (isset($_GET["detailClient"])) {
             <?php
         }
         ?>
+        <br><br>
+        <input type="submit" value="Edit">
     </form>
-
+    <br><br>
     <?php
     // Liste des factures
     $factures = getFacturesFromClientIdSecure(htmlspecialchars($_GET["detailClient"]), getId(htmlspecialchars($_SESSION['mail'])));
 
-    print_r($factures);
+    for ($i = 0; $i < count($factures, COUNT_NORMAL); $i++) {
+    
 
 
 
 
 
 
+    }
 
-
-
-}
-else {
+    } else {
 ?>
 
 <div id="allWithoutForm" v-if="!clientForm">

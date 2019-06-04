@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
   `typeFacture` VARCHAR(45) NULL,
   `dateFacture` VARCHAR(45) NULL, -- Date emission facture
   `dateLivraison` VARCHAR(45) NULL, -- Date livraison
-  `numFacture` VARCHAR(45) NOT NULL,
+  `numFacture` INT NOT NULL,
   `account_id` INT NOT NULL,
   `client_id` INT NOT NULL,
   PRIMARY KEY (`id`),
