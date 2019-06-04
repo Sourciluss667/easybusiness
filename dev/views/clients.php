@@ -17,7 +17,6 @@
 <div class="containerCenter" id="app">
 
 <?php
-require('models/backend.php');
 
 if (isset($_GET["detailClient"])) {
     // Afficher detail du client avec l'id
@@ -66,23 +65,31 @@ if (isset($_GET["detailClient"])) {
         }
         ?>
         <br><br>
+
+        <input type="hidden" name="idclient" value="<?php echo $_GET["detailClient"]; ?>">
+
+        <input type="hidden" name="typeForm" value="editClient">
+
         <input type="submit" value="Edit">
     </form>
     <br><br>
+    <ul class="listFactureDetailClient">
+        <li>ID | Notes | Prix | Date Reglement | Date Facture | Date Livraison | No Facture</li>
     <?php
     // Liste des factures
     $factures = getFacturesFromClientIdSecure(htmlspecialchars($_GET["detailClient"]), getId(htmlspecialchars($_SESSION['mail'])));
 
     for ($i = 0; $i < count($factures, COUNT_NORMAL); $i++) {
-    
-
-
-
-
-
-
+        ?>
+        <li>
+            <?php if ($factures[$i]["typeFacture"] == "Achat") { echo '<span style="color: red">'; } else { echo '<span style="color: green">'; } echo $factures[$i]["id"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["notes"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["prix"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateStr"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateFacture"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateLivraison"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["numFacture"]; ?></span>
+        </li>
+        <?php
     }
+    ?>
+    </ul>
 
+<?php
     } else {
 ?>
 

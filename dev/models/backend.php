@@ -338,4 +338,80 @@ function getInfoUser() {
     }
   }
 
+  function editClientSecure($nom, $status, $adresse, $formeJuridique, $idClient, $idUser) {
+    $db = dbConnect();
+
+    if ($formeJuridique != "nooo" && $adresse != "nooo") {
+      $query = $db->prepare('UPDATE client SET nom = :nom, status = :status, adresse = :adresse, formeJuridique = :formeJuridique WHERE id = :idClient AND account_id = :idUser');
+      $query->execute(array(
+        'nom'      => $nom,
+        'status'       => $status,
+        'adresse' => $adresse,
+        'formeJuridique' => $formeJuridique,
+        'idClient' => $idClient,
+        'idUser'         => $idUser
+      ));
+    }
+    elseif ($formeJuridique != "nooo") {
+      $query = $db->prepare('UPDATE client SET nom = :nom, status = :status, formeJuridique = :formeJuridique WHERE id = :idClient AND account_id = :idUser');
+      $query->execute(array(
+        'nom'      => $nom,
+        'status'       => $status,
+        'formeJuridique' => $formeJuridique,
+        'idClient' => $idClient,
+        'idUser'         => $idUser
+      ));
+    }
+    elseif ($adresse != "nooo") {
+      $query = $db->prepare('UPDATE client SET nom = :nom, status = :status, adresse = :adresse WHERE id = :idClient AND account_id = :idUser');
+      $query->execute(array(
+        'nom'      => $nom,
+        'status'       => $status,
+        'adresse' => $adresse,
+        'idClient' => $idClient,
+        'idUser'         => $idUser
+      ));
+    }
+    else {
+      $query = $db->prepare('UPDATE client SET nom = :nom, status = :status WHERE id = :idClient AND account_id = :idUser');
+      $query->execute(array(
+        'nom'      => $nom,
+        'status'       => $status,
+        'idClient' => $idClient,
+        'idUser'         => $idUser
+      ));
+    }
+      
+  }
+
+  function getBalance($id) {
+    $db = dbConnect();
+
+    $query = $db->prepare('SELECT prix, typeFacture, dateStr FROM facture WHERE account_id LIKE :id');
+    $query->execute(array(
+      'id' => $id
+    ));
+
+    $result = $query->fetchAll();
+
+    $balance = 0;
+
+    for ($i = 0; $i < count($result, COUNT_NORMAL); $i++) {
+
+      if ($result[$i]["dateStr"] <= date('Y-m-d')) {
+        if ($result[$i]["typeFacture"] == "Achat") {
+          $balance -= $result[$i]["prix"];
+        }
+        elseif ($result[$i]["typeFacture"] == "Vente") {
+          $balance += $result[$i]["prix"];
+        }
+        else {
+          echo 'wtf'; // Ne sera jamais vu :)
+        }
+      }
+    }
+
+    return $balance;
+  }
+
 ?>

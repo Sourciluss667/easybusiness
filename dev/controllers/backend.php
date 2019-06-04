@@ -45,6 +45,9 @@ try{
             case 'deleteClient':
                 require('delClient.php');
             break;
+            case 'editClient':
+                require('editClient.php');
+            break;
         }
     } else {
         header('Location: ../index.php?action=home');

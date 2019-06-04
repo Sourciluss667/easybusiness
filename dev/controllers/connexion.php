@@ -10,6 +10,8 @@ if ($isRegister['mail'] == $_POST['email']) {
     $_SESSION['lastname'] = $isRegister['lastname'];
     $_SESSION['nameEnterprise'] = $isRegister['nameEnterprise'];
 
+    $_SESSION['balance'] = getBalance($isRegister['id']);
+
     $_SESSION['error'] = "";
 
     header('Location: ../index.php');

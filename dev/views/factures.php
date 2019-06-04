@@ -26,7 +26,6 @@
 <div class="ui middle aligned divided selection list listClient">
     
     <?php
-        require('models/backend.php');
         $factures = getFacturesFromId(getId(htmlspecialchars($_SESSION['mail'])));
 
         for ($i = 0; $i < count($factures, COUNT_NORMAL); $i++) {
@@ -35,15 +34,15 @@
         ?>
         <div class="item" id="clients-<?php echo $factures[$i]["id"];?>">
             <?php if ($factures[$i]["typeFacture"] == "Vente") {
-                ?> <img class="ui avatar image" src="public/img/facture_vente_avatar.png"> <!-- SELON SI VENTE OU ACHAT --> <?php
+                ?> <img class="ui avatar image" src="public/img/facture_achat_avatar.png"> <!-- SELON SI VENTE OU ACHAT --> <?php
             }
             elseif ($factures[$i]["typeFacture"] == "Achat") {
-                ?> <img class="ui avatar image" src="public/img/facture_achat_avatar.png"> <!-- SELON SI VENTE OU ACHAT --> <?php
+                ?> <img class="ui avatar image" src="public/img/facture_vente_avatar.png"> <!-- SELON SI VENTE OU ACHAT --> <?php
             }
             ?>
             
             <div class="content">
-                <div class="header"><?php echo $factures[$i]["notes"];?></div>
+                <div class="header"><?php echo $factures[$i]["notes"]; ?>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $factures[$i]["prix"]; ?> EUR</div>
                 <span class="nomclientlist"><?php echo $client[0]["nom"]; ?></span>
                 <span class="numerofacturelist right floated content">No.<?php echo $factures[$i]["numFacture"]; ?></span>
             </div>

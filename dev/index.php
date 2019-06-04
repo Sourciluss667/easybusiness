@@ -6,6 +6,9 @@ try{
 
   if (isset($_SESSION['status'])) {
     if($_SESSION['status'] == 'connected') {
+      require('models/backend.php');
+      $_SESSION['balance'] = getBalance(getId(htmlspecialchars($_SESSION['mail'])));
+
       if (isset($_GET['action'])) {
         switch ($_GET['action']) {
           case 'register':

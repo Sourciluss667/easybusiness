@@ -1,6 +1,6 @@
 <div class="ui left fixed vertical menu">
   <div class="item">
-    <img class="ui image" src="public/img/logo-pi.png">
+    <a href="index.php"><img class="ui image" src="public/img/logo-pi.png"></a>
   </div>
   <a class="item" href="index.php">Dashboard</a>
 
@@ -22,4 +22,20 @@
     <input type="hidden" name="typeForm" value="deconnexion">
     <a class="item" href="javascript:document.deconnexionForm.submit()">Déconnexion</a>
   </form>
+
+<!-- Balance -->
+<div class="balance item">
+  <?php 
+    if ($_SESSION["balance"] < 0) {
+      echo '<span style="color: red">';
+    }
+    else {
+      echo '<span style="color: green">';
+    }
+    echo $_SESSION["balance"]; 
+
+    echo ' EUR</span>';
+  ?>
+</div>
+
 </div>
