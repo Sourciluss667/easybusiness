@@ -34,10 +34,10 @@
             $client = getClientFromId($factures[$i]["client_id"]); 
         ?>
         <div class="item" id="clients-<?php echo $factures[$i]["id"];?>">
-            <?php if ($client[0]["status"] == "Acheteur") {
+            <?php if ($factures[$i]["typeFacture"] == "Vente") {
                 ?> <img class="ui avatar image" src="public/img/facture_vente_avatar.png"> <!-- SELON SI VENTE OU ACHAT --> <?php
             }
-            elseif ($client[0]["status"] == "Vendeur") {
+            elseif ($factures[$i]["typeFacture"] == "Achat") {
                 ?> <img class="ui avatar image" src="public/img/facture_achat_avatar.png"> <!-- SELON SI VENTE OU ACHAT --> <?php
             }
             ?>
@@ -84,6 +84,12 @@ Date règlement : <input type="date" name="dateStr" id="dateStr">
 Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture">
 <br><br>
 Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison">
+<br><br>
+Type de facture : 
+<select name="typeFacture" id="typeFacture" required>
+    <option value="Achat">Achat</option>
+    <option value="Vente">Vente</option>
+</select>
 <br><br>
 Numéro de facture : <input type="text" name="numFacture" id="numFacture">
 <br><br>

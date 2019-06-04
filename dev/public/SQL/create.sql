@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
   `prix` VARCHAR(45) NOT NULL, -- Prix total
   `dateStr` VARCHAR(45) NOT NULL, -- Date reglement
   `notes` VARCHAR(45) NULL,
+  `typeFacture` VARCHAR(45) NULL,
   `dateFacture` VARCHAR(45) NULL, -- Date emission facture
   `dateLivraison` VARCHAR(45) NULL, -- Date livraison
   `numFacture` VARCHAR(45) NOT NULL,

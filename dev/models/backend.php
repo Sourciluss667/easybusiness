@@ -207,12 +207,12 @@ function getInfoUser() {
       }
   }
 
-  function addFacture($idUser, $idClient, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture) {
+  function addFacture($idUser, $idClient, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture) {
     try {
 
       // account
       $db = dbConnect();    
-      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, dateFacture, dateLivraison, numFacture, account_id, client_id) VALUES(:prix, :dateStr, :notes, :dateFacture, :dateLivraison, :numFacture, :idUser, :idClient)');
+      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, dateFacture, dateLivraison, numFacture, typeFacture, account_id, client_id) VALUES(:prix, :dateStr, :notes, :dateFacture, :dateLivraison, :numFacture, :typeFacture, :idUser, :idClient)');
       $req->execute(array(
           'prix' => $prix,
           'dateStr'=> $dateStr,
@@ -220,6 +220,7 @@ function getInfoUser() {
           'dateFacture' => $dateFacture,
           'dateLivraison' => $dateLivraison,
           'numFacture' => $numFacture,
+          'typeFacture' => $typeFacture,
           'idUser' => $idUser,
           'idClient' => $idClient));
       $req->closeCursor();
