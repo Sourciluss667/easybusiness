@@ -107,6 +107,37 @@ Numéro de facture : <input type="text" name="numFacture" id="numFacture">
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="public/js/vue.js"></script>
 <script>
+
+function post(path, params, method='post') {
+
+// The rest of this code assumes you are not using a library.
+// It can be made less wordy if you use one.
+const form = document.createElement('form');
+form.method = method;
+form.action = path;
+
+for (const key in params) {
+  if (params.hasOwnProperty(key)) {
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = key;
+    hiddenField.value = params[key];
+
+    form.appendChild(hiddenField);
+  }
+}
+
+document.body.appendChild(form);
+form.submit();
+}
+
+const deleteFacture = id => {
+    if (confirm("Cela entrainera la suppression de la facture, êtes-vous sûr ?")) {
+        post('controllers/backend.php', {typeForm: 'deleteFacture', idFacture: id});
+    }
+}
+
+
 const app = new Vue({
     el: '#app',
     data: {

@@ -338,6 +338,19 @@ function getInfoUser() {
     }
   }
 
+  function deleteFacture($idFacture) {
+    try {
+      $db = dbConnect();
+      $req = $db->prepare("DELETE FROM facture WHERE id=:idFacture");
+      $req->execute(array(
+        "idFacture" => $idFacture
+      ));
+    }
+    catch (Exception $e) {
+      die('Erreur : ' . $e->getMessage());
+    }
+  }
+
   function editClientSecure($nom, $status, $adresse, $formeJuridique, $idClient, $idUser) {
     $db = dbConnect();
 
@@ -413,5 +426,7 @@ function getInfoUser() {
 
     return $balance;
   }
+
+  
 
 ?>

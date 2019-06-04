@@ -215,6 +215,10 @@ div#calendar{
     color: green;
 }
 
+.listFacture {
+    width: 80%;
+}
+
 .balance {
     font-size: 24px;
 }
