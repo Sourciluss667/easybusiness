@@ -70,7 +70,6 @@ form.submit();
         });
         
         <?php
-          require('models/backend.php');
 
           $factures = getFacturesFromId(htmlspecialchars(getId($_SESSION['mail'])));
 
@@ -82,12 +81,13 @@ form.submit();
                 calendar.addEvent({
                     title: '<?php echo $row['notes']; ?>',
                     start: date,
-                    allDay: true
+                    allDay: true,
+                    color: <?php if ($row['typeFacture'] == "Achat") { echo '\'red\''; } else { echo '\'green\''; } ?>
                 });
               <?php
           }
         ?>
-          
+
         calendar.render();
       });
 

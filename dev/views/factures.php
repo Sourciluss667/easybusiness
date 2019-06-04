@@ -76,7 +76,7 @@ Nom client : <select name="idClient" id="idClient" required> <!-- combobox a uti
 <br><br>
 Prix (en EUR): <input type="number" name="prix">
 <br><br>
-Notes : <input type="text" name="notes" id="notes">
+Notes/Titre : <input type="text" name="notes" id="notes">
 <br><br>
 Date règlement : <input type="date" name="dateStr" id="dateStr">
 <br><br>
