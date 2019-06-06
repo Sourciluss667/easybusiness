@@ -8,6 +8,8 @@ try{
     if($_SESSION['status'] == 'connected') {
       require('models/backend.php');
       $_SESSION['balance'] = getBalance(getId(htmlspecialchars($_SESSION['mail'])));
+      $_SESSION['futurBalance'] = getFuturBalance(getId(htmlspecialchars($_SESSION['mail'])));
+      $_SESSION['dateLastFacture'] = getDateLastFacture(getId(htmlspecialchars($_SESSION['mail'])));
 
       if (isset($_GET['action'])) {
         switch ($_GET['action']) {

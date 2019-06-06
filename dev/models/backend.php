@@ -427,6 +427,53 @@ function getInfoUser() {
     return $balance;
   }
 
+  function getFuturBalance($id) {
+    $db = dbConnect();
+
+    $query = $db->prepare('SELECT prix, typeFacture FROM facture WHERE account_id LIKE :id');
+    $query->execute(array(
+      'id' => $id
+    ));
+
+    $result = $query->fetchAll();
+
+    $balance = 0;
+
+    for ($i = 0; $i < count($result, COUNT_NORMAL); $i++) {
+        if ($result[$i]["typeFacture"] == "Achat") {
+          $balance -= $result[$i]["prix"];
+        }
+        elseif ($result[$i]["typeFacture"] == "Vente") {
+          $balance += $result[$i]["prix"];
+        }
+        else {
+          echo 'wtf'; // Ne sera jamais vu :)
+        }
+    }
+
+    return $balance;
+  }
+
+  function getDateLastFacture($id) {
+    $db = dbConnect();
+
+    $query = $db->prepare('SELECT dateStr FROM facture WHERE account_id LIKE :id');
+    $query->execute(array(
+      'id' => $id
+    ));
+
+    $result = $query->fetchAll();
+
+    $dateLast = date('Y-m-d');
+
+    for ($i = 0; $i < count($result, COUNT_NORMAL); $i++) {
+      if ($result[$i]["dateStr"] > $dateLast) {
+        $dateLast = $result[$i]["dateStr"];
+      }
+    }
+
+    return $dateLast;
+  }
   
 
 ?>

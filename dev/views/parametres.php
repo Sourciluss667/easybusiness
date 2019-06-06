@@ -68,7 +68,6 @@
 <!-- Autre params (entreprise info) -->
 
 <?php
-require('models/backend.php');
 
 $enterpriseInfo = selectEnterpriseInfo(getId(htmlspecialchars($_SESSION['mail'])));
 

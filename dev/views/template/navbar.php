@@ -25,6 +25,7 @@
 
 <!-- Balance -->
 <div class="balance item">
+  Actuel : <br>
   <?php 
     if ($_SESSION["balance"] < 0) {
       echo '<span style="color: red">';
@@ -33,6 +34,22 @@
       echo '<span style="color: green">';
     }
     echo $_SESSION["balance"]; 
+
+    echo ' EUR</span>';
+  ?>
+</div>
+
+<!-- Futur balance -->
+<div class="futurBalance item">
+  <span class="dateLastFacture"><?php echo $_SESSION["dateLastFacture"]; ?> : </span><br>
+  <?php 
+    if ($_SESSION["futurBalance"] < 0) {
+      echo '<span style="color: red">';
+    }
+    else {
+      echo '<span style="color: green">';
+    }
+    echo $_SESSION["futurBalance"]; 
 
     echo ' EUR</span>';
   ?>

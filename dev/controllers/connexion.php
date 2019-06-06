@@ -11,6 +11,8 @@ if ($isRegister['mail'] == $_POST['email']) {
     $_SESSION['nameEnterprise'] = $isRegister['nameEnterprise'];
 
     $_SESSION['balance'] = getBalance($isRegister['id']);
+    $_SESSION['futurBalance'] = getFuturBalance($isRegister['id']);
+    $_SESSION['dateLastFacture'] = getDateLastFacture($isRegister['id']);
 
     $_SESSION['error'] = "";
 
