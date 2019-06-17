@@ -17,22 +17,113 @@
 
 <div class="containerCenter" id="app">
 
+<?php 
+if (isset($_GET["detail"]) && $_GET["detail"] != "") {
+// Detail facture
+
+?>
+<a href="index.php?action=factures">Retour</a>
+<?php
+// Get facture by id
+$facture = getFactureById(htmlspecialchars($_GET["detail"]), getId(htmlspecialchars($_SESSION["mail"])));
+if (!$facture) {
+    echo "<br>Erreur d'id";
+}
+else {
+
+?>
+
+
+
+<form action="controllers/backend.php" method="post">
+
+Nom client : <select name="idClient" id="idClient" required> <!-- combobox a utiliser pour pouvoir faire une recherche dans le champs -->
+        <?php
+        $clients = getClients(getId(htmlspecialchars($_SESSION['mail'])));
+        $clientActuel = getClientFromIdSecure($facture[0]["client_id"], $facture[0]["account_id"]);
+
+        echo  '<option value="'.$clientActuel[0]["id"].'">'.$clientActuel[0]["nom"].'</option>';
+
+        for ($i = 0; $i < count($clients, COUNT_NORMAL); $i++) {
+            if ($clients[$i]["id"] != $clientActuel[0]["id"]) {
+                echo  '<option value="'.$clients[$i]["id"].'">'.$clients[$i]["nom"].'</option>';
+            }
+        }
+        ?>
+        </select>
+<br><br>
+Prix (en EUR): <input type="number" name="prix" value="<?php echo $facture[0]["prix"]; ?>">
+<br><br>
+Notes/Titre : <input type="text" name="notes" id="notes" value="<?php echo $facture[0]["notes"]; ?>">
+<br><br>
+Date règlement : <input type="date" name="dateStr" id="dateStr" value="<?php echo $facture[0]["dateStr"]; ?>">
+<br><br>
+Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" value="<?php echo $facture[0]["dateFacture"]; ?>">
+<br><br>
+Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison" value="<?php echo $facture[0]["dateLivraison"]; ?>">
+<br><br>
+Type de facture : 
+<select name="typeFacture" id="typeFacture" required>
+        <?php 
+        if ($facture[0]["typeFacture"] == "Achat") {
+            ?>
+                <option value="Achat">Achat</option>
+                <option value="Vente">Vente</option>
+            <?php
+        } else {
+            ?>
+                <option value="Vente">Vente</option>
+                <option value="Achat">Achat</option>
+            <?php
+        }
+        ?>
+</select>
+<br><br>
+Numéro de facture : <input type="text" name="numFacture" id="numFacture" value="<?php echo $facture[0]["numFacture"]; ?>">
+<br><br>
+<input type="hidden" name="idFacture" value="<?php echo $facture[0]["id"]; ?>">
+<input type="hidden" name="typeForm" value="editFacture">
+
+<input type="submit" value="Modifier la facture !">
+
+</form>
+
+
+
+
+<?php
+}
+}
+else { // Liste factures et ajout
+?>
+
 <!-- Liste factures -->
 
 <div v-if="!factureForm">
 
-<div class="ui text titleFactures">Liste des factures</div>
+<div class="ui text titleFactures">Liste des factures</div><br>
+
+<div class="ui text">Trié par : <a href="index.php?action=factures&tri=notes">Alphabetiquement</a> | <a href="index.php?action=factures&tri=prix">Prix</a> | <a href="index.php?action=factures&tri=dateStr">Date de facturation</a> | <a href="index.php?action=factures&tri=numFacture">No Facture</a> | <a href="index.php?action=factures&tri=client_id">Clients</a> | <a href="index.php?action=factures&tri=typeFacture">Achat</a> | <a href="index.php?action=factures&tri=typeFacture DESC">Vente</a></div>
 
 <div class="ui middle aligned divided selection list listClient">
     
     <?php
-        $factures = getFacturesFromId(getId(htmlspecialchars($_SESSION['mail'])));
+
+        $tri = "id";
+
+        if (isset($_GET["tri"])) {
+            if ($_GET["tri"] == "notes" || $_GET["tri"] == "prix" || $_GET["tri"] == "dateStr" || $_GET["tri"] == "numFacture" || $_GET["tri"] == "client_id" || $_GET["tri"] == "typeFacture" || $_GET["tri"] == "typeFacture DESC") {
+                $tri = htmlspecialchars($_GET["tri"]);
+            }
+        }
+
+        $factures = getFacturesFromId(getId(htmlspecialchars($_SESSION['mail'])), $tri);
 
         for ($i = 0; $i < count($factures, COUNT_NORMAL); $i++) {
             // 1 Client
             $client = getClientFromId($factures[$i]["client_id"]); 
         ?>
-        <div class="item" id="clients-<?php echo $factures[$i]["id"];?>">
+        <div class="item" id="clients-<?php echo $factures[$i]["id"]; ?>" onclick="detailFacture(<?php echo $factures[$i]['id']; ?>)">
             <?php if ($factures[$i]["typeFacture"] == "Vente") {
                 ?> <img class="ui avatar image" src="public/img/facture_achat_avatar.png"> <!-- SELON SI VENTE OU ACHAT --> <?php
             }
@@ -98,6 +189,11 @@ Numéro de facture : <input type="text" name="numFacture" id="numFacture">
 
 </form>
 
+
+
+
+<?php } ?>
+
 </div>
 
 <!-- FIN TOUT ICI -->
@@ -137,6 +233,9 @@ const deleteFacture = id => {
     }
 }
 
+const detailFacture = id => {
+    window.location = `index.php?action=factures&detail=${id}`;
+}
 
 const app = new Vue({
     el: '#app',

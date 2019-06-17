@@ -30,6 +30,9 @@ try{
             case 'editRate':
                 require('editRate.php');
             break;
+            case 'editFacture':
+                require('editFacture.php');
+            break;
             case 'addFacture':
                 require('addFacture.php');
             break;
@@ -48,6 +51,7 @@ try{
             case 'deleteFacture':
                 require('delFacture.php');
             break;
+
             case 'editClient':
                 require('editClient.php');
             break;

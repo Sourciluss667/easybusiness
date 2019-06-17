@@ -89,11 +89,50 @@ function selectRate() {
 }
 
 function deleteUser($id){
+  try {
   $db = dbConnect();
+
+  // Delete facture
+  $query = $db->prepare('DELETE FROM facture WHERE account_id = :id');
+  $query->execute(array(
+    'id'=>$id
+  ));
+
+  // Delete client
+  $query = $db->prepare('DELETE FROM client WHERE account_id = :id');
+  $query->execute(array(
+    'id'=>$id
+  ));
+
+  // Get rateId
+  $query = $db->prepare('SELECT rate_id FROM enterpriseInfo WHERE account_id = :id');
+  $query->execute(array(
+    'id'=>$id
+  ));
+
+  $rateId = $query->fetchAll();
+
+  // Delete enterpriseInfo
+  $query = $db->prepare('DELETE FROM enterpriseInfo WHERE account_id = :id');
+  $query->execute(array(
+    'id'=>$id
+  ));
+
+  // Delete rate
+  $query = $db->prepare('DELETE FROM facture WHERE account_id = :id');
+  $query->execute(array(
+    'id'=>$rateId[0][0]
+  ));
+
+  // Delete account
   $query = $db->prepare('DELETE FROM account WHERE id = :id');
   $query->execute(array(
     'id'=>$id
   ));
+  }
+  catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+  }
 }
 
   function modifyRate($seuil, $formationPro,$RSI,$TVA) { // Taux admin
@@ -184,7 +223,7 @@ function getInfoUser() {
       'rcp' => $rcp,
       'declarationTime' => $declarationTime,
       'idUser'         => $idUser
-    ));    
+    ));
   }
 
   function addFactureFromCalendar($idUser, $idClient, $notes, $date, $prix) {
@@ -222,7 +261,8 @@ function getInfoUser() {
           'numFacture' => $numFacture,
           'typeFacture' => $typeFacture,
           'idUser' => $idUser,
-          'idClient' => $idClient));
+          'idClient' => $idClient
+        ));
       $req->closeCursor();
       
       }
@@ -231,10 +271,34 @@ function getInfoUser() {
       }
   }
 
-  function getFacturesFromId($id) {
+  function editFacture($idUser, $idClient, $idFacture, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture) {
+    try {
+      $db = dbConnect();    
+      $req = $db->prepare('UPDATE facture SET client_id = :idClient, notes = :notes, dateStr = :dateStr, prix = :prix, dateFacture = :dateFacture, dateLivraison = :dateLivraison, numFacture = :numFacture, typeFacture = :typeFacture WHERE id = :id AND account_id = :idUser');
+      $req->execute(array(
+          'prix' => $prix,
+          'dateStr'=> $dateStr,
+          'notes' => $notes,
+          'dateFacture' => $dateFacture,
+          'dateLivraison' => $dateLivraison,
+          'numFacture' => $numFacture,
+          'typeFacture' => $typeFacture,
+          'idUser' => $idUser,
+          'idClient' => $idClient,
+          'id' => $idFacture
+        ));
+      
+      }
+      catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
+      }
+  }
+
+  function getFacturesFromId($id, $tri="id") {
     try {
     $db = dbConnect();
-    $req = $db->prepare("SELECT * FROM facture WHERE account_id LIKE :id");
+    $req = $db->prepare("SELECT * FROM facture WHERE account_id LIKE :id ORDER BY $tri");
+    
     $req->execute(array(
       "id" => $id
     ));
@@ -243,6 +307,22 @@ function getInfoUser() {
     } catch (Exception $e) {
       die('Erreur: ' . $e->getMessage());
     }
+  }
+
+  function getFactureById($id, $userId) {
+    try {
+      $db = dbConnect();
+      $req = $db->prepare("SELECT * FROM facture WHERE id LIKE :id AND account_id LIKE :userId");
+      
+      $req->execute(array(
+        "id" => $id,
+        "userId" => $userId
+      ));
+      $result = $req->fetchAll();
+      return $result;
+      } catch (Exception $e) {
+        die('Erreur: ' . $e->getMessage());
+      }
   }
 
   function getFacturesFromClientIdSecure($id, $idUser) {

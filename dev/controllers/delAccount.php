@@ -1,6 +1,6 @@
 <?php
 
-deleteUser(getId($_SESSION['mail']));
+deleteUser(getId(htmlspecialchars($_SESSION['mail'])));
 
 $_SESSION['status'] = '';
 $_SESSION['statut'] = '';

@@ -13,6 +13,7 @@
 
     <script src='public/js/fullcalendar/packages/core/main.js'></script>
     <script src='public/js/fullcalendar/packages/daygrid/main.js'></script>
+    <script src='public/js/fullcalendar/packages/interaction/main.js'></script>
 
     <script>
 
@@ -44,7 +45,7 @@ form.submit();
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: [ 'dayGrid' ],
+            plugins: [ 'dayGrid', 'interaction' ],
             height: 'parent',
             header: {
               center: 'addEventBtn'
@@ -66,6 +67,12 @@ form.submit();
 
                 }
               }
+            },
+            dateClick: info => { // Clic sur une date
+              console.log(info.dateStr); // Date format : 2018-09-01
+            },
+            eventClick: info => { // Clic sur un event
+              console.log(info);
             }
         });
         

@@ -8,9 +8,12 @@ $dateLivraison = htmlspecialchars($_POST['dateLivraison']);
 $numFacture = htmlspecialchars($_POST['numFacture']);
 $typeFacture = htmlspecialchars($_POST['typeFacture']);
 $idClient = htmlspecialchars($_POST['idClient']);
+$idFacture = htmlspecialchars($_POST['idFacture']);
 
-addFacture(getId(htmlspecialchars($_SESSION['mail'])), $idClient, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture);
+$idUser = getId(htmlspecialchars($_SESSION['mail']));
+
+
+editFacture($idUser, $idClient, $idFacture, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture);
 
 header("Location: ../index.php?action=factures");
-
 ?>
