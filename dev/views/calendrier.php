@@ -72,7 +72,8 @@ form.submit();
               console.log(info.dateStr); // Date format : 2018-09-01
             },
             eventClick: info => { // Clic sur un event
-              console.log(info);
+              // Redirige sur la page de modif avec l'id de la facture
+              window.location = `index.php?action=factures&detail=${info.event.id}`;
             }
         });
         
@@ -88,6 +89,7 @@ form.submit();
 
                 calendar.addEvent({
                     title: '<?php echo $row['notes']; ?>',
+                    id: '<?php echo $row['id']; ?>',
                     start: date,
                     allDay: true,
                     color: <?php if ($row['typeFacture'] == "Achat") { echo '\'red\''; } else { echo '\'green\''; } ?>

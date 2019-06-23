@@ -13,7 +13,7 @@ $idFacture = htmlspecialchars($_POST['idFacture']);
 $idUser = getId(htmlspecialchars($_SESSION['mail']));
 
 
-editFacture($idUser, $idClient, $idFacture, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture);
+//editFacture($idUser, $idClient, $idFacture, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture);
 
 header("Location: ../index.php?action=factures");
 ?>

@@ -37,55 +37,44 @@ else {
 
 <form action="controllers/backend.php" method="post">
 
-Nom client : <select name="idClient" id="idClient" required> <!-- combobox a utiliser pour pouvoir faire une recherche dans le champs -->
+Nom client : 
         <?php
-        $clients = getClients(getId(htmlspecialchars($_SESSION['mail'])));
         $clientActuel = getClientFromIdSecure($facture[0]["client_id"], $facture[0]["account_id"]);
-
-        echo  '<option value="'.$clientActuel[0]["id"].'">'.$clientActuel[0]["nom"].'</option>';
-
-        for ($i = 0; $i < count($clients, COUNT_NORMAL); $i++) {
-            if ($clients[$i]["id"] != $clientActuel[0]["id"]) {
-                echo  '<option value="'.$clients[$i]["id"].'">'.$clients[$i]["nom"].'</option>';
-            }
-        }
         ?>
-        </select>
+        <input type="text" name="client" value="<?php echo $clientActuel[0]["nom"]; ?>" readonly="readonly">
 <br><br>
-Prix (en EUR): <input type="number" name="prix" value="<?php echo $facture[0]["prix"]; ?>">
+Prix (en EUR): <input type="number" name="prix" value="<?php echo $facture[0]["prix"]; ?>" readonly="readonly">
 <br><br>
-Notes/Titre : <input type="text" name="notes" id="notes" value="<?php echo $facture[0]["notes"]; ?>">
+Notes/Titre : <input type="text" name="notes" id="notes" value="<?php echo $facture[0]["notes"]; ?>" readonly="readonly">
 <br><br>
-Date règlement : <input type="date" name="dateStr" id="dateStr" value="<?php echo $facture[0]["dateStr"]; ?>">
+Date règlement : <input type="date" name="dateStr" id="dateStr" value="<?php echo $facture[0]["dateStr"]; ?>" readonly="readonly">
 <br><br>
-Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" value="<?php echo $facture[0]["dateFacture"]; ?>">
+Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" value="<?php echo $facture[0]["dateFacture"]; ?>" readonly="readonly">
 <br><br>
-Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison" value="<?php echo $facture[0]["dateLivraison"]; ?>">
+Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison" value="<?php echo $facture[0]["dateLivraison"]; ?>" readonly="readonly">
 <br><br>
 Type de facture : 
-<select name="typeFacture" id="typeFacture" required>
         <?php 
         if ($facture[0]["typeFacture"] == "Achat") {
             ?>
-                <option value="Achat">Achat</option>
-                <option value="Vente">Vente</option>
+                <input type="text" name="typeFacture" value="Achat" readonly="readonly">
             <?php
         } else {
             ?>
-                <option value="Vente">Vente</option>
-                <option value="Achat">Achat</option>
+                <input type="text" name="typeFacture" value="Vente" readonly="readonly">
             <?php
         }
         ?>
-</select>
+
 <br><br>
-Numéro de facture : <input type="text" name="numFacture" id="numFacture" value="<?php echo $facture[0]["numFacture"]; ?>">
+Numéro de facture : <input type="text" name="numFacture" id="numFacture" value="<?php echo $facture[0]["numFacture"]; ?>" readonly="readonly">
 <br><br>
+<!--
 <input type="hidden" name="idFacture" value="<?php echo $facture[0]["id"]; ?>">
 <input type="hidden" name="typeForm" value="editFacture">
 
 <input type="submit" value="Modifier la facture !">
-
+-->
 </form>
 
 
@@ -150,7 +139,7 @@ else { // Liste factures et ajout
 </div>
 
 <!-- Creer factures id 	prix 	dateStr 	notes 	dateFacture 	dateLivraison 	numFacture 	account_id 	client_id -->
-
+<br>
 <button class="ui button" v-on:click="factureForm = true" v-if="!factureForm">Ajouter une facture</button>
 
 <a href="javascript:void(0);" v-if="factureForm" v-on:click="factureForm = false">Retour</a>
