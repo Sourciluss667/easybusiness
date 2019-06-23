@@ -160,6 +160,15 @@ $rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
 
   </div>
 
+  <div class="inline fields">
+    <div class="field">
+      
+      <label>Template Facture : </label>
+      <input type="text" name="typeNumFacture" value="<?php echo $enterpriseInfo['typeNumFacture']; ?>">
+
+    </div>
+  </div>
+
     <input type="hidden" name="typeForm" value="editEnterprise">
 
     <div class="fields">

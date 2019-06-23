@@ -25,9 +25,11 @@ else {
 
 $declarationTime = htmlspecialchars($_POST['declarationTime']);
 
+$typeNumFacture = htmlspecialchars($_POST['typeNumFacture']);
+
 $id = getId($_SESSION['mail']);
 
-editEnterprise($id, $status, $acre, $arce, $rcp, $declarationTime);
+editEnterprise($id, $status, $acre, $arce, $rcp, $declarationTime, $typeNumFacture);
 
 header('Location: ../index.php?action=settings&msg=Success');
 

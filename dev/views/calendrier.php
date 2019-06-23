@@ -82,6 +82,7 @@ form.submit();
 
           
           foreach ($factures as $row) {
+            if ($row['del'] != 1) {
               ?>
                 var date = new Date('<?php echo $row['dateStr']; ?>' + 'T00:00:00');
 
@@ -92,6 +93,7 @@ form.submit();
                     color: <?php if ($row['typeFacture'] == "Achat") { echo '\'red\''; } else { echo '\'green\''; } ?>
                 });
               <?php
+            }
           }
         ?>
 

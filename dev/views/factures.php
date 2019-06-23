@@ -133,13 +133,15 @@ else { // Liste factures et ajout
             ?>
             
             <div class="content">
-                <div class="header"><?php echo $factures[$i]["notes"]; ?>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $factures[$i]["prix"]; ?> EUR</div>
+                <div class="header"><?php if ($factures[$i]["del"] == 1) { echo '<span style="color: red;">SUPR</span>&nbsp;&nbsp;'; } ?><?php echo $factures[$i]["notes"]; ?>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $factures[$i]["prix"]; ?> EUR</div>
                 <span class="nomclientlist"><?php echo $client[0]["nom"]; ?></span>
                 <span class="numerofacturelist right floated content">No.<?php echo $factures[$i]["numFacture"]; ?></span>
             </div>
+            <?php if ($factures[$i]["del"] != 1) { ?>
             <div class="right floated content">
                 <i class="trash alternate icon deleteIconClient" onclick="deleteFacture('<?php echo $factures[$i]['id']; ?>')"></i>
             </div>
+            <?php } ?>
         </div>
     <?php } ?>
 </div>
@@ -169,6 +171,15 @@ Prix (en EUR): <input type="number" name="prix">
 <br><br>
 Notes/Titre : <input type="text" name="notes" id="notes">
 <br><br>
+Date max du règlement : <select name="dateMax" id="dateMax">
+    <option value="Immédiat">Immédiat</option>
+    <option value="Fin de mois">Fin de mois</option>
+    <option value="30 Jours + Fin de mois">30 Jours + Fin de mois</option>
+    <option value="60 Jours + Fin de mois">60 Jours + Fin de mois</option>
+    <option value="90 Jours + Fin de mois">90 Jours + Fin de mois</option>
+    <option value="Particulier">Particulier</option>
+</select>
+<br><br>
 Date règlement : <input type="date" name="dateStr" id="dateStr">
 <br><br>
 Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture">
@@ -181,7 +192,23 @@ Type de facture :
     <option value="Vente">Vente</option>
 </select>
 <br><br>
-Numéro de facture : <input type="text" name="numFacture" id="numFacture">
+TVA : <input type="number" name="TVA" id="TVA" value="<?php
+$rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
+echo $rate[0]['TVA'];
+?>">
+<br><br>
+Numéro de facture : <input type="text" name="numFacture" id="numFacture" value="<?php 
+if (!$factures) {
+    $temp = getTypeNumFacture(getId(htmlspecialchars($_SESSION['mail'])));
+    echo ++$temp[0]["typeNumFacture"];
+}
+else {
+    $index = count($factures, COUNT_NORMAL);
+    $str = $factures[--$index]["numFacture"];
+    echo ++$str;
+}
+
+?>" placeholder="<?php $temp = getTypeNumFacture(getId(htmlspecialchars($_SESSION['mail']))); echo $temp[0]["typeNumFacture"]; ?>">
 <br><br>
 <input type="hidden" name="typeForm" value="addFacture">
 
@@ -203,6 +230,8 @@ Numéro de facture : <input type="text" name="numFacture" id="numFacture">
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script src="public/js/vue.js"></script>
 <script>
+
+let deleteFact = 0;
 
 function post(path, params, method='post') {
 
@@ -229,13 +258,20 @@ form.submit();
 
 const deleteFacture = id => {
     if (confirm("Cela entrainera la suppression de la facture, êtes-vous sûr ?")) {
+        deleteFact = 1;
         post('controllers/backend.php', {typeForm: 'deleteFacture', idFacture: id});
     }
 }
 
 const detailFacture = id => {
-    window.location = `index.php?action=factures&detail=${id}`;
+    if (deleteFact != 1) {
+        window.location = `index.php?action=factures&detail=${id}`;
+    } else {
+        deleteFact = 0;
+    }
 }
+
+
 
 const app = new Vue({
     el: '#app',

@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`enterpriseInfo` (
   `RCP` INT NULL,
   `SIRET` VARCHAR(45) NULL,
   `declarationTime` VARCHAR(45) NULL,
+  `typeNumFacture` VARCHAR(45) NOT NULL,
   `rate_id` INT NOT NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -140,11 +141,14 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `prix` VARCHAR(45) NOT NULL, -- Prix total
   `dateStr` VARCHAR(45) NOT NULL, -- Date reglement
+  `dateMax` VARCHAR(45) NOT NULL, -- Date reglement max
   `notes` VARCHAR(45) NULL,
   `typeFacture` VARCHAR(45) NULL,
   `dateFacture` VARCHAR(45) NULL, -- Date emission facture
   `dateLivraison` VARCHAR(45) NULL, -- Date livraison
-  `numFacture` INT NOT NULL,
+  `TVA` VARCHAR(45) NULL,
+  `numFacture` VARCHAR(45) NOT NULL,
+  `del` INT NULL,
   `account_id` INT NOT NULL,
   `client_id` INT NOT NULL,
   PRIMARY KEY (`id`),

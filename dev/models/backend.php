@@ -27,17 +27,25 @@ function createMember($lastname, $firstname, $password, $email, $nameEnterprise)
         'nameEnterprise' => $nameEnterprise));
     $req->closeCursor();
     
-    // rate
-    //id 	seuil 	formationPro 	RSI 	TVA 
-    $db = dbConnect();
-    $req = $db->prepare('INSERT INTO rate(seuil, formationPro, RSI, TVA) VALUES(1, 1, 1, 1)'); // Mettre les taux admin
+    // Recup rate admin
+    $req = $db->prepare('SELECT * FROM rate WHERE id = 1');
     $req->execute();
+    $rateAdmin = $req->fetchAll();
+
+    // rate
+    //id 	seuil 	formationPro 	RSI 	TVA
+    $req = $db->prepare('INSERT INTO rate(seuil, formationPro, RSI, TVA) VALUES(:seuil, :formationPro, :RSI, :TVA)'); // Mettre les taux admin
+    $req->execute(array(
+      "seuil" => $rateAdmin[0]["seuil"],
+      "formationPro" => $rateAdmin[0]["formationPro"],
+      "RSI" => $rateAdmin[0]["RSI"],
+      "TVA" => $rateAdmin[0]["TVA"]
+    ));
     $req->closeCursor();
 
 
     // enterpriseInfo
-    $db = dbConnect();
-    $req = $db->prepare('INSERT INTO enterpriseInfo(status, ACRE, ARCE, RCP, declarationTime, rate_id, account_id) VALUES("Achat/revente de marchandises", 0, 0, 0, "Trimestrielle", :rateId, :id)');
+    $req = $db->prepare('INSERT INTO enterpriseInfo(status, ACRE, ARCE, RCP, declarationTime, typeNumFacture, rate_id, account_id) VALUES("Achat/revente de marchandises", 0, 0, 0, "Trimestrielle", "0000", :rateId, :id)');
     $req->execute(array(
       "id" => getId($email),
       "rateId" => getId($email)
@@ -213,16 +221,17 @@ function getInfoUser() {
     return $result;
   }
 
-  function editEnterprise($idUser, $status, $acre, $arce, $rcp, $declarationTime) { // 	status 	ACRE 	ARCE 	RCP 	declarationTime
+  function editEnterprise($idUser, $status, $acre, $arce, $rcp, $declarationTime, $typeNumFacture) { // 	status 	ACRE 	ARCE 	RCP 	declarationTime
     $db = dbConnect();
-    $query = $db->prepare('UPDATE enterpriseInfo SET status = :status, ACRE = :acre, ARCE = :arce, RCP = :rcp, declarationTime = :declarationTime WHERE account_id = :idUser');
+    $query = $db->prepare('UPDATE enterpriseInfo SET status = :status, ACRE = :acre, ARCE = :arce, RCP = :rcp, declarationTime = :declarationTime, typeNumFacture = :typeNumFacture WHERE account_id = :idUser');
     $query->execute(array(
       'status'      => $status,
       'acre'       => $acre,
       'arce' => $arce,
       'rcp' => $rcp,
       'declarationTime' => $declarationTime,
-      'idUser'         => $idUser
+      'idUser'         => $idUser,
+      'typeNumFacture' => $typeNumFacture
     ));
   }
 
@@ -246,20 +255,22 @@ function getInfoUser() {
       }
   }
 
-  function addFacture($idUser, $idClient, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture) {
+  function addFacture($idUser, $idClient, $notes, $dateStr, $dateMax, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture, $TVA) {
     try {
 
       // account
       $db = dbConnect();    
-      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, dateFacture, dateLivraison, numFacture, typeFacture, account_id, client_id) VALUES(:prix, :dateStr, :notes, :dateFacture, :dateLivraison, :numFacture, :typeFacture, :idUser, :idClient)');
+      $req = $db->prepare('INSERT INTO facture(prix, dateStr, dateMax, notes, dateFacture, dateLivraison, numFacture, typeFacture, TVA, del, account_id, client_id) VALUES(:prix, :dateStr, :dateMax, :notes, :dateFacture, :dateLivraison, :numFacture, :typeFacture, :TVA, 0, :idUser, :idClient)');
       $req->execute(array(
           'prix' => $prix,
           'dateStr'=> $dateStr,
+          'dateMax' => $dateMax,
           'notes' => $notes,
           'dateFacture' => $dateFacture,
           'dateLivraison' => $dateLivraison,
           'numFacture' => $numFacture,
           'typeFacture' => $typeFacture,
+          'TVA' => $TVA,
           'idUser' => $idUser,
           'idClient' => $idClient
         ));
@@ -421,7 +432,8 @@ function getInfoUser() {
   function deleteFacture($idFacture) {
     try {
       $db = dbConnect();
-      $req = $db->prepare("DELETE FROM facture WHERE id=:idFacture");
+      // $req = $db->prepare("DELETE FROM facture WHERE id=:idFacture");
+      $req = $db->prepare("UPDATE facture SET del = 1 WHERE id = :idFacture");
       $req->execute(array(
         "idFacture" => $idFacture
       ));
@@ -480,7 +492,7 @@ function getInfoUser() {
   function getBalance($id) {
     $db = dbConnect();
 
-    $query = $db->prepare('SELECT prix, typeFacture, dateStr FROM facture WHERE account_id LIKE :id');
+    $query = $db->prepare('SELECT prix, typeFacture, dateStr FROM facture WHERE account_id LIKE :id AND del LIKE 0');
     $query->execute(array(
       'id' => $id
     ));
@@ -510,7 +522,7 @@ function getInfoUser() {
   function getFuturBalance($id) {
     $db = dbConnect();
 
-    $query = $db->prepare('SELECT prix, typeFacture FROM facture WHERE account_id LIKE :id');
+    $query = $db->prepare('SELECT prix, typeFacture FROM facture WHERE account_id LIKE :id AND del LIKE 0');
     $query->execute(array(
       'id' => $id
     ));
@@ -537,7 +549,7 @@ function getInfoUser() {
   function getDateLastFacture($id) {
     $db = dbConnect();
 
-    $query = $db->prepare('SELECT dateStr FROM facture WHERE account_id LIKE :id');
+    $query = $db->prepare('SELECT dateStr FROM facture WHERE account_id LIKE :id AND del LIKE 0');
     $query->execute(array(
       'id' => $id
     ));
@@ -553,6 +565,16 @@ function getInfoUser() {
     }
 
     return $dateLast;
+  }
+
+  function getTypeNumFacture($id) {
+    $db = dbConnect();
+    $req = $db->prepare('SELECT typeNumFacture FROM enterpriseInfo WHERE account_id = :id');
+    $req->execute(array(
+      "id" => $id
+    ));
+
+    return $req->fetchAll();
   }
   
 
