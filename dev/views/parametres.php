@@ -185,7 +185,7 @@ $rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
 <div class="ui text titleForm">Paramètres taux :</div>
 
 <form action="controllers/backend.php" method="post" class="ui form formParam">
-    <div class="fields">
+    <div class="fields" style="width: 95%;">
       <div class="field">
           Cotisations Sociales (en %)
           <input type="number" name="rsi" id="rsi" step=".01" value="<?php echo $rate[0]['RSI']; ?>" onclick="verifRate('rsi')">
@@ -202,11 +202,16 @@ $rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
           Seuil (en EUR HT)
           <input type="number" name="seuil" id="seuil" step=".01" value="<?php echo $rate[0]['seuil']; ?>" onclick="verifRate('seuil')">
       </div>
+      <div class="field">
+          Seuil sans la TVA (en EUR HT)
+          <input type="number" name="seuilTVA" id="seuilTVA" step=".01" value="<?php echo $rate[0]['seuilTVA']; ?>" onclick="verifRate('seuilTVA')">
+      </div>
     </div>
 
     <input type="hidden" name="typeForm" value="editRate">
 
     <div class="fields">
+      
       <div class="field">
         <button class="ui right labeled icon red basic button" type="submit">Edit&nbsp;&nbsp;&nbsp;<i class="edit icon"></i></button>
       </div>

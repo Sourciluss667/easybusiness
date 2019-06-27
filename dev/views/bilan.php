@@ -19,7 +19,7 @@
 
 <br>
 <h1>Under construction /!\</h1>
-
+<!--
 <?php
 $depense = getAllOut(htmlspecialchars($_SESSION['mail']));
 getAllOut(htmlspecialchars($_SESSION['mail']));
@@ -43,7 +43,7 @@ echo $depense.'</span>'; ?></h2>
     echo '<span style="color: green">'; 
 } 
 echo $ventes.'</span>'; ?></h2>
-
+-->
 
 </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 $seuil = htmlspecialchars($_POST['seuil']);
+$seuilTVA = htmlspecialchars($_POST['seuilTVA']);
 $TVA = htmlspecialchars($_POST['tva']);
 $formationPro = htmlspecialchars($_POST['formationPro']);
 $RSI = htmlspecialchars($_POST['rsi']);

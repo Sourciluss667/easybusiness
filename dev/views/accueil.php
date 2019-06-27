@@ -21,7 +21,7 @@
 
 <!-- Video -->
 
-<p style="font-size: 21px; width: 60%;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus aliquam, beatae incidunt harum fugiat unde est voluptatibus eligendi, vitae esse iusto laboriosam. Dolores adipisci repudiandae eaque esse excepturi tempora sapiente!</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5oPAjdEbvhg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <ol style="font-size: 21px; width: 60%;">
     <li>Paramétré le compte</li>
