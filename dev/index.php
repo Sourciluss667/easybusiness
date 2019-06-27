@@ -28,6 +28,9 @@ try{
           case 'factures':
             require('views/factures.php');
           break;
+          case 'bilan':
+            require('views/bilan.php');
+          break;
           case 'clients':
             require('views/clients.php');
           break;

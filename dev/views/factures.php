@@ -30,29 +30,14 @@ if (!$facture) {
     echo "<br>Erreur d'id";
 }
 else {
-
+    $clientActuel = getClientFromIdSecure($facture[0]["client_id"], $facture[0]["account_id"]);
 ?>
 
-
+<!-- Edit / Details -->
+<div class="facture-div">
 
 <form action="controllers/backend.php" method="post">
 
-Nom client : 
-        <?php
-        $clientActuel = getClientFromIdSecure($facture[0]["client_id"], $facture[0]["account_id"]);
-        ?>
-        <input type="text" name="client" value="<?php echo $clientActuel[0]["nom"]; ?>" readonly="readonly">
-<br><br>
-Prix (en EUR): <input type="number" name="prix" value="<?php echo $facture[0]["prix"]; ?>" readonly="readonly">
-<br><br>
-Notes/Titre : <input type="text" name="notes" id="notes" value="<?php echo $facture[0]["notes"]; ?>" readonly="readonly">
-<br><br>
-Date règlement : <input type="date" name="dateStr" id="dateStr" value="<?php echo $facture[0]["dateStr"]; ?>" readonly="readonly">
-<br><br>
-Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" value="<?php echo $facture[0]["dateFacture"]; ?>" readonly="readonly">
-<br><br>
-Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison" value="<?php echo $facture[0]["dateLivraison"]; ?>" readonly="readonly">
-<br><br>
 Type de facture : 
         <?php 
         if ($facture[0]["typeFacture"] == "Achat") {
@@ -65,20 +50,107 @@ Type de facture :
             <?php
         }
         ?>
+&nbsp;&nbsp;&nbsp;
+Notes/Titre : <input type="text" name="notes" id="notes" value="<?php echo $facture[0]["notes"]; ?>" readonly="readonly">
 
 <br><br>
-Numéro de facture : <input type="text" name="numFacture" id="numFacture" value="<?php echo $facture[0]["numFacture"]; ?>" readonly="readonly">
+<!-- Identification de l'autoentrepreneur -->
+<div class="first-cadre">
+    <h3>Identification de l'auto-entrepreneur</h3>
+    <br>
+    <input type="text" name="nameEnterprise" value="<?php echo $_SESSION['nameEnterprise']; ?>" placeholder="Nom d'entreprise" readonly="readonly">
+    <br><br>
+    <input type="text" name="name" value="<?php echo $_SESSION['firstname'].' '.$_SESSION['lastname']; ?>" placeholder="Nom" readonly="readonly">
+    <br><br>
+    <input type="text" name="adresse" placeholder="Adresse" readonly="readonly">
+    <br><br>
+    <input type="text" name="SIREN" placeholder="Numéro de SIREN" readonly="readonly">
+</div>
+
+<!-- Identification client -->
+<div class="second-cadre">
+    <h3>Client</h3>
+    <br>
+    <input type="text" name="client" value="<?php echo $clientActuel[0]["nom"]; ?>" readonly="readonly">
+    <br><br>
+    <input type="text" name="addrClient" value="<?php echo $clientActuel[0]["adresse"]; ?>" placeholder="Adresse" readonly="readonly">
+    <br><br>
+    <input type="text" name="formeJuridique" value="<?php echo $clientActuel[0]["formeJuridique"]; ?>" placeholder="Forme Juridique" readonly="readonly">
+</div>
 <br><br>
+<div class="cadre-3">
+Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" value="<?php echo $facture[0]["dateFacture"]; ?>" readonly="readonly">
+</div>
+<br><br><br>
+<table class="cadre-4">
+    <tr>
+        <th>Désignation des produits ou prestations</th>
+        <th>Quantité</th>
+        <th>Prix unitaire HT</th>
+        <th>Total HT</th>
+    </tr>
+    <tr>
+        <td><input type="text" name="produit" id="produit" value="<?php echo $facture[0]["produit"]; ?>" style="width: 100%;" readonly="readonly"></td>
+        <td><input type="number" name="quantity" id="quantity" style="width: 100%;" value="<?php echo $facture[0]["quantity"]; ?>" readonly="readonly"></td>
+        <td><input type="number" step=".01" name="prixUnit" id="prixUnit" style="width: 100%;" value="<?php echo $facture[0]["prixUnit"]; ?>" readonly="readonly"></td>
+        <td><input type="number" step=".01" name="totalUnit" id="totalUnit" value="<?php echo $facture[0]["totalUnit"]; ?>" style="width: 100%;" readonly="readonly"></td>
+    </tr>
+</table>
+
+<br><br>
+<div class="cadre-5">
+Total HT : <input type="number" step=".01" name="totalPrix" value="<?php echo $facture[0]["totalPrix"]; ?>" readonly="readonly">
+<br><br>
+<?php
+if ($facture[0]["TVA"] != 0) {
+?>
+TVA : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" step=".01" name="TVA" id="TVA" value="<?php
+$rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
+echo $rate[0]['TVA'];
+?>" readonly="readonly">
+<br>
+<?php } else { ?>
+TVA non applicable, art. 293B du CGI
+<?php } ?>
+</div>
+
+<br><br>
+<br><br>
+
+Date de règlement max : <input type="text" name="dateMax" id="dateMax" value="<?php echo $facture[0]["dateMax"]; ?>" readonly="readonly">
+
+
+<br><br>
+Date de règlement : <input type="date" name="dateStr" id="dateStr" value="<?php echo $facture[0]["dateStr"]; ?>" readonly="readonly">
+<br><br>
+Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison" value="<?php echo $facture[0]["dateLivraison"]; ?>" readonly="readonly">
+<br><br>
+
+<?php
+
+if (isset($facture[0]['RCP']) && $facture[0]['RCP'] == true) {
+    echo 'Assurance RC Pro';
+}
+//Assurance décennale
+//Assurance RC Pro
+//Mention CGA
+?>
+<br><br>
+<br><br>
+Numéro de facture : <input type="text" name="numFacture" id="numFacture" value="<?php echo $facture[0]["numFacture"]; ?>">
+
 <!--
 <input type="hidden" name="idFacture" value="<?php echo $facture[0]["id"]; ?>">
 <input type="hidden" name="typeForm" value="editFacture">
 
 <input type="submit" value="Modifier la facture !">
 -->
+
 </form>
 
+</div>
 
-
+<!-- Fin details -->
 
 <?php
 }
@@ -92,7 +164,7 @@ else { // Liste factures et ajout
 
 <div class="ui text titleFactures">Liste des factures</div><br>
 
-<div class="ui text">Trié par : <a href="index.php?action=factures&tri=notes">Alphabetiquement</a> | <a href="index.php?action=factures&tri=prix">Prix</a> | <a href="index.php?action=factures&tri=dateStr">Date de facturation</a> | <a href="index.php?action=factures&tri=numFacture">No Facture</a> | <a href="index.php?action=factures&tri=client_id">Clients</a> | <a href="index.php?action=factures&tri=typeFacture">Achat</a> | <a href="index.php?action=factures&tri=typeFacture DESC">Vente</a></div>
+<div class="ui text">Trié par : <a href="index.php?action=factures&tri=notes">Alphabetiquement</a> | <a href="index.php?action=factures&tri=totalPrix">Prix</a> | <a href="index.php?action=factures&tri=dateStr">Date de facturation</a> | <a href="index.php?action=factures&tri=numFacture">No Facture</a> | <a href="index.php?action=factures&tri=client_id">Clients</a> | <a href="index.php?action=factures&tri=typeFacture">Achat</a> | <a href="index.php?action=factures&tri=typeFacture DESC">Vente</a></div>
 
 <div class="ui middle aligned divided selection list listClient">
     
@@ -101,7 +173,7 @@ else { // Liste factures et ajout
         $tri = "id";
 
         if (isset($_GET["tri"])) {
-            if ($_GET["tri"] == "notes" || $_GET["tri"] == "prix" || $_GET["tri"] == "dateStr" || $_GET["tri"] == "numFacture" || $_GET["tri"] == "client_id" || $_GET["tri"] == "typeFacture" || $_GET["tri"] == "typeFacture DESC") {
+            if ($_GET["tri"] == "notes" || $_GET["tri"] == "totalPrix" || $_GET["tri"] == "dateStr" || $_GET["tri"] == "numFacture" || $_GET["tri"] == "client_id" || $_GET["tri"] == "typeFacture" || $_GET["tri"] == "typeFacture DESC") {
                 $tri = htmlspecialchars($_GET["tri"]);
             }
         }
@@ -122,7 +194,7 @@ else { // Liste factures et ajout
             ?>
             
             <div class="content">
-                <div class="header"><?php if ($factures[$i]["del"] == 1) { echo '<span style="color: red;">SUPR</span>&nbsp;&nbsp;'; } ?><?php echo $factures[$i]["notes"]; ?>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $factures[$i]["prix"]; ?> EUR</div>
+                <div class="header"><?php if ($factures[$i]["del"] == 1) { echo '<span style="color: red;">SUPR</span>&nbsp;&nbsp;'; } ?><?php echo $factures[$i]["notes"]; ?>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $factures[$i]["totalPrix"]; ?> EUR</div>
                 <span class="nomclientlist"><?php echo $client[0]["nom"]; ?></span>
                 <span class="numerofacturelist right floated content">No.<?php echo $factures[$i]["numFacture"]; ?></span>
             </div>
@@ -135,6 +207,13 @@ else { // Liste factures et ajout
     <?php } ?>
 </div>
 
+<?php 
+
+if ($factures == Array()) {
+    echo 'Vous n\'avez aucune factures !';
+}
+
+?>
 
 </div>
 
@@ -144,23 +223,90 @@ else { // Liste factures et ajout
 
 <a href="javascript:void(0);" v-if="factureForm" v-on:click="factureForm = false">Retour</a>
 
+<div class="facture-div">
+
 <form action="controllers/backend.php" method="post" v-if="factureForm">
 
-Nom client : <select name="idClient" id="idClient" required> <!-- combobox a utiliser pour pouvoir faire une recherche dans le champs -->
+Type de facture : 
+<select name="typeFacture" id="typeFacture" v-if="!variableconcon">
+    <option value="Achat">Achat</option>
+    <option value="Vente">Vente</option>
+</select>
+<select name="typeFacture" id="typeFacture" v-if="variableconcon">
+    <option value="Vente">Vente</option>
+    <option value="Achat">Achat</option>
+</select>
+&nbsp;&nbsp;&nbsp;
+Notes/Titre : <input type="text" name="notes" id="notes" required>
+
+<br><br>
+<!-- Identification de l'autoentrepreneur -->
+<div class="first-cadre">
+    <h3>Identification de l'auto-entrepreneur</h3>
+    <br>
+    <input type="text" name="nameEnterprise" value="<?php echo $_SESSION['nameEnterprise']; ?>" placeholder="Nom d'entreprise" readonly="readonly">
+    <br><br>
+    <input type="text" name="name" value="<?php echo $_SESSION['firstname'].' '.$_SESSION['lastname']; ?>" placeholder="Nom" readonly="readonly">
+    <br><br>
+    <input type="text" name="adresse" placeholder="Adresse" readonly="readonly">
+    <br><br>
+    <input type="text" name="SIREN" placeholder="Numéro de SIREN" readonly="readonly">
+</div>
+
+<!-- Identification client -->
+<div class="second-cadre">
+    <h3>Client</h3>
+    <br>
+    <select name="idClient" id="idClient" v-on:change="typeClient($event)" required> <!-- combobox a utiliser pour pouvoir faire une recherche dans le champs -->
         <?php
         $clients = getClients(getId(htmlspecialchars($_SESSION['mail'])));
 
         for ($i = 0; $i < count($clients, COUNT_NORMAL); $i++) {
-            echo  '<option value="'.$clients[$i]["id"].'">'.$clients[$i]["nom"].'</option>';
+            echo  '<option id="'.$i.'" value="'.$clients[$i]["id"].'" label="'.$clients[$i]["status"].'">'.$clients[$i]["nom"].'</option>';
         }
         ?>
-        </select>
+    </select>
+    <br><br>
+    <input type="text" name="addrClient" placeholder="Adresse" readonly="readonly">
+    <br><br>
+    <input type="text" name="formeJuridique" placeholder="Forme Juridique" readonly="readonly">
+</div>
 <br><br>
-Prix (en EUR): <input type="number" name="prix">
+<div class="cadre-3">
+Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" required>
+</div>
+<br><br><br>
+<table class="cadre-4">
+    <tr>
+        <th>Désignation des produits ou prestations</th>
+        <th>Quantité</th>
+        <th>Prix unitaire HT</th>
+        <th>Total HT</th>
+    </tr>
+    <tr>
+        <td><input type="text" name="produit" id="produit" style="width: 100%;"required></td>
+        <td><input type="number" name="quantity" id="quantity" style="width: 100%;" v-on:change="quantity($event)" required></td>
+        <td><input type="number" step=".01" name="prixUnit" id="prixUnit" style="width: 100%;" v-on:change="prixUnit($event)" required></td>
+        <td><input type="number" step=".01" name="totalUnit" id="totalUnit" v-bind:placeholder="prixTot" style="width: 100%;" required></td>
+    </tr>
+</table>
+
 <br><br>
-Notes/Titre : <input type="text" name="notes" id="notes">
+<div class="cadre-5">
+Total HT : <input type="number" step=".01" name="totalPrix" v-bind:value="prixTot" required>
 <br><br>
-Date max du règlement : <select name="dateMax" id="dateMax">
+TVA : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" step=".01" name="TVA" id="TVA" required value="<?php
+$rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
+echo $rate[0]['TVA'];
+?>">
+<br>
+Si 0, TVA non applicable, art. 293B du CGI
+</div>
+
+<br><br>
+<br><br>
+
+Date de règlement max : <select name="dateMax" id="dateMax" required>
     <option value="Immédiat">Immédiat</option>
     <option value="Fin de mois">Fin de mois</option>
     <option value="30 Jours + Fin de mois">30 Jours + Fin de mois</option>
@@ -168,25 +314,26 @@ Date max du règlement : <select name="dateMax" id="dateMax">
     <option value="90 Jours + Fin de mois">90 Jours + Fin de mois</option>
     <option value="Particulier">Particulier</option>
 </select>
+
 <br><br>
-Date règlement : <input type="date" name="dateStr" id="dateStr">
+Date de règlement : <input type="date" name="dateStr" id="dateStr" required>
 <br><br>
-Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture">
+Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison" required>
 <br><br>
-Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison">
+
+<?php
+$enterpriseInfo = selectEnterpriseInfo(getId(htmlspecialchars($_SESSION['mail'])));
+
+if ($enterpriseInfo['RCP']) {
+    echo '<input type="checkbox" value="true" name="RCP" id="RCP" checked>&nbsp;&nbsp;Assurance RC Pro';
+}
+//Assurance décennale
+//Assurance RC Pro
+//Mention CGA
+?>
 <br><br>
-Type de facture : 
-<select name="typeFacture" id="typeFacture" required>
-    <option value="Achat">Achat</option>
-    <option value="Vente">Vente</option>
-</select>
 <br><br>
-TVA : <input type="number" name="TVA" id="TVA" value="<?php
-$rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
-echo $rate[0]['TVA'];
-?>">
-<br><br>
-Numéro de facture : <input type="text" name="numFacture" id="numFacture" value="<?php 
+Numéro de facture : <input type="text" required name="numFacture" id="numFacture" value="<?php 
 if (!$factures) {
     $temp = getTypeNumFacture(getId(htmlspecialchars($_SESSION['mail'])));
     echo ++$temp[0]["typeNumFacture"];
@@ -198,14 +345,14 @@ else {
 }
 
 ?>" placeholder="<?php $temp = getTypeNumFacture(getId(htmlspecialchars($_SESSION['mail']))); echo $temp[0]["typeNumFacture"]; ?>">
-<br><br>
-<input type="hidden" name="typeForm" value="addFacture">
 
+<input type="hidden" name="typeForm" value="addFacture">
+&nbsp;&nbsp;
 <input type="submit" value="Ajouter la facture !">
 
 </form>
 
-
+</div>
 
 
 <?php } ?>
@@ -260,12 +407,39 @@ const detailFacture = id => {
     }
 }
 
-
-
 const app = new Vue({
     el: '#app',
-    data: {
-        factureForm: false
+    data: function () {
+        return {
+            factureForm: false,
+            variableconcon: true,
+            prixTot: 0,
+            qty: 0,
+            prix: 0
+        }
+    },
+    methods: {
+        typeClient (val) {
+            let typedutype = val.target.options[val.target.selectedIndex].label
+            if (typedutype === 'Acheteur') {
+                this.variableconcon = true
+            }
+            else if (typedutype === 'Vendeur') {
+                this.variableconcon = false
+            }
+            else {
+                this.variableconcon = true
+            }
+        },
+        quantity (val) {
+            console.log(val)
+            this.qty = val.target.value;
+            this.prixTot = this.prix*this.qty;
+        },
+        prixUnit (val) {
+            this.prix = val.target.value;
+            this.prixTot = this.prix*this.qty;
+        }
     }
 })
 </script>

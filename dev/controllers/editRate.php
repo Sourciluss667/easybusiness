@@ -7,7 +7,7 @@ $RSI = htmlspecialchars($_POST['rsi']);
 $idUser = getId(htmlspecialchars($_SESSION['mail']));
 
 if ($seuil >= 0 && $TVA >= 0 && $formationPro >= 0 && $RSI >= 0) {
-    editRate($idUser, $seuil, $formationPro, $RSI, $TVA);
+    editRate($idUser, $seuil, $seuilTVA, $formationPro, $RSI, $TVA);
     header("Location: ../index.php?action=settings&msg=Success");
 }
 else {

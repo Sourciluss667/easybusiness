@@ -187,20 +187,20 @@ $rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
 <form action="controllers/backend.php" method="post" class="ui form formParam">
     <div class="fields">
       <div class="field">
-          RSI (en %)
-          <input type="number" name="rsi" id="rsi" value="<?php echo $rate[0]['RSI']; ?>" onclick="verifRate('rsi')">
+          Cotisations Sociales (en %)
+          <input type="number" name="rsi" id="rsi" step=".01" value="<?php echo $rate[0]['RSI']; ?>" onclick="verifRate('rsi')">
       </div>
       <div class="field">
           Formation Pro (en %)
-          <input type="number" name="formationPro" id="formationPro" value="<?php echo $rate[0]['formationPro']; ?>" onclick="verifRate('formationPro')">
+          <input type="number" name="formationPro" id="formationPro" step=".01" value="<?php echo $rate[0]['formationPro']; ?>" onclick="verifRate('formationPro')">
       </div>
       <div class="field">
           TVA (en %)
-          <input type="number" name="tva" id="tva" value="<?php echo $rate[0]['TVA']; ?>" onclick="verifRate('tva')">
+          <input type="number" name="tva" id="tva" step=".01" value="<?php echo $rate[0]['TVA']; ?>" onclick="verifRate('tva')">
       </div>
       <div class="field">
-          Seuil (en EUR)
-          <input type="number" name="seuil" id="seuil" value="<?php echo $rate[0]['seuil']; ?>" onclick="verifRate('seuil')">
+          Seuil (en EUR HT)
+          <input type="number" name="seuil" id="seuil" step=".01" value="<?php echo $rate[0]['seuil']; ?>" onclick="verifRate('seuil')">
       </div>
     </div>
 

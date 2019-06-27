@@ -4,7 +4,6 @@ $isRegister = isRegister(htmlspecialchars($_POST['email']),htmlspecialchars($_PO
 
 if ($isRegister['mail'] == $_POST['email']) {
     $_SESSION['status'] = 'connected';
-    $_SESSION['statut'] = $isRegister['statut'];
     $_SESSION['mail'] = $isRegister['mail'];
     $_SESSION['firstname'] = $isRegister['firstname'];
     $_SESSION['lastname'] = $isRegister['lastname'];

@@ -22,7 +22,7 @@
 <div class="ui placeholder segment" id="connexion" v-if="switchForm">
   <div class="ui two column very relaxed stackable grid">
     <div class="column">
-      <div><?php if(isset($_SESSION['error'])) { echo $_SESSION['error']; } ?></div>
+      <div><?php if(isset($_SESSION['error'])) { echo $_SESSION['error']; $_SESSION['error'] = ''; } ?></div>
       <form class="ui form" action="controllers/backend.php" method="post">
         <div class="field">
           <label>E-Mail</label>

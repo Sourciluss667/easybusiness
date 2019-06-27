@@ -7,9 +7,11 @@
   <!-- Calendrier -->
   <a class="item" href="index.php?action=calendar">Calendrier</a>
 
-  <!-- -->
+  <!-- Factures -->
   <a class="item" href="index.php?action=factures">Factures</a>
-  <a class="item">Bilan</a>
+
+  <!-- Bilan -->
+  <a class="item" href="index.php?action=bilan">Bilan</a>
 
   <!-- Clients -->
   <a class="item" href="index.php?action=clients">Clients</a>

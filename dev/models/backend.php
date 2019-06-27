@@ -34,9 +34,10 @@ function createMember($lastname, $firstname, $password, $email, $nameEnterprise)
 
     // rate
     //id 	seuil 	formationPro 	RSI 	TVA
-    $req = $db->prepare('INSERT INTO rate(seuil, formationPro, RSI, TVA) VALUES(:seuil, :formationPro, :RSI, :TVA)'); // Mettre les taux admin
+    $req = $db->prepare('INSERT INTO rate(seuil, seuilTVA, formationPro, RSI, TVA) VALUES(:seuil, :seuilTVA, :formationPro, :RSI, :TVA)'); // Mettre les taux admin
     $req->execute(array(
       "seuil" => $rateAdmin[0]["seuil"],
+      "seuilTVA" => $rateAdmin[0]["seuilTVA"],
       "formationPro" => $rateAdmin[0]["formationPro"],
       "RSI" => $rateAdmin[0]["RSI"],
       "TVA" => $rateAdmin[0]["TVA"]
@@ -154,16 +155,29 @@ function deleteUser($id){
     ));
   }
 
-  function editRate($idUser, $seuil, $formationPro, $RSI, $TVA) { // Taux user
+  function editRate($idUser, $seuil, $seuilTVA, $formationPro, $RSI, $TVA) { // Taux user
     $db = dbConnect();
-    $query = $db->prepare('UPDATE rate SET seuil = :seuil, formationPro = :formationPro, RSI = :RSI, TVA = :TVA WHERE id LIKE (SELECT rate_id FROM enterpriseInfo WHERE account_id = :idUser)');
+    if ($TVA === -1) {
+      $query = $db->prepare('UPDATE rate SET seuil = :seuil, seuilTVA = :seuilTVA, formationPro = :formationPro, RSI = :RSI WHERE id LIKE (SELECT rate_id FROM enterpriseInfo WHERE account_id = :idUser)');
     $query->execute(array(
       'seuil'=> $seuil,
+      "seuilTVA" => $seuilTVA,
+      'formationPro'=> $formationPro,
+      'RSI' => $RSI,
+      'idUser' => $idUser
+    ));
+    }
+    else {
+      $query = $db->prepare('UPDATE rate SET seuil = :seuil, seuilTVA = :seuilTVA, formationPro = :formationPro, RSI = :RSI, TVA = :TVA WHERE id LIKE (SELECT rate_id FROM enterpriseInfo WHERE account_id = :idUser)');
+    $query->execute(array(
+      'seuil'=> $seuil,
+      "seuilTVA" => $seuilTVA,
       'formationPro'=> $formationPro,
       'RSI' => $RSI,
       'TVA' => $TVA,
       'idUser' => $idUser
     ));
+    }
   }
 
   function editUserWPass($idUser, $firstname, $lastname, $nameEnterprise, $password) {
@@ -233,16 +247,81 @@ function getInfoUser() {
       'idUser'         => $idUser,
       'typeNumFacture' => $typeNumFacture
     ));
+
+    
+
+    if ($acre) {
+      // ACRE
+      switch ($status) {
+        // Seuil SeuilTVA RSI FormationPro
+        case 'Achat/revente de marchandises':
+          // 139 738 € HT , 82 800 € de CA HT , 3.2% , 0.1
+          editRate($idUser, 139738, 82800, 0.1, 3.2, 0);
+        break;
+        case 'Vente de denrées à consommer sur place':
+          // 139 738 € HT , 82 800 € de CA HT , 3.2% , 0.1
+          editRate($idUser, 139738, 82800, 0.1, 3.2, 0);
+        break;
+        case 'Prestations d\'hébergement (BIC)':
+          // 170 000 € HT , 33 200 € de CA HT, 3.2%, 0.2
+          editRate($idUser, 170000, 33200, 0.2, 3.2, 0);
+        break;
+        case 'Prestation de service commerciale ou artisanale (BIC / BNC)':
+          // 81 048 € HT , 33 200 € de CA HT, 5.5%, 0.2
+          editRate($idUser, 81048, 33200, 0.2, 5.5, 0);
+        break;
+        case 'Profession libérale':
+          // 61 400 € HT , 33 200 € de CA HT, 5.5% , 0.2
+          editRate($idUser, 61400, 33200, 0.2, 5.5, 0);
+        break;
+        case 'Activité de location de tourisme':
+          // 170 000 € HT , 33 200 € de CA HT, 1.9% , 0.2
+          editRate($idUser, 170000, 33200, 0.2, 1.9, 0);
+        break;
+        
+      }
+    }
+    else {
+      // Sans ACRE
+      switch ($status) {
+        // Seuil SeuilTVA RSI FormationPro
+        case 'Achat/revente de marchandises':
+          // 170 000 € HT , 82 800 € de CA HT , 12.8% , 0.1
+          editRate($idUser, 170000, 82800, 0.1, 12.8, -1);
+        break;
+        case 'Vente de denrées à consommer sur place':
+          // 170 000 € HT , 82 800 € de CA HT , 12.8% , 0.1
+          editRate($idUser, 170000, 82800, 0.1, 12.8, -1);  
+        break;
+        case 'Prestations d\'hébergement (BIC)':
+          // 170 000 € HT , 33 200 € de CA HT, 12.8%, 0.2
+          editRate($idUser, 170000, 33200, 0.2, 12.8, -1);
+        break;
+        case 'Prestation de service commerciale ou artisanale (BIC / BNC)':
+          // 70 000 € HT , 33 200 € de CA HT, 22%, 0.2
+          editRate($idUser, 70000, 33200, 0.2, 22, -1);
+        break;
+        case 'Profession libérale':
+          // 70 000 € HT , 33 200 € de CA HT, 22% , 0.2
+          editRate($idUser, 70000, 33200, 0.2, 22, -1);
+        break;
+        case 'Activité de location de tourisme':
+          // 170 000 € HT , 33 200 € de CA HT, 22% , 0.2
+          editRate($idUser, 170000, 33200, 0.2, 22, -1);
+        break;
+        
+      }
+    }
   }
 
-  function addFactureFromCalendar($idUser, $idClient, $notes, $date, $prix) {
+  function addFactureFromCalendar($idUser, $idClient, $notes, $date, $totalPrix) {
     try {
 
       // account
       $db = dbConnect();    
-      $req = $db->prepare('INSERT INTO facture(prix, dateStr, notes, account_id, client_id) VALUES(:prix, :dateStr, :notes, :idUser, :idClient)');
+      $req = $db->prepare('INSERT INTO facture(totalPrix, dateStr, notes, account_id, client_id) VALUES(:totalPrix, :dateStr, :notes, :idUser, :idClient)');
       $req->execute(array(
-          'prix' => $prix,
+          'totalPrix' => $totalPrix,
           'dateStr'=> $date,
           'notes' => $notes,
           'idUser' => $idUser,
@@ -255,14 +334,14 @@ function getInfoUser() {
       }
   }
 
-  function addFacture($idUser, $idClient, $notes, $dateStr, $dateMax, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture, $TVA) {
+  function addFacture($idUser, $idClient, $notes, $dateStr, $dateMax, $totalPrix, $dateFacture, $dateLivraison, $numFacture, $typeFacture, $TVA, $RCP, $produit, $quantity, $prixUnit, $totalUnit) {
     try {
 
       // account
       $db = dbConnect();    
-      $req = $db->prepare('INSERT INTO facture(prix, dateStr, dateMax, notes, dateFacture, dateLivraison, numFacture, typeFacture, TVA, del, account_id, client_id) VALUES(:prix, :dateStr, :dateMax, :notes, :dateFacture, :dateLivraison, :numFacture, :typeFacture, :TVA, 0, :idUser, :idClient)');
+      $req = $db->prepare('INSERT INTO facture(totalPrix, dateStr, dateMax, notes, dateFacture, dateLivraison, numFacture, typeFacture, TVA, del, account_id, client_id, RCP, produit, quantity, prixUnit, totalUnit) VALUES(:totalPrix, :dateStr, :dateMax, :notes, :dateFacture, :dateLivraison, :numFacture, :typeFacture, :TVA, 0, :idUser, :idClient, :RCP, :produit, :quantity, :prixUnit, :totalUnit)');
       $req->execute(array(
-          'prix' => $prix,
+          'totalPrix' => $totalPrix,
           'dateStr'=> $dateStr,
           'dateMax' => $dateMax,
           'notes' => $notes,
@@ -272,7 +351,12 @@ function getInfoUser() {
           'typeFacture' => $typeFacture,
           'TVA' => $TVA,
           'idUser' => $idUser,
-          'idClient' => $idClient
+          'idClient' => $idClient,
+          'RCP' => $RCP,
+          'produit' => $produit,
+          'quantity' => $quantity,
+          'prixUnit' => $prixUnit,
+          'totalUnit' => $totalUnit
         ));
       $req->closeCursor();
       
@@ -282,12 +366,12 @@ function getInfoUser() {
       }
   }
 
-  function editFacture($idUser, $idClient, $idFacture, $notes, $dateStr, $prix, $dateFacture, $dateLivraison, $numFacture, $typeFacture) {
+  function editFacture($idUser, $idClient, $idFacture, $notes, $dateStr, $totalPrix, $dateFacture, $dateLivraison, $numFacture, $typeFacture) {
     try {
       $db = dbConnect();    
-      $req = $db->prepare('UPDATE facture SET client_id = :idClient, notes = :notes, dateStr = :dateStr, prix = :prix, dateFacture = :dateFacture, dateLivraison = :dateLivraison, numFacture = :numFacture, typeFacture = :typeFacture WHERE id = :id AND account_id = :idUser');
+      $req = $db->prepare('UPDATE facture SET client_id = :idClient, notes = :notes, dateStr = :dateStr, totalPrix = :totalPrix, dateFacture = :dateFacture, dateLivraison = :dateLivraison, numFacture = :numFacture, typeFacture = :typeFacture WHERE id = :id AND account_id = :idUser');
       $req->execute(array(
-          'prix' => $prix,
+          'totalPrix' => $totalPrix,
           'dateStr'=> $dateStr,
           'notes' => $notes,
           'dateFacture' => $dateFacture,
@@ -351,14 +435,16 @@ function getInfoUser() {
     }
   }
 
-  function addClient($idUser, $nom, $status) {
+  function addClient($idUser, $nom, $status, $adresse, $formeJuridique) {
     try {
     $db = dbConnect();
-    $req = $db->prepare("INSERT INTO client(nom, status, account_id) VALUES(:nom, :status, :idUser)");
+    $req = $db->prepare("INSERT INTO client(nom, status, adresse, formeJuridique, account_id) VALUES(:nom, :status, :adresse, :formeJuridique, :idUser)");
     $req->execute(array(
       "nom" => $nom,
       "status" => $status,
-      "idUser" => $idUser
+      "idUser" => $idUser,
+      "adresse" => $adresse,
+      "formeJuridique" => $formeJuridique
     ));
     $req->closeCursor();
     }
@@ -492,7 +578,7 @@ function getInfoUser() {
   function getBalance($id) {
     $db = dbConnect();
 
-    $query = $db->prepare('SELECT prix, typeFacture, dateStr FROM facture WHERE account_id LIKE :id AND del LIKE 0');
+    $query = $db->prepare('SELECT totalPrix, typeFacture, dateStr FROM facture WHERE account_id LIKE :id AND del LIKE 0');
     $query->execute(array(
       'id' => $id
     ));
@@ -505,10 +591,10 @@ function getInfoUser() {
 
       if ($result[$i]["dateStr"] <= date('Y-m-d')) {
         if ($result[$i]["typeFacture"] == "Achat") {
-          $balance -= $result[$i]["prix"];
+          $balance -= $result[$i]["totalPrix"];
         }
         elseif ($result[$i]["typeFacture"] == "Vente") {
-          $balance += $result[$i]["prix"];
+          $balance += $result[$i]["totalPrix"];
         }
         else {
           echo 'wtf'; // Ne sera jamais vu :)
@@ -522,7 +608,7 @@ function getInfoUser() {
   function getFuturBalance($id) {
     $db = dbConnect();
 
-    $query = $db->prepare('SELECT prix, typeFacture FROM facture WHERE account_id LIKE :id AND del LIKE 0');
+    $query = $db->prepare('SELECT totalPrix, typeFacture FROM facture WHERE account_id LIKE :id AND del LIKE 0');
     $query->execute(array(
       'id' => $id
     ));
@@ -533,10 +619,10 @@ function getInfoUser() {
 
     for ($i = 0; $i < count($result, COUNT_NORMAL); $i++) {
         if ($result[$i]["typeFacture"] == "Achat") {
-          $balance -= $result[$i]["prix"];
+          $balance -= $result[$i]["totalPrix"];
         }
         elseif ($result[$i]["typeFacture"] == "Vente") {
-          $balance += $result[$i]["prix"];
+          $balance += $result[$i]["totalPrix"];
         }
         else {
           echo 'wtf'; // Ne sera jamais vu :)
@@ -575,6 +661,50 @@ function getInfoUser() {
     ));
 
     return $req->fetchAll();
+  }
+
+  function getAllIn($id) {
+    $db = dbConnect();
+
+    $query = $db->prepare('SELECT totalPrix, typeFacture FROM facture WHERE account_id LIKE :id AND del LIKE 0');
+    $query->execute(array(
+      'id' => $id
+    ));
+
+    $result = $query->fetchAll();
+
+    $balance = 0;
+
+    for ($i = 0; $i < count($result, COUNT_NORMAL); $i++) {
+        if ($result[$i]["typeFacture"] == "Vente") {
+          $balance += $result[$i]["totalPrix"];
+        }
+    }
+
+    return $balance;
+  }
+
+  function getAllOut($id) {
+    $db = dbConnect();
+
+    $query = $db->prepare('SELECT totalPrix, typeFacture FROM facture WHERE account_id LIKE :id AND del LIKE 0');
+    $query->execute(array(
+      'id' => $id
+    ));
+
+    $result = $query->fetchAll();
+
+    $balance = 0;
+
+    for ($i = 0; $i < count($result, COUNT_NORMAL); $i++) {
+        if ($result[$i]["typeFacture"] == "Achat") {
+          $balance += $result[$i]["totalPrix"];
+        }
+        echo $i;
+
+    }
+    echo $balance;
+    return $balance;
   }
   
 

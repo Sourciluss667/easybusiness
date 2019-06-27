@@ -50,7 +50,7 @@ form.submit();
             header: {
               center: 'addEventBtn'
             },
-            customButtons: {
+            customButtons: {/*
               addEventBtn: {
                 text: 'Ajouter une facture...',
                 click: function() {
@@ -66,7 +66,7 @@ form.submit();
                   post('controllers/backend.php', {typeForm: 'addFactureFromCalendar', notes: notesUser, prix: montant, idClient: id, date: dateStr});
 
                 }
-              }
+              }*/
             },
             dateClick: info => { // Clic sur une date
               console.log(info.dateStr); // Date format : 2018-09-01

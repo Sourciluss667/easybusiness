@@ -15,8 +15,23 @@
 
 <!-- TOUT ICI -->
 
+<div class="containerCenter" id="app">
+<br>
+<h1>Comment fonctionne le site ?</h1>
 
+<!-- Video -->
 
+<p style="font-size: 21px; width: 60%;">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus aliquam, beatae incidunt harum fugiat unde est voluptatibus eligendi, vitae esse iusto laboriosam. Dolores adipisci repudiandae eaque esse excepturi tempora sapiente!</p>
+
+<ol style="font-size: 21px; width: 60%;">
+    <li>Paramétré le compte</li>
+    <li>Ajouter des intermédiaires (clients)</li>
+    <li>Ajouter les factures</li>
+    <li>Garder un suivi avec le calendrier</li>
+    <li>Avoir un bilan complet</li>
+</ol>
+
+</div>
 
 <!-- FIN TOUT ICI -->
 

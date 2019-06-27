@@ -38,6 +38,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `easybusiness`.`rate` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `seuil` VARCHAR(45) NULL,
+  `seuilTVA` VARCHAR(45) NULL,
   `formationPro` VARCHAR(45) NULL,
   `RSI` INT NULL,
   `TVA` VARCHAR(45) NULL,
@@ -139,7 +140,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `prix` VARCHAR(45) NOT NULL, -- Prix total
+  `totalPrix` VARCHAR(45) NOT NULL, -- Prix total
   `dateStr` VARCHAR(45) NOT NULL, -- Date reglement
   `dateMax` VARCHAR(45) NOT NULL, -- Date reglement max
   `notes` VARCHAR(45) NULL,
@@ -148,6 +149,11 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`facture` (
   `dateLivraison` VARCHAR(45) NULL, -- Date livraison
   `TVA` VARCHAR(45) NULL,
   `numFacture` VARCHAR(45) NOT NULL,
+  `RCP` VARCHAR(45) NULL,
+  `produit` VARCHAR(45) NULL,
+  `quantity` VARCHAR(45) NULL,
+  `prixUnit` VARCHAR(45) NULL,
+  `totalUnit` VARCHAR(45) NULL,
   `del` INT NULL,
   `account_id` INT NOT NULL,
   `client_id` INT NOT NULL,

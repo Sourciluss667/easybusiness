@@ -82,7 +82,7 @@ if (isset($_GET["detailClient"])) {
     for ($i = 0; $i < count($factures, COUNT_NORMAL); $i++) {
         ?>
         <li>
-            <?php if ($factures[$i]["typeFacture"] == "Achat") { echo '<span style="color: red">'; } else { echo '<span style="color: green">'; } echo $factures[$i]["id"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["notes"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["prix"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateStr"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateFacture"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateLivraison"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["numFacture"]; ?></span>
+            <?php if ($factures[$i]["typeFacture"] == "Achat") { echo '<span style="color: red">'; } else { echo '<span style="color: green">'; } echo $factures[$i]["id"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["notes"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["totalPrix"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateStr"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateFacture"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["dateLivraison"]; ?>&nbsp;|&nbsp;<?php echo $factures[$i]["numFacture"]; ?></span>
         </li>
         <?php
     }
@@ -139,11 +139,16 @@ if ($clients == Array()) {
 <form action="controllers/backend.php" method="post" v-if="clientForm">
 
 Nom client : <input type="text" name="nomClient" id="nomClient" required>
-
+<br><br>
+Adresse : <input type="text" name="adresse" id="adresse" required>
+<br><br>
+Forme Juridique : <input type="text" name="formeJuridique" id="formeJuridique" required>
+<br><br>
 <select name="statutClient" id="statutClient" required>
     <option value="Acheteur">Acheteur</option>
     <option value="Vendeur">Vendeur</option>
 </select>
+<br><br>
 
 <input type="hidden" name="typeForm" value="addClient">
 
