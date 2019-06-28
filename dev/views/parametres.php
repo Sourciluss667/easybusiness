@@ -50,7 +50,7 @@
       <input type="password" name="password" placeholder="MOT DE PASSE">
     </div>
     <div class="field">
-      <label>Retapé le mot de passe</label>
+      <label>Retapez le mot de passe</label>
       <input type="password" name="verifPassword" placeholder="MOT DE PASSE">
     </div>
 
@@ -119,7 +119,7 @@ $rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
   </div>
 
   <div class="inline fields">
-    <label>A quelle fréquence voulez-vous déclarer ?</label>
+    <label>A quelle fréquence voulez-vous déclarer votre CA ?</label>
 
     <?php
       if ($enterpriseInfo['declarationTime'] == "Mensuelle") {
@@ -163,7 +163,7 @@ $rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
   <div class="inline fields">
     <div class="field">
       
-      <label>Template Facture : </label>
+      <label>Template numéro de facture : </label>
       <input type="text" name="typeNumFacture" value="<?php echo $enterpriseInfo['typeNumFacture']; ?>">
 
     </div>

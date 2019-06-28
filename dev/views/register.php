@@ -103,7 +103,7 @@
         </div>
 
         <div class="field">
-          <label>Encore</label>
+          <label>Confirmez votre mot de passe</label>
           <div class="ui left icon input">
             <input type="password" name="verifPassword" placeholder="Mot de passe" required>
             <i class="lock icon"></i>

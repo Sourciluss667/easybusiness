@@ -51,7 +51,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `easybusiness`.`enterpriseInfo` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(45) NULL,
+  `status` VARCHAR(100) NULL,
   `ACRE` TINYINT NULL,
   `ARCE` TINYINT NULL,
   `RCP` INT NULL,

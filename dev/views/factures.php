@@ -273,7 +273,7 @@ Notes/Titre : <input type="text" name="notes" id="notes" required>
 </div>
 <br><br>
 <div class="cadre-3">
-Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" required>
+Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" value="" required>
 </div>
 <br><br><br>
 <table class="cadre-4">
@@ -316,7 +316,7 @@ Date de règlement max : <select name="dateMax" id="dateMax" required>
 </select>
 
 <br><br>
-Date de règlement : <input type="date" name="dateStr" id="dateStr" required>
+Date de règlement : <input type="date" name="dateStr" id="dateStr" <?php if(isset($_GET['date'])) { echo 'value="'.$_GET['date'].'"'; } ?> required>
 <br><br>
 Date de livraison du service/produit : <input type="date" name="dateLivraison" id="dateLivraison" required>
 <br><br>
@@ -411,7 +411,7 @@ const app = new Vue({
     el: '#app',
     data: function () {
         return {
-            factureForm: false,
+            factureForm: <?php if(isset($_GET['from']) && $_GET['from'] == 'calendar') { echo 'true'; } else { echo 'false'; } ?>,
             variableconcon: true,
             prixTot: 0,
             qty: 0,

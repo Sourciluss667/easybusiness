@@ -24,7 +24,7 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/5oPAjdEbvhg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <ol style="font-size: 21px; width: 60%;">
-    <li>Paramétré le compte</li>
+    <li>Paramétrer le compte</li>
     <li>Ajouter des intermédiaires (clients)</li>
     <li>Ajouter les factures</li>
     <li>Garder un suivi avec le calendrier</li>

@@ -69,7 +69,8 @@ form.submit();
               }*/
             },
             dateClick: info => { // Clic sur une date
-              console.log(info.dateStr); // Date format : 2018-09-01
+              // Date format : 2018-09-01
+              window.location = `index.php?action=factures&from=calendar&date=${info.dateStr}`;
             },
             eventClick: info => { // Clic sur un event
               // Redirige sur la page de modif avec l'id de la facture
