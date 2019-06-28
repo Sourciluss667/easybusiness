@@ -287,7 +287,7 @@ Date emission de la facture : <input type="date" name="dateFacture" id="dateFact
         <td><input type="text" name="produit" id="produit" style="width: 100%;"required></td>
         <td><input type="number" name="quantity" id="quantity" style="width: 100%;" v-on:change="quantity($event)" required></td>
         <td><input type="number" step=".01" name="prixUnit" id="prixUnit" style="width: 100%;" v-on:change="prixUnit($event)" required></td>
-        <td><input type="number" step=".01" name="totalUnit" id="totalUnit" v-bind:placeholder="prixTot" style="width: 100%;" required></td>
+        <td><input type="number" step=".01" name="totalUnit" id="totalUnit" v-bind:value="prixTot" style="width: 100%;" required></td>
     </tr>
 </table>
 
