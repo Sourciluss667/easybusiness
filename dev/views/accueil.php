@@ -21,7 +21,8 @@
 
 <!-- Video -->
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5oPAjdEbvhg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<img width="560" height="315" src="public/img/video.png" frameborder="0">
+
 
 <ol style="font-size: 21px; width: 60%;">
     <li>Paramétrer le compte</li>
