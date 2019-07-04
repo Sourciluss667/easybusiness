@@ -88,12 +88,14 @@ Date emission de la facture : <input type="date" name="dateFacture" id="dateFact
         <th>Quantité</th>
         <th>Prix unitaire HT</th>
         <th>Total HT</th>
+        <th>TVA</th>
     </tr>
     <tr>
         <td><input type="text" name="produit" id="produit" value="<?php echo $facture[0]["produit"]; ?>" style="width: 100%;" readonly="readonly"></td>
         <td><input type="number" name="quantity" id="quantity" style="width: 100%;" value="<?php echo $facture[0]["quantity"]; ?>" readonly="readonly"></td>
         <td><input type="number" step=".01" name="prixUnit" id="prixUnit" style="width: 100%;" value="<?php echo $facture[0]["prixUnit"]; ?>" readonly="readonly"></td>
         <td><input type="number" step=".01" name="totalUnit" id="totalUnit" value="<?php echo $facture[0]["totalUnit"]; ?>" style="width: 100%;" readonly="readonly"></td>
+        <td><input type="number" step=".01" name="TVA" id="TVA" value="<?php echo $facture[0]["TVA"]; ?>" readonly="readonly"></td>
     </tr>
 </table>
 
@@ -101,15 +103,13 @@ Date emission de la facture : <input type="date" name="dateFacture" id="dateFact
 <div class="cadre-5">
 Total HT : <input type="number" step=".01" name="totalPrix" value="<?php echo $facture[0]["totalPrix"]; ?>" readonly="readonly">
 <br><br>
+<?php if ($facture[0]["TVA"] != 0) { ?>
+Total TTC : <input type="number" step=".01" name="totalPrix" value="<?php echo $facture[0]["totalPrix"] + $facture[0]["totalPrix"] * ($facture[0]["TVA"]/100); ?>" readonly="readonly">
+<br><br>
+<?php } ?>
 <?php
-if ($facture[0]["TVA"] != 0) {
+if ($facture[0]["TVA"] == 0) {
 ?>
-TVA : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" step=".01" name="TVA" id="TVA" value="<?php
-$rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
-echo $rate[0]['TVA'];
-?>" readonly="readonly">
-<br>
-<?php } else { ?>
 TVA non applicable, art. 293B du CGI
 <?php } ?>
 </div>
@@ -255,7 +255,7 @@ Notes/Titre : <input type="text" name="notes" id="notes" required>
 
 <!-- Identification client -->
 <div class="second-cadre">
-    <h3>Client</h3>
+    <h3>Prestataire</h3>
     <br>
     <select name="idClient" id="idClient" v-on:change="typeClient($event)" required> <!-- combobox a utiliser pour pouvoir faire une recherche dans le champs -->
         <?php
@@ -282,25 +282,26 @@ Date emission de la facture : <input type="date" name="dateFacture" id="dateFact
         <th>Quantité</th>
         <th>Prix unitaire HT</th>
         <th>Total HT</th>
+        <th>TVA (*)</th>
     </tr>
     <tr>
         <td><input type="text" name="produit" id="produit" style="width: 100%;"required></td>
         <td><input type="number" name="quantity" id="quantity" style="width: 100%;" v-on:change="quantity($event)" required></td>
         <td><input type="number" step=".01" name="prixUnit" id="prixUnit" style="width: 100%;" v-on:change="prixUnit($event)" required></td>
         <td><input type="number" step=".01" name="totalUnit" id="totalUnit" v-bind:value="prixTot" style="width: 100%;" required></td>
+        <td><input type="number" step=".01" name="TVA" id="TVA" required value="<?php
+                $rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
+                echo $rate[0]['TVA'];
+            ?>"></td>
     </tr>
 </table>
 
 <br><br>
 <div class="cadre-5">
 Total HT : <input type="number" step=".01" name="totalPrix" v-bind:value="prixTot" required>
-<br><br>
-TVA : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" step=".01" name="TVA" id="TVA" required value="<?php
-$rate = getRate(getId(htmlspecialchars($_SESSION['mail'])));
-echo $rate[0]['TVA'];
-?>">
 <br>
-Si 0, TVA non applicable, art. 293B du CGI
+<br>
+* : Si 0, TVA non applicable, art. 293B du CGI
 </div>
 
 <br><br>
@@ -432,7 +433,6 @@ const app = new Vue({
             }
         },
         quantity (val) {
-            console.log(val)
             this.qty = val.target.value;
             this.prixTot = this.prix*this.qty;
         },

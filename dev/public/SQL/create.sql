@@ -123,7 +123,6 @@ CREATE TABLE IF NOT EXISTS `easybusiness`.`client` (
   `nom` VARCHAR(45) NULL,
   `status` VARCHAR(45) NULL, -- Acheteur / Vendeur
   `adresse` VARCHAR(45) NULL,
-  `formeJuridique` VARCHAR(45) NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_client_account1_idx` (`account_id` ASC),

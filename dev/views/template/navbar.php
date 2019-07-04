@@ -14,7 +14,7 @@
   <a class="item" href="index.php?action=bilan">Bilan</a>
 
   <!-- Clients -->
-  <a class="item" href="index.php?action=clients">Clients</a>
+  <a class="item" href="index.php?action=clients">Prestataires</a>
 
   <!-- Paramètres -->
   <a class="item" href="index.php?action=settings">Paramètres</a>

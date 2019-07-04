@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EasyBusiness - Clients</title>
+    <title>EasyBusiness - Prestataires</title>
     <link rel="stylesheet" href="public/css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 </head>
@@ -36,16 +36,16 @@ if (isset($_GET["detailClient"])) {
         if ($client[0]["status"] == "Acheteur") {
             ?>
                 <select name="status" id="status" required>
-                    <option value="Acheteur"><span style="color: green;">Acheteur</span></option>
-                    <option value="Vendeur">Vendeur</option>
+                    <option value="Acheteur"><span style="color: green;">Client</span></option>
+                    <option value="Vendeur">Fournisseur</option>
                 </select>
             <?php
         }
         elseif ($client[0]["status"] == "Vendeur") {
             ?>
                 <select name="status" id="status" required>
-                    <option value="Vendeur"><span style="color: green;">Vendeur</span></option>
-                    <option value="Acheteur">Acheteur</option>
+                    <option value="Vendeur"><span style="color: green;">Fournisseur</span></option>
+                    <option value="Acheteur">Client</option>
                 </select>
             <?php
         }
@@ -54,13 +54,6 @@ if (isset($_GET["detailClient"])) {
             ?>
             <br><br>
             Adresse : <input type="text" name="adresse" id="adresse" value="<?php echo $client[0]["adresse"]; ?>">
-            <?php
-        }
-
-        if ($client[0]["formeJuridique"] != "") {
-            ?>
-            <br><br>
-            Forme juridique : <input type="text" name="formeJuridique" id="formeJuridique" value="<?php echo $client[0]["formeJuridique"]; ?>"> <!-- A changer plus tard pour mettre toutes les formes en choix -->
             <?php
         }
         ?>
@@ -95,7 +88,7 @@ if (isset($_GET["detailClient"])) {
 
 <div id="allWithoutForm" v-if="!clientForm">
 <!-- Liste -->
-<div class="ui text titleClients">Liste des clients</div>
+<div class="ui text titleClients">Liste des prestataires</div>
 
 <div class="ui middle aligned divided selection list listClient">
     
@@ -132,7 +125,7 @@ if ($clients == Array()) {
 
 <!-- Ajouter un client -->
 <br>
-<button class="ui button" v-on:click="clientForm = true" v-if="!clientForm">Ajouter un client</button>
+<button class="ui button" v-on:click="clientForm = true" v-if="!clientForm">Ajouter un prestataire</button>
 
 <a href="javascript:void(0);" v-if="clientForm" v-on:click="clientForm = false">Retour</a>
 
@@ -140,14 +133,12 @@ if ($clients == Array()) {
 
 Nom client : <input type="text" name="nomClient" id="nomClient" required>
 <br><br>
-Adresse : <input type="text" name="adresse" id="adresse" required>
-<br><br>
-Forme Juridique : <input type="text" name="formeJuridique" id="formeJuridique" required>
-<br><br>
-<select name="statutClient" id="statutClient" required>
-    <option value="Acheteur">Acheteur</option>
-    <option value="Vendeur">Vendeur</option>
+<select name="status" id="status">
+    <option value="Acheteur">Client</option>
+    <option value="Vendeur">Fournisseur</option>
 </select>
+<br><br>
+Adresse : <input type="text" name="adresse" id="adresse" required>
 <br><br>
 
 <input type="hidden" name="typeForm" value="addClient">

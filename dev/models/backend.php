@@ -435,16 +435,15 @@ function getInfoUser() {
     }
   }
 
-  function addClient($idUser, $nom, $status, $adresse, $formeJuridique) {
+  function addClient($idUser, $nom, $status, $adresse) {
     try {
     $db = dbConnect();
-    $req = $db->prepare("INSERT INTO client(nom, status, adresse, formeJuridique, account_id) VALUES(:nom, :status, :adresse, :formeJuridique, :idUser)");
+    $req = $db->prepare("INSERT INTO client(nom, status, adresse, account_id) VALUES(:nom, :status, :adresse, :idUser)");
     $req->execute(array(
       "nom" => $nom,
       "status" => $status,
       "idUser" => $idUser,
-      "adresse" => $adresse,
-      "formeJuridique" => $formeJuridique
+      "adresse" => $adresse
     ));
     $req->closeCursor();
     }
@@ -529,31 +528,10 @@ function getInfoUser() {
     }
   }
 
-  function editClientSecure($nom, $status, $adresse, $formeJuridique, $idClient, $idUser) {
+  function editClientSecure($nom, $status, $adresse, $idClient, $idUser) {
     $db = dbConnect();
-
-    if ($formeJuridique != "nooo" && $adresse != "nooo") {
-      $query = $db->prepare('UPDATE client SET nom = :nom, status = :status, adresse = :adresse, formeJuridique = :formeJuridique WHERE id = :idClient AND account_id = :idUser');
-      $query->execute(array(
-        'nom'      => $nom,
-        'status'       => $status,
-        'adresse' => $adresse,
-        'formeJuridique' => $formeJuridique,
-        'idClient' => $idClient,
-        'idUser'         => $idUser
-      ));
-    }
-    elseif ($formeJuridique != "nooo") {
-      $query = $db->prepare('UPDATE client SET nom = :nom, status = :status, formeJuridique = :formeJuridique WHERE id = :idClient AND account_id = :idUser');
-      $query->execute(array(
-        'nom'      => $nom,
-        'status'       => $status,
-        'formeJuridique' => $formeJuridique,
-        'idClient' => $idClient,
-        'idUser'         => $idUser
-      ));
-    }
-    elseif ($adresse != "nooo") {
+    
+    if ($adresse != "nooo") {
       $query = $db->prepare('UPDATE client SET nom = :nom, status = :status, adresse = :adresse WHERE id = :idClient AND account_id = :idUser');
       $query->execute(array(
         'nom'      => $nom,
