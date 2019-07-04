@@ -102,7 +102,14 @@ if (isset($_GET["detailClient"])) {
             <img class="ui avatar image" src="public/img/client_avatar.png">
             <div class="content">
                 <div class="header"><?php echo $clients[$i]["nom"];?></div>
-                <?php echo $clients[$i]["status"]; ?>
+                <?php 
+                if ($clients[$i]["status"] == "Acheteur") {
+                    echo 'Client';
+                }
+                else {
+                    echo 'Fournisseur';
+                }
+                ?>
             </div>
             <div class="right floated content">
                 <i class="trash alternate icon deleteIconClient" onclick="deleteClient('<?php echo $clients[$i]['id']; ?>')"></i>
@@ -133,7 +140,7 @@ if ($clients == Array()) {
 
 Nom client : <input type="text" name="nomClient" id="nomClient" required>
 <br><br>
-<select name="status" id="status">
+Statut : <select name="statutClient" id="statutClient">
     <option value="Acheteur">Client</option>
     <option value="Vendeur">Fournisseur</option>
 </select>

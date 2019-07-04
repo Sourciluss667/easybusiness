@@ -69,13 +69,12 @@ Notes/Titre : <input type="text" name="notes" id="notes" value="<?php echo $fact
 
 <!-- Identification client -->
 <div class="second-cadre">
-    <h3>Client</h3>
+    <h3>Prestataire</h3>
     <br>
     <input type="text" name="client" value="<?php echo $clientActuel[0]["nom"]; ?>" readonly="readonly">
     <br><br>
     <input type="text" name="addrClient" value="<?php echo $clientActuel[0]["adresse"]; ?>" placeholder="Adresse" readonly="readonly">
-    <br><br>
-    <input type="text" name="formeJuridique" value="<?php echo $clientActuel[0]["formeJuridique"]; ?>" placeholder="Forme Juridique" readonly="readonly">
+    <br><br><br><br><br>
 </div>
 <br><br>
 <div class="cadre-3">
@@ -194,7 +193,7 @@ else { // Liste factures et ajout
             ?>
             
             <div class="content">
-                <div class="header"><?php if ($factures[$i]["del"] == 1) { echo '<span style="color: red;">SUPR</span>&nbsp;&nbsp;'; } ?><?php echo $factures[$i]["notes"]; ?>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $factures[$i]["totalPrix"]; ?> EUR</div>
+                <div class="header"><?php if ($factures[$i]["del"] == 1) { echo '<span style="color: red;">Annulée</span>&nbsp;&nbsp;'; } ?><?php echo $factures[$i]["notes"]; ?>&nbsp;&nbsp;|&nbsp;&nbsp;<?php echo $factures[$i]["totalPrix"]; ?> EUR</div>
                 <span class="nomclientlist"><?php echo $client[0]["nom"]; ?></span>
                 <span class="numerofacturelist right floated content">No.<?php echo $factures[$i]["numFacture"]; ?></span>
             </div>
@@ -268,9 +267,8 @@ Notes/Titre : <input type="text" name="notes" id="notes" required>
     </select>
     <br><br>
     <input type="text" name="addrClient" placeholder="Adresse" readonly="readonly">
-    <br><br>
-    <input type="text" name="formeJuridique" placeholder="Forme Juridique" readonly="readonly">
-</div>
+    <br><br><br><br><br>
+    </div>
 <br><br>
 <div class="cadre-3">
 Date emission de la facture : <input type="date" name="dateFacture" id="dateFacture" value="" required>
@@ -394,7 +392,7 @@ form.submit();
 }
 
 const deleteFacture = id => {
-    if (confirm("Cela entrainera la suppression de la facture, êtes-vous sûr ?")) {
+    if (confirm("Cela entrainera l'annulation de la facture, êtes-vous sûr ?")) {
         deleteFact = 1;
         post('controllers/backend.php', {typeForm: 'deleteFacture', idFacture: id});
     }
